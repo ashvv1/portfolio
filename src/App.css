@@ -1,31 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap');
+
+*{
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
+  background-color: #282c34;
+  position: relative;
+  height: 100vh;
+  padding: 1%;
+  font-size: calc(10px + 5vmin);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .headerText {
+    animation: falling-text forwards 1.3s linear;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .headerBanner {
+    animation: banner-expand forwards 2.3s linear;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .avatar {
+    animation: avatar-up forwards 2.2s linear;
+  }
+}
 
-.App-header {
+@media (prefers-reduced-motion: no-preference) {
+  .testWindow {
+    animation: fade-in forwards 4s linear;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  span:hover {
+    animation: blowup forwards .5s linear;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pixMe:hover {
+    animation: unblur forwards 1s linear;
+  }
+}
+
+
+  @media (prefers-reduced-motion: no-preference) {
+    .certOne {
+      animation: fade-in forwards 3s linear;
+      
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .certTwo {
+      animation: fade-in forwards 3s linear;
+      animation-delay: .5s;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .certThree {
+      animation: fade-in forwards 3s linear;
+      animation-delay: 1s;
+    }
+  }
+
+
+.App-background {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 100%;
   display: flex;
+  position: sticky;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  overflow:visible;
+}
+
+.headerText {
+  text-align: left;
+  font-weight: 900;
+  width: 100%;
+  display: block;
+  height: 50px;
+  position: relative;
+  top: 10%;
+  flex-shrink: 1;
+  text-shadow: 3px 3px rgba(165, 116, 61, 0.733);
+  overflow-inline: show;
+  font-size: 130%;
+}
+
+.headerText {
+  text-align: left;
+  font-weight: 900;
+  width: 100%;
+  display: block;
+  height: 50px;
+  position: relative;
+  top: 10%;
+  flex-shrink: 1;
+  text-shadow: 3px 3px rgba(165, 116, 61, 0.733);
+  overflow-inline: show;
+  font-size: 130%;
+}
+
+.headerBanner {
+  background-color: #04457a93;
+  position: absolute;
+  padding: 2%;
+  border-radius: 10px;
+  width: 95%;
+  margin: 0;
+  top: 0%;
+  height: 95vh;
+  overflow: hidden;
+}
+
+.certOne {
+  background-image: url(./resources/cert1.JPG);
+  background-position: no-repeat;
+  text-shadow: none;
+  background-size: cover;
+  height: 100%;
+  width: 31%;
+  position: absolute;
+  pointer-events: none;
+}
+
+.certTwo {
+  background-image: url(./resources/cert2.JPG);
+  background-position: no-repeat;
+  text-shadow: none;
+  background-size: cover;
+  height: 100%;
+  width: 31%;
+  left: 33%;
+  position: absolute;
+  pointer-events: none;
+}
+
+.certThree {
+  background-image: url(./resources/cert3.JPG);
+  background-position: no-repeat;
+  text-shadow: none;
+  background-size: cover;
+  height: 100%;
+  width: 31%;
+  position: absolute;
+  left: 66%;
+  pointer-events: none;
+}
+
+
+.certificates {
+  position: relative;
+  height: 40vh;
+  margin-left: 3vw;
+}
+
+.secondBanner {
+  background-color: #04457ab7;
+  position: relative;
+  padding: 2%;
+  border-radius: 10px;
+  display: none;
+  width: 95%;
+  top: 50%;
+  height:95vh;
+  overflow: hidden;
+}
+
+.avatar {
+  position: absolute;
+  width: 13%;
+  height: 40%;
+  right: 25%;
+  bottom: 23%;
+}
+
+.pixMe {
+  background-image: url(./resources/adamportpix.png);
+  height: 250px;
+  width: 250px;
+  position: absolute;
+}
+
+.pixMe:hover {
+  background-image: url(./resources/adamport.png);
+}
+
+.equalSign {
+  font-size: 400%;
+  font-weight: 900;
+  position: absolute;
+  bottom: 35%;
+  right: -18%;
+  text-shadow: 8px 8px black;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.testWindow{
+  position: absolute;
+  left: 7%;
+  bottom: 1%;
+  overflow: show;
+  height: 50%;
+  width: 50%;
 }
 
 @keyframes App-logo-spin {
@@ -36,3 +231,116 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes falling-text {
+  0% {
+    transform: translateY(-300px);
+    transform: translate3d(30);
+  }
+  25% {
+    transform: translateY(0px);
+  }
+  45% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(0px);
+  }
+  80% {
+    transform: translateY(-1px);
+  }
+  82%{
+    transform: translateY(0px);
+  }
+}
+
+@keyframes banner-expand {
+  0% {
+    height: 30%;
+    top: 30%;
+    width: 70%;
+  }
+  30% {
+    width: 70%;
+  }
+  60% {
+    top: 30%;
+    height: 30%;
+    width: 95%;
+  }
+}
+
+
+@keyframes avatar-up {
+  0% {
+    bottom: 300%;
+  }
+  40% {
+    bottom: 198%;
+  }
+  100% {
+    bottom: 23%;
+  }
+  }
+
+
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes fade-in-right {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    position: absolute;
+    opacity: 0%;
+    right: 200vw;
+  }
+  100% {
+    left: 0;
+    opacity: 100%;
+    position: absolute;
+  }
+}
+
+@keyframes blowup {
+  0%   {
+  }
+  100% {
+    margin-right: 2%;
+  }
+}
+
+@keyframes unblur {
+  0% { -webkit-filter: blur(10px);}
+  50% { -webkit-filter: blur(5px);}
+  100% { -webkit-filter: blur(0px);}
+}
+
+@keyframes glow {
+  0%{
+    text-shadow: 2px 2px 2px rgb(131, 82, 9)
+  }
+  10%{
+    text-shadow: 2px 2px rgba(131, 48, 9, 0.747)
+  }
+  30%{
+    text-shadow: 2px 2px rgba(251, 255, 0, 0.61)
+  }
+  40%{
+    text-shadow: 2px 2px rgba(204, 121, 12, 0.801)
+  }
+  70%{
+    text-shadow: 2px 2px rgba(131, 68, 9, 0.74)
+  }
+}
+

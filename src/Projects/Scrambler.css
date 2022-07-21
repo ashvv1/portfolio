@@ -1,0 +1,102 @@
+
+.Scrambler-App {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  font-size: 40%;
+  opacity: 85%;
+}
+
+.Container {
+  background-color: white;
+  position: relative;
+  width: 80%;
+  min-height: 45%;
+  height: fit-content;
+  border-radius: 2vw;
+  padding: 3%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: black 5px 4px 2px 2px;
+  overflow: visible;
+}
+
+.Sentence {
+  color: rgb(0, 0, 0);
+  font-size: 300%;
+  margin-bottom: 2vh;
+  text-transform: uppercase;
+}
+
+.Score {
+  font-size: 40%;
+  font-weight: 600;
+  margin-top: 2vh;
+}
+
+.Letters {
+  display: flex;
+  height: 100%;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  position: relative;
+  padding: 0;
+}
+
+.input {
+  margin: 1vh;
+  border-radius: 2px;
+  font-size: 100%; 
+}
+
+input {
+  font-size: 80%;
+  height: 100%;
+  font-weight: 500;
+  text-shadow: #388e3c;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+
+button {
+  font-size: 50%;
+  margin: 2vh;
+  padding: 1vh;
+  background-color: #388e3c;
+  color: white;
+}
+
+p {
+  font-size: 30%;
+  margin-bottom: 1vh;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  src: url(https://fonts.gstatic.com/s/opensans/v29/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
