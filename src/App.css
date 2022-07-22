@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap');
 
-*{
-  box-sizing: border-box;
-}
+
 .App {
   text-align: center;
   font-family: 'Roboto', sans-serif;
@@ -57,21 +55,20 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .certOne {
-      animation: fade-in forwards 3s linear;
-      
+      animation: fade-in forwards 2s linear;
     }
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .certTwo {
-      animation: fade-in forwards 3s linear;
+      animation: fade-in forwards 2s linear;
       animation-delay: .5s;
     }
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .certThree {
-      animation: fade-in forwards 3s linear;
+      animation: fade-in forwards 2s linear;
       animation-delay: 1s;
     }
   }
@@ -79,7 +76,7 @@
 
 .App-background {
   background-color: #282c34;
-  height: 100%;
+  height: 101%;
   display: flex;
   position: sticky;
   flex-direction: column;
@@ -116,8 +113,9 @@
   font-size: 130%;
 }
 
+
 .headerBanner {
-  background-color: #04457a93;
+  background-color:  #04457aaf;
   position: absolute;
   padding: 2%;
   border-radius: 10px;
@@ -137,6 +135,27 @@
   width: 31%;
   position: absolute;
   pointer-events: none;
+  opacity: 0;
+}
+
+.arrowDown1 {
+  background-image: url(./resources/arrowdown.png);
+  background-position: no-repeat;
+  height: 70px;
+  width: 100px;
+  position: absolute;
+  left: 26%;
+  bottom: -40%;
+}
+
+.arrowDown2 {
+  background-image: url(./resources/arrowdown.png);
+  background-position: no-repeat;
+  height: 70px;
+  width: 100px;
+  position: absolute;
+  left: 59%;
+  bottom: -40%;
 }
 
 .certTwo {
@@ -149,6 +168,7 @@
   left: 33%;
   position: absolute;
   pointer-events: none;
+  opacity: 0;
 }
 
 .certThree {
@@ -161,6 +181,7 @@
   position: absolute;
   left: 66%;
   pointer-events: none;
+  opacity: 0;
 }
 
 
@@ -168,16 +189,111 @@
   position: relative;
   height: 40vh;
   margin-left: 3vw;
+  margin-top: 5%;
+}
+
+.codeSnips {
+  position: relative;
+  height: 65vh;
+  width: 100%;
+  margin-left: 2.2vw;
+  margin-top: 3%;
+  overflow: hidden;
+}
+
+.code1 {
+  background-image: url(./resources/gitsnip.jpg);
+  background-repeat: repeat-y;
+  background-position: 18%;
+  text-shadow: none;
+  background-size: cover;
+  border-right: solid rgba(0, 0, 0, 0.164) 5px;
+  height: 1200px;
+  width: 33%;
+  position: absolute;
+  opacity: 70%;
+  left: 0%;
+  pointer-events: auto;
+  animation: slide 20s alternate linear;
+}
+
+.code1:hover {
+pointer-events: all;
+opacity: 100%;
+}
+.code2:hover {
+pointer-events: all;
+opacity: 100%;
+  }
+.code3:hover {
+pointer-events: all;
+opacity: 100%;
+    }
+
+.code1:hover:after {
+  animation: 0;
+}
+.code2:hover:after {
+  animation: 0;
+}
+
+.code3:hover:after {
+  animation: 0;
+}
+
+
+.code2 {
+  background-image: url(./resources/vssnip.JPG);
+  background-repeat: repeat-y;
+  background-position: 18%;
+  text-shadow: none;
+  background-size: cover;
+  border-right: solid rgba(0, 0, 0, 0.164) 5px;
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  opacity: 70%;
+  left: 35%;
+  pointer-events: auto;
+  animation: slide2 18s alternate linear;
+}
+
+.code3 {
+  background-image: url(./resources/hatchsnip.JPG);
+  background-repeat: repeat-y;
+  background-position: 18%;
+  text-shadow: none;
+  background-size: cover;
+  border-right: solid rgba(0, 0, 0, 0.164) 5px;
+  height: 100%;
+  width: 27%;
+  position: absolute;
+  opacity: 70%;
+  left: 68%;
+  pointer-events: none;
+  animation: slide3 16s alternate linear;
 }
 
 .secondBanner {
-  background-color: #04457ab7;
-  position: relative;
+  background-color:   #04457aaf;
+  position: absolute;
   padding: 2%;
   border-radius: 10px;
   display: none;
   width: 95%;
-  top: 50%;
+  top: 33.3%;
+  height:95vh;
+  overflow: hidden;
+}
+
+.thirdBanner {
+  background-color:  #04457aaf;
+  position: absolute;
+  padding: 2%;
+  border-radius: 10px;
+  display: none;
+  width: 95%;
+  top: 66.6%;
   height:95vh;
   overflow: hidden;
 }
@@ -186,16 +302,18 @@
   position: absolute;
   width: 13%;
   height: 40%;
-  right: 25%;
-  bottom: 17%;
+  right: 20%;
+  bottom: 15%;
 }
 
 .pixMe {
   background-image: url(./resources/adamportpix.png);
-  height: 250px;
-  width: 250px;
+  height: 360px;
+  width: 300px;
   position: absolute;
 }
+
+
 
 .pixMe:hover {
   background-image: url(./resources/adamport.png);
@@ -229,6 +347,42 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes slide{
+  0% {
+    transform: translateY(100%);
+  }
+  50% {
+    transform: translateY(-800px);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slide2{
+  0% {
+    transform: translateY(65vh);
+  }
+  50% {
+    transform: translateY(-300px);
+  }
+  100%{
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide3{
+  0% {
+    transform: translateY(70vh);
+  }
+  50% {
+    transform: translateY(-300px);
+  }
+  100% {
+    transform: translateY(0)
   }
 }
 
@@ -276,10 +430,10 @@
     bottom: 300%;
   }
   40% {
-    bottom: 198%;
+    bottom: 170%;
   }
   100% {
-    bottom: 23%;
+    bottom: 15%;
   }
   }
 
@@ -301,14 +455,10 @@
     opacity: 0%;
   }
   50% {
-    position: absolute;
     opacity: 0%;
-    right: 200vw;
   }
   100% {
-    left: 0;
     opacity: 100%;
-    position: absolute;
   }
 }
 
