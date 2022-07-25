@@ -17,11 +17,11 @@
 }
 
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .bg-background {
     animation: bg-fall infinite 40s alternate-reverse;
   }
-}
+} */
 @media (prefers-reduced-motion: no-preference) {
   .headerText {
     animation: falling-text forwards 1.3s linear;
@@ -91,7 +91,7 @@
   z-index:1;
   opacity: 100%;
 }
-
+/* 
 .bg-background {
   position: absolute;
   width: 150%;
@@ -101,7 +101,7 @@
   background-image: url('./resources/background1.jpg');
   background-repeat: repeat-y;
   filter: blur(5px)
-}
+} */
 
 .headerText {
   text-align: left;
