@@ -7,15 +7,13 @@ import me from './resources/adamport.png';
 import cert1 from './resources/cert1.JPG';
 import cert2 from './resources/cert2.JPG';
 import cert3 from './resources/cert3.JPG';
-import giticon from './resources/giticon.png'
-
-
+import giticon from './resources/giticon.png';
 function App() {
 
   const thirdBanner = useRef();
   const secondBanner = useRef();
   const headerBanner = useRef();
-  const appBackground = useRef();
+  const appCont = useRef();
 
   useEffect(()=>{
     (document.getElementById('0')).focus();
@@ -35,20 +33,22 @@ function App() {
     document.getElementById('9').disabled=true;
 
     setTimeout(()=>{
+      clearInterval(0);
       clearInterval(1);
-      clearInterval(2);
     }, 5000)
 
       setTimeout(()=>{
-        appBackground.current.style.height = '300vh';
+        appCont.current.style.height = '300vh';
         secondBanner.current.style.display = 'flex';
         thirdBanner.current.style.display = 'flex';
-        executeScroll(secondBanner);
       }, 2000)
+      setTimeout(()=>{
+        executeScroll(secondBanner);
+      }, 2001)
       
       setTimeout(()=>{
         window.scrollTo({top: 800, behavior: 'smooth'});
-      }, 5500)  
+      }, 5000)  
 
       setTimeout(()=>{
         executeScroll(thirdBanner);
@@ -56,8 +56,10 @@ function App() {
     }
 
   return (
-    <div className="App">
-      <div className="App-background" ref={appBackground}>
+    
+    <div className="App" ref={appCont}>
+      <div className="App-background" >
+      {/* <div className="bg-background"></div> */}
         <div className = "headerBanner" ref={headerBanner}>
         <div className = "avatar" >
         <img src={pixme} alt = "pixelated adam" className = 'pixme' width="100%" height="100%"/>

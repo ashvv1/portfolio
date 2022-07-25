@@ -5,17 +5,21 @@
 .App {
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  background-color: #282c34;
+  background-color: #000000;
   position: relative;
   height: 100vh;
-  padding: 1%;
   font-size: calc(10px + 5vmin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  overflow:hidden;
 }
 
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .bg-background {
+    animation: bg-fall infinite 40s alternate-reverse;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -75,14 +79,28 @@
 
 
 .App-background {
-  background-color: #282c34;
-  height: 101%;
+  background-color: #df050500;
+  height: 100%;
+  width: 100%;
   display: flex;
-  position: sticky;
+  position: absolute;
   flex-direction: column;
   align-items: center;
   color: white;
-  overflow:visible;
+  overflow:hidden;
+  z-index:1;
+  opacity: 100%;
+}
+
+.bg-background {
+  position: absolute;
+  width: 150%;
+  height: 350%;
+  z-index: -1000;
+  opacity: 50%;
+  background-image: url('./resources/background1.jpg');
+  background-repeat: repeat-y;
+  filter: blur(5px)
 }
 
 .headerText {
@@ -105,10 +123,11 @@
   padding: 2%;
   border-radius: 10px;
   width: 95%;
-  margin: 0;
+  margin-top: 1%;
   top: 0%;
   height: 95vh;
   overflow: hidden;
+  opacity: 100%;
 }
 
 .certOne {
@@ -189,7 +208,7 @@
 }
 
 .giticon:hover {
-  filter: brightness(20);
+  filter: brightness(3);
 }
 
 .code1:hover {
@@ -315,12 +334,12 @@ opacity: 100%;
 }
 
 
-@keyframes App-logo-spin {
+@keyframes bg-fall {
   from {
-    transform: rotate(0deg);
+    transform: translate3d(100px, 0px, -200px)
   }
   to {
-    transform: rotate(360deg);
+    transform: translate3d(-100px, -500px,1000px)
   }
 }
 
