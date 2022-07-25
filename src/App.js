@@ -1,11 +1,16 @@
 import './App.css';
 import Scrambler from './Projects/Scrambler';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import gitsnip from './resources/gitsnip.jpg';
+import pixme from './resources/adamportpix.png';
+import me from './resources/adamport.png';
+import cert1 from './resources/cert1.JPG';
+import cert2 from './resources/cert2.JPG';
+import cert3 from './resources/cert3.JPG';
+import giticon from './resources/giticon.png'
 
 
 function App() {
-
-  const [lightLoop, setLightLoop] = useState();
 
   const thirdBanner = useRef();
   const secondBanner = useRef();
@@ -54,8 +59,11 @@ function App() {
     <div className="App">
       <div className="App-background" ref={appBackground}>
         <div className = "headerBanner" ref={headerBanner}>
-        <div className = "avatar">
-        <span className='pixMe' width="250" height="300"></span>
+        <div className = "avatar" >
+        <img src={pixme} alt = "pixelated adam" className = 'pixme' width="100%" height="100%"/>
+        </div>
+        <div className = "avatar2" >
+        <img src={me} alt = "normal adam" className = 'pixme' width="100%" height="100%"/>
         </div>
           <div className = "headerText" >
           <span>H</span><span>i</span><span>,</span>
@@ -71,11 +79,9 @@ function App() {
           <div>I'm mostly self-taught...</div>
 
           <div className = "certificates">
-            <span className = "certOne"></span>
-            {/* <span className = "arrowDown1"></span> */}
-            <span className = "certTwo"></span>
-            {/* <span className = "arrowDown2"></span> */}
-            <span className = "certThree"></span>
+            <img className = "certOne" src={cert1} alt ="certificate one" height = "100%" width ="30%"/>
+            <img src={cert2} alt ="certificate 2" height = "100%" width ="30%" className = "certTwo"/>
+            <img src = {cert3} alt="certificate 3"  height = "100%" width ="30%" className = "certThree"/>
           </div>
 
           </div>
@@ -86,7 +92,9 @@ function App() {
           <div>..but with some experience!</div>
 
           <div className = "codeSnips">
-            <div className = "code1"></div>
+            <img src={gitsnip} alt="code snippit" className = "code1" width = '33%' height = '1600px'/>
+            <a href="https://github.com/ashvv1" className ="giticon">
+              <img src={giticon} alt="git icon" height = "auto" width = '80%'/></a>
             <div className = "code2"></div>
             <div className = "code3"></div>
           </div>

@@ -47,7 +47,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .pixMe:hover {
+  .avatar2:hover {
     animation: unblur forwards 1s linear;
   }
 }
@@ -94,25 +94,10 @@
   position: relative;
   top: 10%;
   flex-shrink: 1;
-  text-shadow: 3px 3px rgba(165, 116, 61, 0.733);
+  text-shadow: 3px 3px rgba(0, 0, 0, 0.719),5px 5px rgba(223, 194, 66, 0.733) ;
   overflow-inline: show;
   font-size: 130%;
 }
-
-.headerText {
-  text-align: left;
-  font-weight: 900;
-  width: 100%;
-  display: block;
-  height: 50px;
-  position: relative;
-  top: 10%;
-  flex-shrink: 1;
-  text-shadow: 3px 3px rgba(165, 116, 61, 0.733);
-  overflow-inline: show;
-  font-size: 130%;
-}
-
 
 .headerBanner {
   background-color:  #04457aaf;
@@ -127,26 +112,10 @@
 }
 
 .certOne {
-  background-image: url(./resources/cert1.JPG);
-  background-position: no-repeat;
-  text-shadow: none;
-  background-size: cover;
-  height: 100%;
-  width: 31%;
   position: absolute;
-  pointer-events: none;
   opacity: 0;
 }
 
-.arrowDown1 {
-  background-image: url(./resources/arrowdown.png);
-  background-position: no-repeat;
-  height: 70px;
-  width: 100px;
-  position: absolute;
-  left: 26%;
-  bottom: -40%;
-}
 
 .arrowDown2 {
   background-image: url(./resources/arrowdown.png);
@@ -159,28 +128,18 @@
 }
 
 .certTwo {
-  background-image: url(./resources/cert2.JPG);
-  background-position: no-repeat;
-  text-shadow: none;
-  background-size: cover;
-  height: 100%;
-  width: 31%;
   left: 33%;
   position: absolute;
-  pointer-events: none;
   opacity: 0;
 }
 
-.certThree {
-  background-image: url(./resources/cert3.JPG);
-  background-position: no-repeat;
-  text-shadow: none;
-  background-size: cover;
-  height: 100%;
-  width: 31%;
+.coolLetter {
   position: absolute;
+}
+
+.certThree {
+  background-image: url(./resources/cert3.JPG);  position: absolute;
   left: 66%;
-  pointer-events: none;
   opacity: 0;
 }
 
@@ -208,27 +167,35 @@
   text-shadow: none;
   background-size: cover;
   border-right: solid rgba(0, 0, 0, 0.164) 5px;
-  height: 1200px;
-  width: 33%;
   position: absolute;
   opacity: 70%;
   left: 0%;
-  pointer-events: auto;
-  animation: slide 20s alternate linear;
+  animation: slide 9s alternate linear;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.giticon {
+  height: 60%;
+  width: 30vw;
+  left: 3vw;
+  top: 18%;
+  position: absolute;
+  z-index: 3000;
+  opacity: 0%;
+  border-radius: 100%;
+  animation: icon-fadein 2s forwards linear;
+  animation-delay: 9s;
+}
+
+.giticon:hover {
+  filter: brightness(20);
 }
 
 .code1:hover {
 pointer-events: all;
 opacity: 100%;
 }
-.code2:hover {
-pointer-events: all;
-opacity: 100%;
-  }
-.code3:hover {
-pointer-events: all;
-opacity: 100%;
-    }
 
 .code1:hover:after {
   animation: 0;
@@ -255,7 +222,7 @@ opacity: 100%;
   opacity: 70%;
   left: 35%;
   pointer-events: auto;
-  animation: slide2 18s alternate linear;
+  animation: slide2 8s alternate linear;
 }
 
 .code3 {
@@ -271,7 +238,7 @@ opacity: 100%;
   opacity: 70%;
   left: 68%;
   pointer-events: none;
-  animation: slide3 16s alternate linear;
+  animation: slide3 6s alternate linear;
 }
 
 .secondBanner {
@@ -300,23 +267,25 @@ opacity: 100%;
 
 .avatar {
   position: absolute;
-  width: 13%;
+  width: auto;
   height: 40%;
-  right: 20%;
+  right: 10%;
   bottom: 15%;
+  z-index: 1000;
 }
 
-.pixMe {
-  background-image: url(./resources/adamportpix.png);
-  height: 360px;
-  width: 300px;
+.avatar2 {
   position: absolute;
+  width: auto;
+  height: 45%;
+  right: 9%;
+  bottom: 14%;
+  opacity: 0;
+  z-index: 10000;
 }
 
-
-
-.pixMe:hover {
-  background-image: url(./resources/adamport.png);
+.avatar2:hover {
+  opacity: 100%;
 }
 
 .equalSign {
@@ -324,7 +293,7 @@ opacity: 100%;
   font-weight: 900;
   position: absolute;
   bottom: 35%;
-  right: -18%;
+  right: -15%;
   text-shadow: 8px 8px black;
 }
 
@@ -340,6 +309,11 @@ opacity: 100%;
   height: 50%;
   width: 50%;
 }
+
+.mobileBreak {
+  display: none;
+}
+
 
 @keyframes App-logo-spin {
   from {
@@ -359,6 +333,15 @@ opacity: 100%;
   }
   100% {
     transform: translateY(0%);
+  }
+}
+
+@keyframes icon-fadein {
+  0%{
+    opacity: 0%;
+  }
+  100%{
+    opacity: 60%;
   }
 }
 
@@ -430,7 +413,16 @@ opacity: 100%;
     bottom: 300%;
   }
   40% {
-    bottom: 170%;
+    bottom: 0;
+  }
+  50% {
+    bottom: 30%;
+  }
+  55% {
+    bottom: 40%;
+  }
+  62%{
+    bottom: 45%;
   }
   100% {
     bottom: 15%;
@@ -494,3 +486,76 @@ opacity: 100%;
   }
 }
 
+@media only screen
+and (max-aspect-ratio: 1/1) {
+ .testWindow {
+  display: none;
+ }
+
+ .avatar {
+  left: 10vw;
+  height : 40vh;
+ }
+
+ .secondBanner {
+  display: block;
+ }
+
+ .App-background {
+  height: 300vh;
+ }
+
+ .certificates {
+  height: 30vh;
+  width: 250%;
+  margin-top: 13vh;
+  overflow-y: scroll;
+ }
+
+ .thirdBanner {
+  display: block;
+ }
+
+ .codeSnips {
+  height: 65vh;
+ }
+
+ .equalSign {
+  display: none;
+ }
+
+ .mobileBreak {
+  display: block;
+ }
+
+ .certOne {
+  left: 9vw;
+ }
+ .certTwo {
+  left: 9vw;
+  top: 30vh;
+ }
+ .certThree {
+  left: 9vw;
+  top: 60vh;
+ }
+
+ @keyframes banner-expand {
+  0% {
+    height: 30%;
+    top: 50vh;
+    width: 70%;
+  }
+  30% {
+    width: 70%;
+  }
+  60% {
+    top: 5vh;
+    height: 30%;
+    width: 95%;
+  }
+  100%{
+    top: 2vh;
+  }
+}
+}
