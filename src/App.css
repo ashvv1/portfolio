@@ -1,38 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Istok+Web&display=swap');
+
 .App {
   text-align: center;
+  position: relative;
+  height:100vh;
+  width: 100vw;
+  font-family: 'Istok Web', sans-serif;
+  text-transform: uppercase;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  background-color: black;
+  color: white;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+p{
+  margin: 0;
+}
+header img{
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.active{
+  font-weight: bold;
+  text-shadow:1px 1px 20px rgb(77, 66, 223, 0.733);
+  font-size: 130%;
+  box-shadow: 0 6px 4px -3px rgb(77, 66, 223, 0.733);
+}
+
+.progress-ball{
+  position: absolute;
+  height: .5em;
+  width: .5em;
+  border-radius: 50%;
+  background-color: rgb(77, 66, 223, 0.733);
+  bottom: .4em;
+  left: 5%;
+}
+
+.logo{
+  height: 100%;
+  width: auto;
+}
+
+nav{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.icon-container{
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.nav-list{
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0 5em;
+  box-sizing: border-box;
+  
+}
+
+.nav-list li{
+  font-size: 150%;
+  cursor: pointer;
+  padding: 0 .5em;
+}
+
+.nav-list li:hover{
+  text-shadow:1px 1px 2px rgba(77, 66, 223, 0.733);
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+h1{
+  margin: 0;
+  font-size: 600%;
+  font-weight: 500;
+}
+
+header{
+  box-shadow: 0px -10px 20px 10px rgba(77, 66, 223, 0.733);
+  background-color: black;
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: fixed;
+  padding: .2em .5em;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.header-container{
+  height: 10%;
+  position: relative;
+}
+
+.Cool-letter{
+  cursor: pointer;
+}
+
+.Cool-letter:hover{
+  animation: razzle .5s infinite linear;
+}
+
+.body{
+  height: 90%;
+  width: 100%;
+  position: relative;
+}
+
+.section{
+  height: 100%;
+  padding: 2em;
+  box-sizing: border-box;
+}
+
+.column{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  box-sizing: border-box;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.headerText {
+  text-align: left;
+  font-weight: 900;
+  width: 100%;
+  height: auto;
+  position: relative;
+  flex-shrink: 1;
+  text-shadow: 3px 3px rgba(0, 0, 0, 0.719),5px 5px rgba(77, 66, 223, 0.733) ;
+  font-size: 300%;
+}
+
+#home p{
+  text-align: left;
+  font-weight: 900;
+  width: 100%;
+  height: auto;
+  position: relative;
+  flex-shrink: 1;
+  text-shadow: 3px 3px rgba(0, 0, 0, 0.719),5px 5px rgba(77, 66, 223, 0.733) ;
+  font-size: 1.5vw;
+  box-sizing: border-box;
+  padding: 0 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100vw;
+}
+
+#about-me{
+  padding: 2em;
+  box-sizing: border-box;
+}
+
+@keyframes type{ 
+  from { 
+    width: 0;
+    opacity: 100%
   }
   to {
-    transform: rotate(360deg);
+    opacity: 100%;
+  } 
+} 
+
+@keyframes razzle{
+  0%{
+    text-shadow: 5px 5px rgba(77, 66, 223, 0.733),7px 7px white;
+    color: black;
+  }
+  33%{
+    text-shadow: 5px 5px white,7px 7px rgba(0, 0, 0, 0.719);
+    color: rgba(77, 66, 223, 0.733);
+  }
+  66%{
+    text-shadow: 5px 5px rgba(0, 0, 0, 0.719),7px 7px rgba(77, 66, 223, 0.733);
+    color: white;
+  }
+  100%{
+    text-shadow: 5px 5px rgba(77, 66, 223, 0.733),7px 7px white;
+    color: black;
   }
 }
