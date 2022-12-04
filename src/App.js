@@ -98,10 +98,6 @@ function App() {
 
   const checkIfInView = (element) => {
     const elementBounds = element.current.getBoundingClientRect();
-    if(element === sectionTwo){
-      console.log(elementBounds)
-      console.log(window.innerHeight * 0.3)
-    }
     return (
       elementBounds.top <= window.innerHeight * 0.3 &&
       elementBounds.top > -1 &&
@@ -112,7 +108,6 @@ function App() {
   const handleScroll = () => {
     const appHeight = appWrapper.current.getBoundingClientRect().height * 2;
     const topElement = sectionOne.current.getBoundingClientRect().top;
-    console.log(Math.abs(topElement * 1.111237)/ appHeight )
     setProgress((Math.abs(topElement * 1.111237)/ appHeight) * 100 )
     if(checkIfInView(sectionOne)){
       setActive('about');
