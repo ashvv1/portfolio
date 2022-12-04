@@ -46,6 +46,14 @@ header img{
   box-sizing: border-box;
 }
 
+.progress-ball-container{
+  position: absolute;
+  bottom: 0;
+  width: 93%;
+  height: 2em;
+  left: 3%;
+}
+
 .vs-snip{
   position: absolute;
   right: 0;

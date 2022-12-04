@@ -100,11 +100,12 @@ function App() {
     const elementBounds = element.current.getBoundingClientRect();
     if(element === sectionTwo){
       console.log(elementBounds)
+      console.log(window.innerHeight * 0.3)
     }
     return (
-      elementBounds.top <= window.innerHeight * 0.12 &&
+      elementBounds.top <= window.innerHeight * 0.3 &&
       elementBounds.top > -1 &&
-      elementBounds.bottom - 10 <= (window.innerHeight)
+      elementBounds.bottom - 10 <= (window.innerHeight * 1.2)
     )
   }
 
@@ -140,7 +141,10 @@ function App() {
               <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)}>Work</li>
               <li className={active === 'contact' ? 'active' : ""} onClick={() => goToSection(sectionThree)}>Contact</li>
             </ul>
+            <div className='progress-ball-container'>
             <div className='progress-ball' style={{ left: `${progress}%` }}></div>
+            </div>
+            
           </nav>
         </header>
       </div>
