@@ -5,8 +5,8 @@
   position: relative;
   height:100vh;
   width: 100vw;
+  font-size: calc(8px + min(1vw,1vh));
   font-family: 'Istok Web', sans-serif;
-  text-transform: uppercase;
   overflow-y: scroll;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
@@ -14,9 +14,6 @@
   color: white;
 }
 
-p{
-  margin: 0;
-}
 header img{
   cursor: pointer;
 }
@@ -28,7 +25,6 @@ header img{
 .active{
   font-weight: bold;
   text-shadow:1px 1px 20px rgb(77, 66, 223, 0.733);
-  font-size: 130%;
   box-shadow: 0 6px 4px -3px rgb(77, 66, 223, 0.733);
 }
 
@@ -40,6 +36,8 @@ header img{
   background-color: rgb(77, 66, 223, 0.733);
   bottom: .4em;
   left: 5%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .logo{
@@ -49,16 +47,21 @@ header img{
 
 nav{
   display: flex;
-  width: 100%;
+  width: 60%;
   height: 100%;
   position: relative;
+  margin-left: 20%;
 }
 
-.icon-container{
-  height: 100%;
-  width: 10%;
-  display: flex;
-  justify-content: flex-start;
+h4{
+  margin: 0;
+  color:rgba(117, 113, 168, 0.733);
+  padding: 0;
+}
+
+.headerText h2{
+  padding: 0;
+  margin: 0;
 }
 
 .nav-list{
@@ -68,16 +71,18 @@ nav{
   align-items: center;
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0 5em;
+  margin: 0 0;
   box-sizing: border-box;
-  
 }
 
 .nav-list li{
   font-size: 150%;
   cursor: pointer;
   padding: 0 .5em;
+}
+
+ul{
+  padding: 0;
 }
 
 .nav-list li:hover{
@@ -92,6 +97,11 @@ h1{
   margin: 0;
   font-size: 600%;
   font-weight: 500;
+}
+
+h3{
+  margin: 0;
+  color:rgba(180, 178, 212, 0.733);
 }
 
 header{
@@ -129,8 +139,9 @@ header{
 
 .section{
   height: 100%;
-  padding: 2em;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .column{
@@ -160,24 +171,123 @@ header{
   height: auto;
   position: relative;
   flex-shrink: 1;
-  text-shadow: 3px 3px rgba(0, 0, 0, 0.719),5px 5px rgba(77, 66, 223, 0.733) ;
+  color: rgba(77, 66, 223, 0.733);
   font-size: 300%;
+  padding: 2em 2em 0 2em;
+  box-sizing: border-box;
+  margin: 0;
 }
 
-#home p{
+#about{
+  padding: 3em;
+  box-sizing: border-box;
+}
+
+#work{
+  padding: 3em;
+  scroll-margin-top: 10vh;
+  background-color: rgba(15, 13, 41, 0.733);
+}
+
+.icons-container img{
+  margin: 0 1em;
+  width: 5%;
+}
+
+.tech-tile {
+  position: relative;
+  width: auto;
+  font-size: 15px;
+  background-color:rgba(180, 178, 212, 0.733);
+  color: black;
+  margin: .3vw;
+  border-radius: 5px;
+  padding: .5em;
+}
+
+.project-list-desc{
+  height: 30%;
+}
+
+.tech-tiles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 1vh;
+}
+
+.image-gallery img{
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.image-gallery{
+  position: relative;
+  height: 40%;
+}
+
+#contact{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#contact a{
+width: 15%;
+margin: 5%;
+padding: 0;
+}
+
+#contact #email-icon{
+width: 15%;
+margin: 5%;
+padding: 0;
+cursor: pointer;
+}
+
+#contact img{
+  padding: 0;
+  width: 100%;
+}
+
+.Project-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  padding-top: 5%;
+  box-sizing: border-box;
+}
+
+.Project-list-item {
+  background-color:  #04457aaf;
+  position: relative;
+  padding: 1%;
+  border-radius: 10px;
+  width: 25%;
+  margin: 1vw;
+  height: 50vh;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.headerText p{
   text-align: left;
   font-weight: 900;
-  width: 100%;
-  height: auto;
+  width: 65%;
   position: relative;
-  flex-shrink: 1;
-  text-shadow: 3px 3px rgba(0, 0, 0, 0.719),5px 5px rgba(77, 66, 223, 0.733) ;
-  font-size: 1.5vw;
+  font-size: 70%;
   box-sizing: border-box;
-  padding: 0 2em;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 100vw;
+  padding: 1em 2em;
+  color:rgba(111, 103, 216, 0.733);
+  margin: 0;
 }
 
 #about-me{
