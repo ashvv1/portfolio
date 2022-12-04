@@ -67,8 +67,16 @@ function App() {
   const [active, setActive] = useState('about');
   const [progress, setProgress] = useState(0);
   const [captionActive, setCaptionActive] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [capMessage, setCapMessage] = useState("Hi! Thanks for visiting :)")
 
   const switchLogo = () => {
+    setClickCount((prevCount) => {
+      return prevCount + 1
+    });
+    if(clickCount > 3){
+      setCapMessage("Ouch! How many times are you gonna click me?")
+    }
     if(icon === logo){
       setIcon(realAdam);
     }else{
@@ -123,7 +131,7 @@ function App() {
         <header>
           <div className='logo-container'>
           <img onClick = {() => switchLogo()} src={icon} alt="homelogo" className='logo'></img>
-          <div className ='logo-caption' ref={logoCaption} ><span>{`Hi! Thanks for visiting :)`}</span></div>
+          <div className ='logo-caption' ref={logoCaption} ><span>{capMessage}</span></div>
           </div>
           <nav >
             <ul className='nav-list'>
