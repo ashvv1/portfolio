@@ -93,8 +93,39 @@ function App() {
   }
 
   const goToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+    // ref.current?.scrollIntoView({ behavior: 'smooth' });
+    // const elementPosition = ref.current.getBoundingClientRect().top;
+    const appHeight = window.innerHeight * .9 * 3;
+    console.log(appHeight);
+    switch (ref) {
+      case sectionOne:
+        appWrapper.current.scrollTo({
+                top: 0,
+                behavior: "smooth"
+           });
+        break;
+      case sectionTwo:
+        appWrapper.current.scrollTo({
+          top: appHeight *.3333,
+          behavior: "smooth"
+     });
+        break;
+      case sectionThree:
+        appWrapper.current.scrollTo({
+          top: appHeight *.6666,
+          behavior: "smooth"
+     });
+        break;
+      default: 
+        break;
+    }
+ 
+  //     appWrapper.current.scrollTo({
+  //       top: offsetPosition,
+  //       behavior: "smooth"
+  //  });
+    }
+   
 
   const checkIfInView = (element) => {
     const elementBounds = element.current.getBoundingClientRect();

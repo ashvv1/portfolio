@@ -298,7 +298,8 @@ header{
 
 .image-gallery{
   position: relative;
-  height: 40%;
+  height: 50%;
+  width: 100%;
 }
 
 #contact{
@@ -346,7 +347,7 @@ cursor: pointer;
   border-radius: 10px;
   width: 25%;
   margin: 1vw;
-  height: 70%;
+  height: 80%;
   flex-direction: column;
   display: flex;
   justify-content: space-around;
