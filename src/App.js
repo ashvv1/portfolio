@@ -19,7 +19,7 @@ const linkedinIcon = require('./resources/linkedinicon.png');
 const resumeIcon = require('./resources/resumeicon.png');
 const emailIcon = require('./resources/emailicon.png');
 const vsSnip = require('./resources/vsSnipOne.JPG');
-const vsSnipTwo = require('./resources/vsSnipTwo.JPG')
+const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
 
 function App() {
 
@@ -27,6 +27,7 @@ function App() {
   const sectionOne = useRef(null);
   const sectionThree = useRef(null);
   const appWrapper = useRef(null);
+  const logoCaption = useRef(null);
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
 
@@ -65,12 +66,20 @@ function App() {
   const [icon, setIcon] = useState(logo);
   const [active, setActive] = useState('about');
   const [progress, setProgress] = useState(0);
+  const [captionActive, setCaptionActive] = useState(false);
 
   const switchLogo = () => {
     if(icon === logo){
       setIcon(realAdam);
     }else{
       setIcon(logo);
+    }
+    if(!captionActive){
+      logoCaption.current.style.display = 'flex';
+      setCaptionActive(true);
+    }else{
+      logoCaption.current.style.display = 'none';
+      setCaptionActive(false);
     }
   }
 
@@ -112,7 +121,10 @@ function App() {
     <div className="App" onScroll={() => handleScroll()} ref={appWrapper}>
       <div className='header-container' ref={sectionOne}>
         <header>
+          <div className='logo-container'>
           <img onClick = {() => switchLogo()} src={icon} alt="homelogo" className='logo'></img>
+          <div className ='logo-caption' ref={logoCaption} ><span>{`Hi! Thanks for visiting :)`}</span></div>
+          </div>
           <nav >
             <ul className='nav-list'>
               <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)}>About</li>
@@ -138,8 +150,8 @@ function App() {
 
         <div id="work" ref={sectionTwo} className='section'>
           <div className="icons-container">
-            {icons.map(icon => (
-              <img src={icon} alt='stack icon'></img>
+            {icons.map((icon, i) => (
+              <img key={`icon${i}`} src={icon} alt='stack icon'></img>
           ))}
             </div>
             <div className="Project-list">
@@ -156,7 +168,7 @@ function App() {
                         </div>
                         <div className="image-gallery">
                             {project.images.map((image,i) => (
-                                <a key = {i} href={project.link}>
+                                <a key = {`${project.name}image${i}`} href={project.link}>
                                     <img src={image} alt='gallery' ></img>
                                 </a>
                                 
