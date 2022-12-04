@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Istok+Web&display=swap');
 
+@media (prefers-reduced-motion: no-preference) {
+  .vs-snip {
+    animation: slide2 1s alternate linear;
+  }
+}
+
 .App {
   text-align: center;
   position: relative;
@@ -35,9 +41,18 @@ header img{
   border-radius: 50%;
   background-color: rgb(77, 66, 223, 0.733);
   bottom: .4em;
-  left: 5%;
+  left: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.vs-snip{
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 15%;
+  height: 100%;
+  z-index: 0;
 }
 
 .logo{
@@ -142,6 +157,8 @@ header{
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 2;
 }
 
 .column{
@@ -187,6 +204,7 @@ header{
   padding: 3em;
   scroll-margin-top: 10vh;
   background-color: rgba(15, 13, 41, 0.733);
+  position: relative;
 }
 
 .icons-container img{
@@ -232,6 +250,7 @@ header{
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
+  position: relative;
 }
 
 #contact a{
@@ -264,7 +283,7 @@ cursor: pointer;
 }
 
 .Project-list-item {
-  background-color:  #04457aaf;
+  background-color:rgba(22, 19, 59, 0.719);
   position: relative;
   padding: 1%;
   border-radius: 10px;
@@ -274,15 +293,16 @@ cursor: pointer;
   flex-direction: column;
   display: flex;
   justify-content: space-around;
+  z-index: 3;
 }
 
 .headerText p{
   text-align: left;
   font-weight: 900;
-  max-width: 75%;
+  max-width: 70%;
   width: auto;
   position: relative;
-  font-size: 70%;
+  font-size: 100%;
   box-sizing: border-box;
   padding: 1em 2em;
   color:rgba(111, 103, 216, 0.733);
@@ -294,8 +314,17 @@ cursor: pointer;
   box-sizing: border-box;
 }
 
+@keyframes slide2{
+  0% {
+    transform: translatex(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 @media only screen
-and (max-aspect-ratio: 1/1) {
+and (max-aspect-ratio: 9/1) {
 
   .headerText p{
     max-width: 100%;
@@ -311,8 +340,8 @@ and (max-aspect-ratio: 1/1) {
   }
 
   .Project-list-item{
-    height: 50%;
-    width: 30%;
+    height: 45%;
+    width: 45%;
   }
 
   .tech-tile{

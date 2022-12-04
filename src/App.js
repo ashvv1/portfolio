@@ -18,7 +18,8 @@ const galquiz = require('./resources/quizgalscreen.PNG');
 const linkedinIcon = require('./resources/linkedinicon.png');
 const resumeIcon = require('./resources/resumeicon.png');
 const emailIcon = require('./resources/emailicon.png');
-
+const vsSnip = require('./resources/vsSnipOne.JPG');
+const vsSnipTwo = require('./resources/vsSnipTwo.JPG')
 
 function App() {
 
@@ -62,10 +63,8 @@ function App() {
 ];
 
   const [icon, setIcon] = useState(logo);
-
   const [active, setActive] = useState('about');
-
-  const [progress, setProgress] = useState();
+  const [progress, setProgress] = useState(0);
 
   const switchLogo = () => {
     if(icon === logo){
@@ -131,6 +130,7 @@ function App() {
            <p>I specialize in building websites and apps using React and NoSQL databases. Currently, I am working as an intern, building a Learning Management System from the ground up as part of a small team.</p>
           </div>
 
+          <img className='vs-snip' src={vsSnip} alt="vscode snippet" hidden={active !== 'about'}></img>
         </div>
 
         <div id="work" ref={sectionTwo} className='section'>
@@ -162,8 +162,8 @@ function App() {
                     </div>
                 ))}
             </div>
-          
-        </div>
+            <img className='vs-snip' src={vsSnipTwo} alt="vscode snippet" hidden={active !== 'work'}></img>
+        </ div>
 
         <div id='contact' ref={sectionThree} className='section'>
           <a href='https://www.linkedin.com/in/adam-haviv-84bb17225'><img src={linkedinIcon} alt='linkedin icon'/></a>
