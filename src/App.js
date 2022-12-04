@@ -20,6 +20,7 @@ const resumeIcon = require('./resources/resumeicon.png');
 const emailIcon = require('./resources/emailicon.png');
 const vsSnip = require('./resources/vsSnipOne.JPG');
 const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
+const resumePdf = require('./resources/ashresume2022.pdf');
 
 function App() {
 
@@ -190,7 +191,7 @@ function App() {
 
         <div id='contact' ref={sectionThree} className='section'>
           <a href='https://www.linkedin.com/in/adam-haviv-84bb17225'><img src={linkedinIcon} alt='linkedin icon'/></a>
-          <a href='./resources/ashresume2022.pdf' download><img src={resumeIcon} alt='resume icon'></img></a>
+          <a href={resumePdf} download='adamhavivresume.pdf'><img src={resumeIcon} alt='resume icon'></img></a>
           <img onClick={() => openEmail()}id='email-icon' src={emailIcon} alt='email icon'></img>
         </div>
 
