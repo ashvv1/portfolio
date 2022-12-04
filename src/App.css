@@ -5,7 +5,7 @@
   position: relative;
   height:100vh;
   width: 100vw;
-  font-size: calc(8px + min(1vw,1vh));
+  font-size: calc(6px + min(1vw,1vh));
   font-family: 'Istok Web', sans-serif;
   overflow-y: scroll;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -173,7 +173,7 @@ header{
   flex-shrink: 1;
   color: rgba(77, 66, 223, 0.733);
   font-size: 300%;
-  padding: 2em 2em 0 2em;
+  padding: 0 2em 0 2em;
   box-sizing: border-box;
   margin: 0;
 }
@@ -276,7 +276,6 @@ cursor: pointer;
   display: flex;
   justify-content: space-around;
 }
-
 
 .headerText p{
   text-align: left;

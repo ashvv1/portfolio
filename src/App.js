@@ -144,7 +144,6 @@ function App() {
                     <div key={project.name} className="Project-list-item">
                       <div className="project-list-desc">
                         <h3>{project.name}</h3>
-                        <br></br>
                         <h4>{project.description}</h4>
                         <br></br>
                         </div>
