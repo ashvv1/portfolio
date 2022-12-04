@@ -36,8 +36,8 @@ header img{
 
 .progress-ball{
   position: absolute;
-  height: .8em;
-  width: .8em;
+  height: .6em;
+  width: .6em;
   border-radius: 50%;
   background-color: rgb(77, 66, 223, 0.733);
   bottom: .4em;
