@@ -95,7 +95,7 @@ function App() {
   const goToSection = (ref) => {
     // ref.current?.scrollIntoView({ behavior: 'smooth' });
     // const elementPosition = ref.current.getBoundingClientRect().top;
-    const appHeight = window.innerHeight * .9 * 3;
+    const appHeight = appWrapper.current.getBoundingClientRect().height * .9 * 3;
     console.log(appHeight);
     switch (ref) {
       case sectionOne:
