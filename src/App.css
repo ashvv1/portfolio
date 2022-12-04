@@ -197,7 +197,6 @@ header{
 .tech-tile {
   position: relative;
   width: auto;
-  font-size: 15px;
   background-color:rgba(180, 178, 212, 0.733);
   color: black;
   margin: .3vw;
@@ -229,7 +228,7 @@ header{
 
 #contact{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
@@ -271,7 +270,7 @@ cursor: pointer;
   border-radius: 10px;
   width: 25%;
   margin: 1vw;
-  height: 50vh;
+  height: 70%;
   flex-direction: column;
   display: flex;
   justify-content: space-around;
@@ -280,7 +279,8 @@ cursor: pointer;
 .headerText p{
   text-align: left;
   font-weight: 900;
-  width: 65%;
+  max-width: 75%;
+  width: auto;
   position: relative;
   font-size: 70%;
   box-sizing: border-box;
@@ -294,31 +294,43 @@ cursor: pointer;
   box-sizing: border-box;
 }
 
-@keyframes type{ 
-  from { 
-    width: 0;
-    opacity: 100%
-  }
-  to {
-    opacity: 100%;
-  } 
-} 
+@media only screen
+and (max-aspect-ratio: 1/1) {
 
-@keyframes razzle{
-  0%{
-    text-shadow: 5px 5px rgba(77, 66, 223, 0.733),7px 7px white;
-    color: black;
+  .headerText p{
+    max-width: 100%;
+    padding: 1em 0;
   }
-  33%{
-    text-shadow: 5px 5px white,7px 7px rgba(0, 0, 0, 0.719);
-    color: rgba(77, 66, 223, 0.733);
+
+  .headerText{
+    padding: .1em;
   }
-  66%{
-    text-shadow: 5px 5px rgba(0, 0, 0, 0.719),7px 7px rgba(77, 66, 223, 0.733);
-    color: white;
+
+  .Project-list{
+    flex-wrap: wrap;
   }
-  100%{
-    text-shadow: 5px 5px rgba(77, 66, 223, 0.733),7px 7px white;
-    color: black;
+
+  .Project-list-item{
+    height: 50%;
+    width: 30%;
+  }
+
+  .tech-tile{
+    padding: .1em;
+    font-size: 80%;
+  }
+
+  #contact{
+    flex-direction: column;
+    justify-items: space-around;
+  }
+
+  #contact a{
+    height: 30%;
+    width: 30%;
+  }
+
+  #contact #email-icon{
+    width: 30%;
   }
 }
