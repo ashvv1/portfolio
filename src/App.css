@@ -36,8 +36,8 @@ header img{
 
 .progress-ball{
   position: absolute;
-  height: .5em;
-  width: .5em;
+  height: .8em;
+  width: .8em;
   border-radius: 50%;
   background-color: rgb(77, 66, 223, 0.733);
   bottom: .4em;
@@ -361,5 +361,12 @@ and (max-aspect-ratio: 1/1) {
 
   #contact #email-icon{
     width: 30%;
+  }
+}
+
+@media only screen
+and (max-aspect-ratio: 1/2) {
+  .headerText p{
+    width: auto;
   }
 }
