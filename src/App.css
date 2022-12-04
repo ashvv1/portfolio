@@ -64,8 +64,8 @@ header img{
 }
 
 .logo-container{
-  width: auto;
-  height: 100%;
+  width: 9vh;
+  height: 10vh;
   position: relative;
 }
 
@@ -215,6 +215,7 @@ header{
   flex-direction: column;
   position: relative;
   z-index: 2;
+  overflow-x: hidden;
 }
 
 .column{
