@@ -80,10 +80,13 @@ function App() {
 
   const checkIfInView = (element) => {
     const elementBounds = element.current.getBoundingClientRect();
+    if(element === sectionTwo){
+      console.log(elementBounds)
+    }
     return (
-      elementBounds.top <= window.innerHeight * 0.11 &&
+      elementBounds.top <= window.innerHeight * 0.12 &&
       elementBounds.top > -1 &&
-      elementBounds.bottom - 1 <= (window.innerHeight)
+      elementBounds.bottom - 10 <= (window.innerHeight)
     )
   }
 
