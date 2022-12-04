@@ -126,7 +126,7 @@ function App() {
           <div className="headerText" >
            <h4>Hi, my name is</h4>
            <h2>Adam Haviv</h2>
-           <h3>I'm an aspiring FullStack Developer</h3>
+           <h3>I am a FullStack Developer</h3>
            <p>I specialize in building websites and apps using React and NoSQL databases. Currently, I am working as an intern, building a Learning Management System from the ground up as part of a small team.</p>
           </div>
 
