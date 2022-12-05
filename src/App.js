@@ -38,7 +38,7 @@ function App() {
         description:"Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
         tech: ["Node", "React"],
         images: [safesend],
-        link: "https://textsod.com"
+        link: "http://textsod.com"
     },
     {
         name: "My Quiz Gal",
