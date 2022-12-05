@@ -34,11 +34,11 @@ function App() {
 
   const projects = [
     {
-        name:"SafeSend",
+        name:"TextSOD",
         description:"Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
         tech: ["Node", "React"],
         images: [safesend],
-        link: "https://ashvv1.github.io/safesend"
+        link: "https://textsod.com"
     },
     {
         name: "My Quiz Gal",
