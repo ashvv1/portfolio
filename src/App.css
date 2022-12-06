@@ -425,11 +425,6 @@ and (max-aspect-ratio: 1/1) {
     font-size: 80%;
   }
 
-  #contact{
-    flex-direction: column;
-    justify-items: space-around;
-  }
-
   #contact a{
     height: 30%;
     width: 30%;

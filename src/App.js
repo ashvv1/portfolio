@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './App.css';
+const loading = require('./resources/loading.gif');
 const logo = require('./resources/adamportpix.png');
 const realAdam = require('./resources/adamport.png');
 const reactIcon = require('./resources/reacticon.png');
@@ -23,7 +24,16 @@ const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
 const resumePdf = require('./resources/ashresume2022.pdf');
 const githubIcon = require('./resources/githubicon.png');
 
+
 function App() {
+
+  const [icon, setIcon] = useState(logo);
+  const [active, setActive] = useState('about');
+  const [progress, setProgress] = useState(0);
+  const [captionActive, setCaptionActive] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [capMessage, setCapMessage] = useState("Hi! Thanks for visiting :)")
+  const [isLoading, setIsLoading] = useState(true);
 
   const sectionTwo = useRef(null);
   const sectionOne = useRef(null);
@@ -31,7 +41,53 @@ function App() {
   const appWrapper = useRef(null);
   const logoCaption = useRef(null);
 
-  const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
+
+const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
+  
+const cacheImages = async (srcArray) => {
+  const promises = await srcArray.map((src) => {
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+
+      img.src = src;
+      img.onload = resolve();
+      img.onerror = reject();
+    });
+  });
+
+  await Promise.all(promises);
+
+  setIsLoading(false)
+}
+
+useEffect(() => {
+  const imgs = [
+    './resources/adamportpix.png',
+'./resources/adamport.png',
+'./resources/reacticon.png',
+'./resources/nodeicon.png',
+'./resources/mongoicon.png',
+'./resources/jsicon.png',
+'./resources/dockericon.png',
+'./resources/firebaseicon.png',
+'./resources/awsicon.png',
+'./resources/htmlicon.png',
+'./resources/cssicon.png',
+'./resources/safesend.jpg',
+'./resources/cheat.jpg',
+'./resources/crypto.JPG',
+'./resources/quizgalscreen.PNG',
+'./resources/linkedinicon.png',
+'./resources/resumeicon.png',
+'./resources/emailicon.png',
+'./resources/vsSnipOne.JPG',
+'./resources/vsSnipTwo.JPG',
+'./resources/ashresume2022.pdf',
+'./resources/githubicon.png'
+  ]
+
+  cacheImages(imgs);
+}, [])
 
   const projects = [
     {
@@ -64,13 +120,6 @@ function App() {
     }
 
 ];
-
-  const [icon, setIcon] = useState(logo);
-  const [active, setActive] = useState('about');
-  const [progress, setProgress] = useState(0);
-  const [captionActive, setCaptionActive] = useState(false);
-  const [clickCount, setClickCount] = useState(0);
-  const [capMessage, setCapMessage] = useState("Hi! Thanks for visiting :)")
 
   const switchLogo = () => {
     setClickCount((prevCount) => {
@@ -147,6 +196,14 @@ function App() {
 
   const openEmail = () => {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
+  }
+
+  if (isLoading) {
+    return (
+      <div className="App" id='loading-screen'>
+        <img src={loading} alt='loading gif'></img>
+      </div>
+    )
   }
 
   return (
