@@ -21,9 +21,8 @@ const resumeIcon = require('./resources/resumeicon.png');
 const emailIcon = require('./resources/emailicon.png');
 const vsSnip = require('./resources/vsSnipOne.JPG');
 const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
-const resumePdf = require('./resources/ashresume2022.pdf');
+const resumePdf = require('./resources/newresash.pdf');
 const githubIcon = require('./resources/githubicon.png');
-
 
 function App() {
 
@@ -48,7 +47,6 @@ const cacheImages = async (srcArray) => {
   const promises = await srcArray.map((src) => {
     return new Promise(function (resolve, reject) {
       const img = new Image();
-
       img.src = src;
       img.onload = resolve();
       img.onerror = reject();
@@ -62,28 +60,29 @@ const cacheImages = async (srcArray) => {
 
 useEffect(() => {
   const imgs = [
-    './resources/adamportpix.png',
-'./resources/adamport.png',
-'./resources/reacticon.png',
-'./resources/nodeicon.png',
-'./resources/mongoicon.png',
-'./resources/jsicon.png',
-'./resources/dockericon.png',
-'./resources/firebaseicon.png',
-'./resources/awsicon.png',
-'./resources/htmlicon.png',
-'./resources/cssicon.png',
-'./resources/safesend.jpg',
-'./resources/cheat.jpg',
-'./resources/crypto.JPG',
-'./resources/quizgalscreen.PNG',
-'./resources/linkedinicon.png',
-'./resources/resumeicon.png',
-'./resources/emailicon.png',
-'./resources/vsSnipOne.JPG',
-'./resources/vsSnipTwo.JPG',
-'./resources/ashresume2022.pdf',
-'./resources/githubicon.png'
+    loading,
+    logo,
+    realAdam,
+    reactIcon,
+    nodeIcon,
+    mongoIcon,
+    jsIcon,
+    dockerIcon,
+    firebaseIcon,
+    awsIcon,
+    htmlIcon,
+    cssIcon,
+    safesend,
+    cheats,
+    crypto,
+    galquiz,
+    linkedinIcon,
+    resumeIcon,
+    emailIcon,
+    vsSnip,
+    vsSnipTwo,
+    resumePdf,
+    githubIcon    
   ]
 
   cacheImages(imgs);
