@@ -432,6 +432,7 @@ and (max-aspect-ratio: 1/1) {
 
   #contact #email-icon{
     width: 30%;
+    height: 30%;
   }
 }
 
