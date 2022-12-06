@@ -318,9 +318,6 @@ padding: 0;
 }
 
 #contact #email-icon{
-width: 15%;
-margin: 5%;
-padding: 0;
 cursor: pointer;
 }
 
@@ -430,7 +427,7 @@ and (max-aspect-ratio: 1/1) {
     width: 30%;
   }
 
-  #contact #email-icon{
+  #contact #email-icon-container{
     width: 30%;
     height: 30%;
   }

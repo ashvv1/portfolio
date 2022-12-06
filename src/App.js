@@ -275,7 +275,9 @@ useEffect(() => {
         <div id='contact' ref={sectionThree} className='section'>
           <a href='https://www.linkedin.com/in/adam-haviv-84bb17225'><img src={linkedinIcon} alt='linkedin icon'/></a>
           <a href={resumePdf} download='adamhavivresume.pdf'><img src={resumeIcon} alt='resume icon'></img></a>
-          <img onClick={() => openEmail()}id='email-icon' src={emailIcon} alt='email icon'></img>
+          <div id='email-icon-container'>
+          <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon'></img>
+          </div>
           <a href={'https://github.com/ashvv1/'} ><img src={githubIcon} alt='github icon'></img></a>
         </div>
 
