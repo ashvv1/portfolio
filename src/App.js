@@ -21,6 +21,7 @@ const emailIcon = require('./resources/emailicon.png');
 const vsSnip = require('./resources/vsSnipOne.JPG');
 const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
 const resumePdf = require('./resources/ashresume2022.pdf');
+const githubIcon = require('./resources/githubicon.png');
 
 function App() {
 
@@ -106,24 +107,19 @@ function App() {
         break;
       case sectionTwo:
         appWrapper.current.scrollTo({
-          top: appHeight *.3333,
+          top: appHeight *.3333 + 1,
           behavior: "smooth"
      });
         break;
       case sectionThree:
         appWrapper.current.scrollTo({
-          top: appHeight *.6666,
+          top: appHeight *.6666 + 1,
           behavior: "smooth"
      });
         break;
       default: 
         break;
     }
- 
-  //     appWrapper.current.scrollTo({
-  //       top: offsetPosition,
-  //       behavior: "smooth"
-  //  });
     }
    
 
@@ -223,6 +219,7 @@ function App() {
           <a href='https://www.linkedin.com/in/adam-haviv-84bb17225'><img src={linkedinIcon} alt='linkedin icon'/></a>
           <a href={resumePdf} download='adamhavivresume.pdf'><img src={resumeIcon} alt='resume icon'></img></a>
           <img onClick={() => openEmail()}id='email-icon' src={emailIcon} alt='email icon'></img>
+          <a href={'https://github.com/ashvv1/'} ><img src={githubIcon} alt='github icon'></img></a>
         </div>
 
       </div>
