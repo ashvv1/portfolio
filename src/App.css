@@ -317,6 +317,12 @@ margin: 5%;
 padding: 0;
 }
 
+#contact #email-icon-container{
+  width: 15%;
+  margin: 5%;
+  padding: 0;
+}
+
 #contact #email-icon{
 cursor: pointer;
 }
