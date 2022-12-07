@@ -357,6 +357,23 @@ cursor: pointer;
   z-index: 3;
 }
 
+#upOne{
+  animation: slidefadeup 700ms forwards linear;
+  opacity: 0;
+}
+
+#upTwo{
+  animation: slidefadeup 700ms forwards linear;
+  animation-delay: 600ms;
+  opacity: 0;
+}
+
+#upThree{
+  animation: slidefadeup 700ms forwards linear;
+  animation-delay: 1100ms;
+  opacity: 0;
+}
+
 .headerText p{
   text-align: left;
   font-weight: 900;
@@ -401,6 +418,16 @@ cursor: pointer;
   }
 }
 
+@keyframes slidefadeup {
+  from { 
+    opacity: 0%;
+    transform: translateY(6em)}
+  to { 
+    opacity : 100%;
+    transform: translateY(0);
+   }
+}
+
 @media only screen
 and (max-aspect-ratio: 1/1) {
 
@@ -439,10 +466,3 @@ and (max-aspect-ratio: 1/1) {
   }
 }
 
-@media only screen
-and (max-aspect-ratio: 1/2) {
-  .headerText p{
-    width: auto;
-    font-size: 60%;
-  }
-}
