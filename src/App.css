@@ -38,20 +38,22 @@ header img{
   position: absolute;
   height: .6em;
   width: .6em;
-  border-radius: 50%;
+  border-radius: 3px;
+  rotate: 45deg;
   background-color: rgb(77, 66, 223, 0.733);
-  bottom: .4em;
+  box-shadow: -0.09em -.1em .3em .01em white;
   left: 0;
   margin: 0;
   box-sizing: border-box;
+  bottom: -.5em;
 }
 
 .progress-ball-container{
   position: absolute;
   bottom: 0;
-  width: 93%;
+  width: 92%;
   height: 2em;
-  left: 3%;
+  left: 3.5%;
 }
 
 .vs-snip{
