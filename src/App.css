@@ -6,6 +6,14 @@
   }
 }
 
+*{
+  scrollbar-width: none; /* for Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
 .App {
   text-align: center;
   position: relative;
@@ -30,8 +38,8 @@ header img{
 
 .active{
   font-weight: bold;
-  text-shadow:1px 1px 20px rgb(77, 66, 223, 0.733);
-  box-shadow: 0 6px 4px -3px rgb(77, 66, 223, 0.733);
+  text-shadow: .1em .1em .2em rgb(77, 66, 223, 0.733);
+  box-shadow: 0 .2em .2em -.2em rgba(77, 66, 223, 0.877);
 }
 
 .progress-ball{
@@ -271,6 +279,10 @@ header{
   width: 5%;
 }
 
+.icons-container img:hover{
+  filter: brightness(1.7)
+}
+
 .tech-tile {
   position: relative;
   width: auto;
@@ -279,6 +291,10 @@ header{
   margin: .3vw;
   border-radius: 5px;
   padding: .5em;
+}
+
+.tech-tile:hover {
+  filter: brightness(1.5);
 }
 
 .project-list-desc{
@@ -325,6 +341,7 @@ padding: 0;
   padding: 0;
 }
 
+
 #contact #email-icon{
 cursor: pointer;
 }
@@ -332,6 +349,10 @@ cursor: pointer;
 #contact img{
   padding: 0;
   width: 100%;
+}
+
+#contact img:hover{
+  filter: brightness(1.3);
 }
 
 .Project-list {
@@ -343,6 +364,8 @@ cursor: pointer;
   flex-direction: row;
   padding-top: 5%;
   box-sizing: border-box;
+  overflow-x: auto;
+  flex-wrap: wrap;
 }
 
 .Project-list-item {
@@ -433,6 +456,9 @@ cursor: pointer;
 @media only screen
 and (max-aspect-ratio: 1/1) {
 
+  .image-gallery{
+    height: 40%;
+  }
   .headerText p{
     max-width: 100%;
     padding: 1em 0;
@@ -450,6 +476,10 @@ and (max-aspect-ratio: 1/1) {
   .Project-list-item{
     height: 45%;
     width: 45%;
+  }
+
+  .project-list-desc{
+    height: auto;
   }
 
   .tech-tile{

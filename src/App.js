@@ -23,6 +23,7 @@ const vsSnip = require('./resources/vsSnipOne.JPG');
 const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
 const resumePdf = require('./resources/newresash.pdf');
 const githubIcon = require('./resources/githubicon.png');
+const minervaXR = require('./resources/minervaxr.JPG');
 
 function App() {
 
@@ -90,6 +91,13 @@ function App() {
 
   const projects = [
     {
+      name: "MinervaXR - LMS",
+      description: "A Learning Management System made during my internship at MinervaXR ",
+      tech: ["Node", "React", "Firebase", "AWS"],
+      images: [minervaXR],
+      link: null
+    },
+    {
       name: "TextSOD",
       description: "Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
       tech: ["Node", "React"],
@@ -117,7 +125,7 @@ function App() {
       images: [crypto],
       link: "https://ashvv1.github.io/cryptocalc/"
     }
-
+   
   ];
 
   const switchLogo = () => {
@@ -241,8 +249,6 @@ function App() {
             <p>I specialize in building websites and apps using React and NoSQL databases. 
               Currently, I am working as an intern, building a Learning Management System from the ground up as part of a small team.</p>
             </div>
-            
-            
           </div>
 
           <img className='vs-snip' src={vsSnip} alt="vscode snippet" hidden={active !== 'about'}></img>
