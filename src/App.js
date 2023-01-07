@@ -165,7 +165,6 @@ function App() {
 
   const handleScroll = () => {
     const appHeight = (sectionOne.current.clientHeight+sectionTwo.current.clientHeight+sectionThree.current.clientHeight);
-    console.log(appWrapper.current.scrollTop / (appHeight - window.innerHeight))
     setProgress(appWrapper.current.scrollTop / (appHeight - window.innerHeight) * 100)
     if (checkIfInView(sectionOne)) {
       setActive('about');
