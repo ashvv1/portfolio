@@ -372,6 +372,16 @@ cursor: pointer;
   flex-wrap: wrap;
 }
 
+.project-tech{
+  position: absolute;
+  bottom: .5em;
+  padding-left: 1em;
+}
+
+.project-tech span{
+  text-shadow: white 0 0 .2em ;
+}
+
 .Project-list-item {
   background-color:rgba(22, 19, 59, 0.719);
   position: relative;

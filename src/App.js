@@ -93,14 +93,14 @@ function App() {
     {
       name: "MinervaXR - LMS",
       description: "A Learning Management System made during my internship at MinervaXR ",
-      tech: ["Node", "React", "Firebase", "AWS"],
+      tech: ["Node", "React", "Firebase", "AWS", "Docker"],
       images: [minervaXR],
       link: null
     },
     {
       name: "AnonChat",
       description: "Open a temporary chat room at chat anonymously",
-      tech: ["Node", "React", "JSX"],
+      tech: ["NEXTjs","Netlify", "Firebase"],
       images: [anon],
       link: "https://bespoke-dolphin-95cd93.netlify.app/",
       repo: "https://github.com/ashvv1/anonchatbase"
@@ -108,21 +108,21 @@ function App() {
     {
       name: "My Quiz Gal",
       description: "Learn any language that you want through practice and by testing yourself, for free!",
-      tech: ["Node", "React", "Router", "CSS", "HTML"],
+      tech: ["React", "Router", "Heroku", "Firebase"],
       images: [galquiz],
       link: "https://www.myquizgal.com/"
     },
     {
       name: "TextSOD",
       description: "Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
-      tech: ["Node", "React"],
+      tech: ["React"],
       images: [safesend],
       link: "http://textsod.com",
     },
     {
       name: "Cheat Delete",
       description: "Get a customized workout according to calorie intake",
-      tech: ["Node", "JSX"],
+      tech: ["React"],
       images: [cheats],
       link: "https://ashvv1.github.io/cheatdelete",
       repo: "https://github.com/ashvv1/cheatdelete"
@@ -245,9 +245,9 @@ function App() {
                   <h4>{project.description}</h4>
                   {project.link && <a href={project.link} target="_blank" rel="noreferrer"> Go to Project</a>}
                   {project.repo && <a href={project.repo} target="_blank" rel="noreferrer">Go to Repo</a>}
-                  <br></br>
+                  <p className="project-tech">Made using: {project.tech.map(tech => <span>{tech} </span>)}</p>
                 </div>
-                            
+                   
               </div>
             ))}
           </div>
