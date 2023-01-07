@@ -188,7 +188,7 @@ h3{
 header{
   box-shadow: 0px -10px 20px 10px rgba(77, 66, 223, 0.733);
   background-color: black;
-  height: 10%;
+  height: 10vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -200,8 +200,8 @@ header{
 }
 
 .header-container{
-  height: 10%;
-  position: relative;
+  position: absolute;
+  top: 0;
 }
 
 .Cool-letter{
@@ -219,8 +219,8 @@ header{
 }
 
 .section{
-  height: 100%;
-  box-sizing: border-box;
+  padding-top: 15vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -263,13 +263,11 @@ header{
 }
 
 #about{
-  padding: 3em;
   box-sizing: border-box;
+  padding-left: 1em;
 }
 
 #work{
-  padding: 3em;
-  scroll-margin-top: 10vh;
   background-color: rgba(15, 13, 41, 0.733);
   position: relative;
 }
@@ -283,22 +281,32 @@ header{
   filter: brightness(1.7)
 }
 
-.tech-tile {
-  position: relative;
-  width: auto;
-  background-color:rgba(180, 178, 212, 0.733);
-  color: black;
-  margin: .3vw;
-  border-radius: 5px;
-  padding: .5em;
-}
-
-.tech-tile:hover {
-  filter: brightness(1.5);
+.Project-list-item:hover .project-list-desc{
+  animation: slidefadeup 700ms forwards linear, colorBackground 1s 700ms linear forwards;
 }
 
 .project-list-desc{
-  height: 30%;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  opacity: 0%;
+  flex-direction: column;
+  justify-content: center;
+  text-shadow: white 0 0 2em;
+}
+
+.project-list-desc a{
+  font-size: 2em;
+}
+
+.project-list-desc h3{
+  font-size: 3em;
+}
+
+.project-list-desc h4{
+  font-size: 1.2em;
 }
 
 .tech-tiles {
@@ -322,11 +330,8 @@ header{
 
 #contact{
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
   position: relative;
+  justify-content: center;
 }
 
 #contact a{
@@ -362,7 +367,7 @@ cursor: pointer;
   align-items: flex-start;
   justify-content: center;
   flex-direction: row;
-  padding-top: 5%;
+  padding: 1em;
   box-sizing: border-box;
   overflow-x: auto;
   flex-wrap: wrap;
@@ -371,15 +376,20 @@ cursor: pointer;
 .Project-list-item {
   background-color:rgba(22, 19, 59, 0.719);
   position: relative;
-  padding: 1%;
-  border-radius: 10px;
-  width: 25%;
+  width: 40vw;
+  height: 20vw;
   margin: 1vw;
-  height: 80%;
   flex-direction: column;
   display: flex;
   justify-content: space-around;
   z-index: 3;
+  border-radius: 5px;
+  overflow: hidden;
+  filter: grayscale(80%);
+}
+
+.Project-list-item:hover {
+  animation: colorIn 500ms linear forwards;
 }
 
 #upOne{
@@ -399,6 +409,16 @@ cursor: pointer;
   opacity: 0;
 }
 
+.contact-icons{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  margin-top: -10vh;
+}
+
 .headerText p{
   text-align: left;
   font-weight: 900;
@@ -416,6 +436,17 @@ cursor: pointer;
   padding: 2em;
   box-sizing: border-box;
 }
+
+.projectBackgroundImage{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+}
+
+
 
 /* The typing effect */
 @keyframes typing {
@@ -453,9 +484,32 @@ cursor: pointer;
    }
 }
 
+@keyframes colorIn {
+  from { 
+    filter: grayscale(20)
+  }
+  to { 
+    filter: grayscale(0)
+   }
+}
+
+@keyframes colorBackground{
+  from { 
+    background-color: rgba(128, 128, 128, 0);
+    filter: blur(0)
+  }
+  to { 
+    background-color:rgba(3, 1, 7, 0.945);
+    filter: blur(20%);
+   }
+}
+
 @media only screen
 and (max-aspect-ratio: 1/1) {
 
+  .section{
+    padding-top: 12vh;
+  }
   .image-gallery{
     height: 40%;
   }
@@ -469,24 +523,6 @@ and (max-aspect-ratio: 1/1) {
     padding: .1em;
   }
 
-  .Project-list{
-    flex-wrap: wrap;
-  }
-
-  .Project-list-item{
-    height: 45%;
-    width: 45%;
-  }
-
-  .project-list-desc{
-    height: auto;
-  }
-
-  .tech-tile{
-    padding: .1em;
-    font-size: 80%;
-  }
-
   #contact a{
     height: 30%;
     width: 30%;
@@ -495,6 +531,15 @@ and (max-aspect-ratio: 1/1) {
   #contact #email-icon-container{
     width: 30%;
     height: 30%;
+  }
+
+  .Project-list{
+    height: 80vh;
+  }
+
+  .Project-list-item{
+    width: 80vw;
+    height: 40vw;
   }
 }
 

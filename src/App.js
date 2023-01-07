@@ -14,7 +14,7 @@ const htmlIcon = require('./resources/htmlicon.png');
 const cssIcon = require('./resources/cssicon.png');
 const safesend = require('./resources/safesend.jpg')
 const cheats = require('./resources/cheat.jpg');
-const crypto = require('./resources/crypto.JPG');
+const anon = require('./resources/anon.png')
 const galquiz = require('./resources/quizgalscreen.PNG');
 const linkedinIcon = require('./resources/linkedinicon.png');
 const resumeIcon = require('./resources/resumeicon.png');
@@ -75,7 +75,7 @@ function App() {
       cssIcon,
       safesend,
       cheats,
-      crypto,
+      anon,
       galquiz,
       linkedinIcon,
       resumeIcon,
@@ -85,7 +85,7 @@ function App() {
       resumePdf,
       githubIcon
     ]
-
+  
     cacheImages(imgs);
   }, [])
 
@@ -98,11 +98,12 @@ function App() {
       link: null
     },
     {
-      name: "TextSOD",
-      description: "Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
-      tech: ["Node", "React"],
-      images: [safesend],
-      link: "http://textsod.com"
+      name: "AnonChat",
+      description: "Open a temporary chat room at chat anonymously",
+      tech: ["Node", "React", "JSX"],
+      images: [anon],
+      link: "https://bespoke-dolphin-95cd93.netlify.app/",
+      repo: "https://github.com/ashvv1/anonchatbase"
     },
     {
       name: "My Quiz Gal",
@@ -112,20 +113,20 @@ function App() {
       link: "https://www.myquizgal.com/"
     },
     {
-      name: "Cheat Delete",
-      description: "Cheat food calorie calculator and workout planner.",
-      tech: ["Node", "JSX"],
-      images: [cheats],
-      link: "https://ashvv1.github.io/cheatdelete"
+      name: "TextSOD",
+      description: "Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
+      tech: ["Node", "React"],
+      images: [safesend],
+      link: "http://textsod.com",
     },
     {
-      name: "Crypto Calc",
-      description: "Calculate potential gains or losses on trades of XRP/BTC/ETH",
-      tech: ["Node", "React", "JSX"],
-      images: [crypto],
-      link: "https://ashvv1.github.io/cryptocalc/"
+      name: "Cheat Delete",
+      description: "Get a customized workout according to calorie intake",
+      tech: ["Node", "JSX"],
+      images: [cheats],
+      link: "https://ashvv1.github.io/cheatdelete",
+      repo: "https://github.com/ashvv1/cheatdelete"
     }
-   
   ];
 
   const switchLogo = () => {
@@ -150,48 +151,22 @@ function App() {
   }
 
   const goToSection = (ref) => {
-    // ref.current?.scrollIntoView({ behavior: 'smooth' });
-    // const elementPosition = ref.current.getBoundingClientRect().top;
-    const appHeight = appWrapper.current.getBoundingClientRect().height * .9 * 3;
-    console.log(appHeight);
-    switch (ref) {
-      case sectionOne:
-        appWrapper.current.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-        break;
-      case sectionTwo:
-        appWrapper.current.scrollTo({
-          top: appHeight * .3333 + 1,
-          behavior: "smooth"
-        });
-        break;
-      case sectionThree:
-        appWrapper.current.scrollTo({
-          top: appHeight * .6666 + 1,
-          behavior: "smooth"
-        });
-        break;
-      default:
-        break;
-    }
+    ref.current.scrollIntoView({behavior:"smooth"});
   }
 
 
   const checkIfInView = (element) => {
     const elementBounds = element.current.getBoundingClientRect();
     return (
-      elementBounds.top <= window.innerHeight * 0.3 &&
-      elementBounds.top > -1 &&
-      elementBounds.bottom - 10 <= (window.innerHeight * 1.2)
+      -50 < elementBounds.top
+      && elementBounds.top < 400
     )
   }
 
   const handleScroll = () => {
-    const appHeight = appWrapper.current.getBoundingClientRect().height * 2;
-    const topElement = sectionOne.current.getBoundingClientRect().top;
-    setProgress((Math.abs(topElement * 1.111237) / appHeight) * 100)
+    const appHeight = (sectionOne.current.clientHeight+sectionTwo.current.clientHeight+sectionThree.current.clientHeight);
+    console.log(appWrapper.current.scrollTop / (appHeight - window.innerHeight))
+    setProgress(appWrapper.current.scrollTop / (appHeight - window.innerHeight) * 100)
     if (checkIfInView(sectionOne)) {
       setActive('about');
     } else if (checkIfInView(sectionTwo)) {
@@ -215,7 +190,7 @@ function App() {
 
   return (
     <div className="App" onScroll={() => handleScroll()} ref={appWrapper}>
-      <div className='header-container' ref={sectionOne}>
+      <div className='header-container'>
         <header>
           <div className='logo-container'>
             <img onClick={() => switchLogo()} src={icon} alt="homelogo" className='logo'></img>
@@ -236,7 +211,7 @@ function App() {
       </div>
 
       <div className='body'>
-        <div id="about" className='section column'>
+        <div id="about" className='section column' ref={sectionOne}>
           <div className="headerText" >
             <div id='upOne'>
             <h4>Hi, my name is</h4>
@@ -263,23 +238,16 @@ function App() {
           <div className="Project-list">
             {projects.map((project, i) => (
               <div key={project.name} className="Project-list-item">
-                <div className="project-list-desc">
+
+                  <img className="projectBackgroundImage" src={project.images[0]} alt={`${project.name} background`} />
+                    <div className="project-list-desc">
                   <h3>{project.name}</h3>
                   <h4>{project.description}</h4>
+                  {project.link && <a href={project.link} target="_blank" rel="noreferrer"> Go to Project</a>}
+                  {project.repo && <a href={project.repo} target="_blank" rel="noreferrer">Go to Repo</a>}
                   <br></br>
                 </div>
-                <div className="tech-tiles">{project.tech.map((item, i) => (
-                  <div key={item + i} className="tech-tile">{item}</div>
-                ))}
-                </div>
-                <div className="image-gallery">
-                  {project.images.map((image, i) => (
-                    <a key={`${project.name}image${i}`} href={project.link}>
-                      <img src={image} alt='gallery' ></img>
-                    </a>
-
-                  ))}
-                </div>
+                            
               </div>
             ))}
           </div>
@@ -287,12 +255,17 @@ function App() {
         </ div>
 
         <div id='contact' ref={sectionThree} className='section'>
-          <a href='https://www.linkedin.com/in/adam-haviv-84bb17225'><img src={linkedinIcon} alt='linkedin icon' /></a>
-          <a href={resumePdf} download='adamhavivresume.pdf'><img src={resumeIcon} alt='resume icon'></img></a>
+          <div className="contact-icons">
+
+          <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer"><img src={linkedinIcon} alt='linkedin icon' /></a>
+          <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer"><img src={resumeIcon} alt='resume icon'></img></a>
           <div id='email-icon-container'>
             <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon'></img>
           </div>
-          <a href={'https://github.com/ashvv1/'} ><img src={githubIcon} alt='github icon'></img></a>
+          <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer"><img src={githubIcon} alt='github icon'></img></a>
+
+          </div>
+       
         </div>
 
       </div>
