@@ -369,7 +369,6 @@ cursor: pointer;
   flex-direction: row;
   padding: 1em;
   box-sizing: border-box;
-  overflow-x: auto;
   flex-wrap: wrap;
 }
 
@@ -531,10 +530,6 @@ and (max-aspect-ratio: 1/1) {
   #contact #email-icon-container{
     width: 30%;
     height: 30%;
-  }
-
-  .Project-list{
-    height: 80vh;
   }
 
   .Project-list-item{
