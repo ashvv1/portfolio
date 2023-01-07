@@ -288,10 +288,9 @@ header{
 .project-list-desc{
   height: 100%;
   width: 100%;
-  position: relative;
   z-index: 2;
   display: flex;
-  opacity: 0%;
+  opacity: 100%;
   flex-direction: column;
   justify-content: center;
   text-shadow: white 0 0 2em;
@@ -303,6 +302,7 @@ header{
 
 .project-list-desc h3{
   font-size: 3em;
+  padding: 0;
 }
 
 .project-list-desc h4{
@@ -374,8 +374,9 @@ cursor: pointer;
 
 .project-tech{
   position: absolute;
-  bottom: .5em;
-  padding-left: 1em;
+  bottom: 0;
+  left: .5em;
+  margin: .1em;
 }
 
 .project-tech span{
