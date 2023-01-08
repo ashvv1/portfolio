@@ -87,7 +87,7 @@ function App() {
       resumePdf,
       githubIcon
     ]
-  
+
     cacheImages(imgs);
   }, [])
 
@@ -102,7 +102,7 @@ function App() {
     {
       name: "AnonChat",
       description: "Open a temporary chat room at chat anonymously",
-      tech: ["NEXTjs","Netlify", "Firebase"],
+      tech: ["NEXTjs", "Netlify", "Firebase"],
       images: [anon],
       link: "https://bespoke-dolphin-95cd93.netlify.app/",
       repo: "https://github.com/ashvv1/anonchatbase"
@@ -153,7 +153,7 @@ function App() {
   }
 
   const goToSection = (ref) => {
-    ref.current.scrollIntoView({behavior:"smooth"});
+    ref.current.scrollIntoView({ behavior: "smooth" });
   }
 
 
@@ -166,7 +166,7 @@ function App() {
   }
 
   const handleScroll = () => {
-    const appHeight = (sectionOne.current.clientHeight+sectionTwo.current.clientHeight+sectionThree.current.clientHeight);
+    const appHeight = (sectionOne.current.clientHeight + sectionTwo.current.clientHeight + sectionThree.current.clientHeight);
     setProgress(appWrapper.current.scrollTop / (appHeight - window.innerHeight) * 100)
     if (checkIfInView(sectionOne)) {
       setActive('about');
@@ -215,15 +215,15 @@ function App() {
         <div id="about" className='section column' ref={sectionOne}>
           <div className="headerText" >
             <div id='upOne'>
-            <h4>Hi, my name is</h4>
-            <h2>Adam Haviv</h2>
+              <h4>Hi, my name is</h4>
+              <h2>Adam Haviv</h2>
             </div>
             <div id='upTwo'>
-            <h3>I am a FullStack Developer</h3>
+              <h3>I am a FullStack Developer</h3>
             </div>
             <div id='upThree'>
-            <p>I specialize in building websites and apps using React and NoSQL databases. 
-              Currently, I am working as an intern, building a Learning Management System from the ground up as part of a small team.</p>
+              <p>I specialize in building websites and apps using React and NoSQL databases.
+                Currently, I am working as an intern, building a Learning Management System from the ground up as part of a small team.</p>
             </div>
           </div>
 
@@ -239,18 +239,18 @@ function App() {
           <div className="Project-list">
             {projects.map((project, i) => (
               <div key={project.name} className="Project-list-item">
-             
-                  <img className="projectBackgroundImage" src={project.images[0]} alt={`${project.name} background`} />
-                    <div className="project-list-desc">
-                    {project.link && <a href={project.repo} target="_blank" rel="noreferrer" className="projectIcon" id="topLeft"><img src={githubSmall} alt={"link to github"}/></a>}
-                {project.repo && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon" id="topRight"><img src={websiteIcon} alt={"link to website"}/></a>}
+
+                <img className="projectBackgroundImage" src={project.images[0]} alt={`${project.name} background`} />
+                <div className="project-list-desc">
+                  {project.repo && <a href={project.repo} target="_blank" rel="noreferrer" className="projectIcon" id="topLeft"><img src={githubSmall} alt={"link to github"} /></a>}
+                  {project.link && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon" id="topRight"><img src={websiteIcon} alt={"link to website"} /></a>}
                   <h3>{project.name}</h3>
                   <h4>{project.description}</h4>
-                  
-                  
+
+
                   <p className="project-tech">Made using: {project.tech.map(tech => <span key={tech}>{tech} </span>)}</p>
                 </div>
-                   
+
               </div>
             ))}
           </div>
@@ -260,15 +260,15 @@ function App() {
         <div id='contact' ref={sectionThree} className='section'>
           <div className="contact-icons">
 
-          <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer"><img src={linkedinIcon} alt='linkedin icon' /></a>
-          <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer"><img src={resumeIcon} alt='resume icon'></img></a>
-          <div id='email-icon-container'>
-            <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon'></img>
-          </div>
-          <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer"><img src={githubIcon} alt='github icon'></img></a>
+            <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer"><img src={linkedinIcon} alt='linkedin icon' /></a>
+            <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer"><img src={resumeIcon} alt='resume icon'></img></a>
+            <div id='email-icon-container'>
+              <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon'></img>
+            </div>
+            <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer"><img src={githubIcon} alt='github icon'></img></a>
 
           </div>
-       
+
         </div>
 
       </div>
