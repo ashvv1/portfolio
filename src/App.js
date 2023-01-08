@@ -24,6 +24,8 @@ const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
 const resumePdf = require('./resources/newresash.pdf');
 const githubIcon = require('./resources/githubicon.png');
 const minervaXR = require('./resources/minervaxr.JPG');
+const githubSmall = require('./resources/githubsmall.png');
+const websiteIcon = require('./resources/tabicon.png');
 
 function App() {
 
@@ -198,7 +200,7 @@ function App() {
           <nav >
             <ul className='nav-list'>
               <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)}>About</li>
-              <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)}>Work</li>
+              <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)}>Projects</li>
               <li className={active === 'contact' ? 'active' : ""} onClick={() => goToSection(sectionThree)}>Contact</li>
             </ul>
             <div className='progress-ball-container'>
@@ -237,14 +239,16 @@ function App() {
           <div className="Project-list">
             {projects.map((project, i) => (
               <div key={project.name} className="Project-list-item">
-
+             
                   <img className="projectBackgroundImage" src={project.images[0]} alt={`${project.name} background`} />
                     <div className="project-list-desc">
+                    {project.link && <a href={project.repo} target="_blank" rel="noreferrer" className="projectIcon" id="topLeft"><img src={githubSmall} alt={"link to github"}/></a>}
+                {project.repo && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon" id="topRight"><img src={websiteIcon} alt={"link to website"}/></a>}
                   <h3>{project.name}</h3>
                   <h4>{project.description}</h4>
-                  {project.link && <a href={project.link} target="_blank" rel="noreferrer"> Go to Project</a>}
-                  {project.repo && <a href={project.repo} target="_blank" rel="noreferrer">Go to Repo</a>}
-                  <p className="project-tech">Made using: {project.tech.map(tech => <span>{tech} </span>)}</p>
+                  
+                  
+                  <p className="project-tech">Made using: {project.tech.map(tech => <span key={tech}>{tech} </span>)}</p>
                 </div>
                    
               </div>
