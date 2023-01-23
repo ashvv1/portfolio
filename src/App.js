@@ -246,11 +246,8 @@ function App() {
                   {project.link && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon" id="topRight"><img src={websiteIcon} alt={"link to website"} /></a>}
                   <h3>{project.name}</h3>
                   <h4>{project.description}</h4>
-
-
                   <p className="project-tech">Made using: {project.tech.map(tech => <span key={tech}>{tech} </span>)}</p>
                 </div>
-
               </div>
             ))}
           </div>
