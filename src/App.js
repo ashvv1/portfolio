@@ -21,7 +21,7 @@ const resumeIcon = require('./resources/resumeicon.png');
 const emailIcon = require('./resources/emailicon.png');
 const vsSnip = require('./resources/vsSnipOne.JPG');
 const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
-const resumePdf = require('./resources/newresash.pdf');
+const resumePdf = require('./resources/engResumeAdamShaneHaviv.pdf');
 const githubIcon = require('./resources/githubicon.png');
 const minervaXR = require('./resources/minervaxr.JPG');
 const githubSmall = require('./resources/githubsmall.png');
@@ -42,7 +42,6 @@ function App() {
   const sectionThree = useRef(null);
   const appWrapper = useRef(null);
   const logoCaption = useRef(null);
-
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
 
