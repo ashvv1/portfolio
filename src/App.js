@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import './App.css';
+import CameraCanvas from './CameraCanvas';
 const loading = require('./resources/loading.gif');
 const logo = require('./resources/adamportpix.png');
 const realAdam = require('./resources/adamport.png');
@@ -26,6 +27,9 @@ const githubIcon = require('./resources/githubicon.png');
 const minervaXR = require('./resources/minervaxr.JPG');
 const githubSmall = require('./resources/githubsmall.png');
 const websiteIcon = require('./resources/tabicon.png');
+const offSwitch = require('./resources/offSwitch.png');
+const onSwitch = require('./resources/onSwitch.png')
+
 
 function App() {
 
@@ -36,12 +40,18 @@ function App() {
   const [clickCount, setClickCount] = useState(0);
   const [capMessage, setCapMessage] = useState("Hi! Thanks for visiting :)")
   const [isLoading, setIsLoading] = useState(true);
+  const [modeAR, setModeAR] = useState(false);
 
   const sectionTwo = useRef(null);
   const sectionOne = useRef(null);
   const sectionThree = useRef(null);
   const appWrapper = useRef(null);
   const logoCaption = useRef(null);
+
+  const buttonOne = useRef(null);
+  const buttonTwo = useRef(null);
+  const buttonThree = useRef(null);
+  const buttonFour = useRef(null);
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
 
@@ -180,6 +190,30 @@ function App() {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
   }
 
+  const pressButton = (button) => {
+    const activeElement = document.querySelector('[aria-label="pressed"]')
+    activeElement && activeElement.setAttribute("aria-label", "unpressed");
+    switch (button){
+      case 1:
+        buttonOne.current.setAttribute("aria-label", "pressed");
+        buttonOne.current.click();
+        break;
+      case 2:
+        buttonTwo.current.setAttribute("aria-label", "pressed");
+        buttonTwo.current.click();
+        break;
+      case 3:
+        buttonThree.current.setAttribute("aria-label", "pressed");
+        buttonThree.current.click();
+        break;
+      case 4:
+        buttonFour.current.click();
+        break;
+      default:
+       break;
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="App" id='loading-screen'>
@@ -189,18 +223,21 @@ function App() {
   }
 
   return (
-    <div className="App" onScroll={() => handleScroll()} ref={appWrapper}>
+    <div className={`App ${modeAR ? 'arMode':""}`} onScroll={() => handleScroll()} ref={appWrapper}>
+      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton}/> : null}
       <div className='header-container'>
         <header>
           <div className='logo-container'>
             <img onClick={() => switchLogo()} src={icon} alt="homelogo" className='logo'></img>
             <div className='logo-caption' ref={logoCaption} ><span>{capMessage}</span></div>
           </div>
+          <div className="arButton" onClick={() => setModeAR(!modeAR)} ref={buttonFour}><h3>ARMODE</h3><img src={modeAR ? onSwitch : offSwitch} alt="ar is on"></img></div>
           <nav >
+            
             <ul className='nav-list'>
-              <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)}>About</li>
-              <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)}>Projects</li>
-              <li className={active === 'contact' ? 'active' : ""} onClick={() => goToSection(sectionThree)}>Contact</li>
+              <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)} ref={buttonOne} >About</li>
+              <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)} ref={buttonTwo}>Projects</li>
+              <li className={active === 'contact' ? 'active' : ""} onClick={() => goToSection(sectionThree)} ref={buttonThree}>Contact</li>
             </ul>
             <div className='progress-ball-container'>
               <div className='progress-ball' style={{ left: `${progress}%` }}></div>
@@ -210,7 +247,7 @@ function App() {
         </header>
       </div>
 
-      <div className='body'>
+      <div className={`body `} >
         <div id="about" className='section column' ref={sectionOne}>
           <div className="headerText" >
             <div id='upOne'>
