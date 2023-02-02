@@ -190,11 +190,7 @@ CAMERA LOADING
                 </canvas>
  
             </div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.thumb.left) * 2.98), top: (fingerPos.thumb.top * 2.5) }} id="thumb"></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.pointer.left) * 2.98), top: (fingerPos.pointer.top * 2.5) }}></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.middle.left) * 2.98), top: (fingerPos.middle.top * 2.5) }}id="middleFing"></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.ring.left) * 2.98), top: (fingerPos.ring.top * 2.5) }} id="ringFing"></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.pinky.left) * 2.98), top: (fingerPos.pinky.top * 2.5) }} id="pinky"></div>
+           
         </div>
     );
 };
