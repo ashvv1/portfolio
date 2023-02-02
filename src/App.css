@@ -715,6 +715,10 @@ cursor: pointer;
 @media only screen
 and (max-aspect-ratio: 1/1) {
 
+  .arButton{
+    display: none;
+  }
+
   .section{
     padding-top: 12vh;
   }
