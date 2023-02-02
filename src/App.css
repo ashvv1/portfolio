@@ -168,10 +168,28 @@ h4{
   box-shadow: -.2em .2em .1em .3em rgb(48, 48, 48);
 }
 
-.arMode .nav-list li[aria-label ="pressed"]{
+.arMode .nav-list li[aria-label ="hovered"]{
   background-color: green;
   opacity: 100%;
-  animation: press 500ms ease-out alternate;
+  animation: press 350ms ease-out forwards;
+}
+
+.arMode .nav-list li[aria-label ="pressed"]{
+  background-color: green;
+  opacity: 100%;  
+
+  box-shadow:-.5em .5em .1em .1em rgb(246, 6, 6) ;
+}
+
+.arMode .nav-list li[aria-label ="unpressed"]{
+  background-color: green;
+  opacity: 100%;
+  box-shadow: -.2em .2em .1em .3em rgb(48, 48, 48);
+}
+
+.arMode .section{
+  opacity: 100%;
+  animation: arFade 2.5s 1.5s forwards;
 }
 
 ul{
@@ -632,6 +650,15 @@ cursor: pointer;
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes arFade{
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 50%;
   }
 }
 

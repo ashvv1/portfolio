@@ -52,6 +52,7 @@ function App() {
   const buttonTwo = useRef(null);
   const buttonThree = useRef(null);
   const buttonFour = useRef(null);
+  const buttonFive = useRef(null);
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
 
@@ -190,10 +191,11 @@ function App() {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
   }
 
-  const pressButton = (button) => {
-    const activeElement = document.querySelector('[aria-label="pressed"]')
-    activeElement && activeElement.setAttribute("aria-label", "unpressed");
-    switch (button){
+  const pressButton = (button, clickStrength) => {
+    const activeElement = document.querySelector('[aria-label="hovered"]');
+    (activeElement && !clickStrength) && activeElement.setAttribute("aria-label", "unhovered");
+
+    switch (button) {
       case 1:
         buttonOne.current.setAttribute("aria-label", "pressed");
         buttonOne.current.click();
@@ -207,10 +209,30 @@ function App() {
         buttonThree.current.click();
         break;
       case 4:
+        buttonFour.current.setAttribute("aria-label", "pressed");
         buttonFour.current.click();
         break;
+      case 5:
+        buttonFive.current.setAttribute("aria-label", "pressed");
+        buttonFive.current.click();
+        break;
+      case -1:
+        buttonOne.current.setAttribute("aria-label", "hovered");
+        break;
+      case -2:
+        buttonTwo.current.setAttribute("aria-label", "hovered");
+        break;
+      case -3:
+        buttonThree.current.setAttribute("aria-label", "hovered");
+        break;
+      case -4:
+        buttonFour.current.setAttribute("aria-label", "hovered");
+        break;
+      case -5:
+        buttonFive.current.setAttribute("aria-label", "hovered");
+        break;
       default:
-       break;
+        break;
     }
   }
 
@@ -223,19 +245,19 @@ function App() {
   }
 
   return (
-    <div className={`App ${modeAR ? 'arMode':""}`} onScroll={() => handleScroll()} ref={appWrapper}>
-      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton}/> : null}
+    <div className={`App ${modeAR ? 'arMode' : ""}`} onScroll={() => handleScroll()} ref={appWrapper}>
+      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton} /> : null}
       <div className='header-container'>
         <header>
           <div className='logo-container'>
-            <img onClick={() => switchLogo()} src={icon} alt="homelogo" className='logo'></img>
+            <img onClick={() => switchLogo()} src={icon} alt="homelogo" className='logo' ref={buttonFive}></img>
             <div className='logo-caption' ref={logoCaption} ><span>{capMessage}</span></div>
           </div>
           <div className="arButton" onClick={() => setModeAR(!modeAR)} ref={buttonFour}><h3>ARMODE</h3><img src={modeAR ? onSwitch : offSwitch} alt="ar is on"></img></div>
           <nav >
-            
+
             <ul className='nav-list'>
-              <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)} ref={buttonOne} >About</li>
+              <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)} ref={buttonOne}  >About</li>
               <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)} ref={buttonTwo}>Projects</li>
               <li className={active === 'contact' ? 'active' : ""} onClick={() => goToSection(sectionThree)} ref={buttonThree}>Contact</li>
             </ul>
