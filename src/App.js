@@ -237,6 +237,9 @@ function App() {
       case -5:
         buttonFive.current.setAttribute("aria-label", "hovered");
         break;
+      case 800:
+        console.log("pinching")
+        break;
       default:
         break;
     }

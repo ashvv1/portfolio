@@ -167,7 +167,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
                 // pressButton(5);
                 // triggered = true
             }else if(pinching){
-                console.log(pinching);
+                pressButton(800);
             }else{
                 !triggered && pressButton(900);
             }
@@ -203,7 +203,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
         
         const drawInterval = setInterval(() => {
             draw();
-        }, 10)
+        }, 20)
 
         return () => clearInterval(drawInterval)
     }, [loadedModel])
@@ -222,7 +222,7 @@ CAMERA LOADING
                 </canvas>
  
        
-            <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.thumb.top * (APP_DIMENSIONS.height/330))}} id="thumb"></div>
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.thumb.top * (APP_DIMENSIONS.height/350))}} id="thumb"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.pointer.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.pointer.top * (APP_DIMENSIONS.height/350)) }}></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.middle.top * (APP_DIMENSIONS.height/350)) }}id="middleFing"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.ring.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.ring.top * (APP_DIMENSIONS.height/350)) }} id="ringFing"></div>

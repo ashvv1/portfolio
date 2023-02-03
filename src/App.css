@@ -578,8 +578,8 @@ cursor: pointer;
   box-shadow: rgba(95, 188, 251, 0.682) 0 0 1em 1em;
   position: absolute;
   z-index: 1000;
-  width: 3em;
-  height: 3em;
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
 }
 
@@ -634,10 +634,11 @@ cursor: pointer;
   position: absolute;
   top: 30%;
   right: 1em;
-  display: flex;
+
   border-radius: 10px;
   justify-content: center;
   align-items: center;
+  display: none;
   flex-direction: column;
 }
 
