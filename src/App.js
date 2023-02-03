@@ -28,7 +28,8 @@ const minervaXR = require('./resources/minervaxr.JPG');
 const githubSmall = require('./resources/githubsmall.png');
 const websiteIcon = require('./resources/tabicon.png');
 const offSwitch = require('./resources/offSwitch.png');
-const onSwitch = require('./resources/onSwitch.png')
+const onSwitch = require('./resources/onSwitch.png');
+const blueBrush = require('./resources/brushes/bluebrush.png')
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
  
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
+  const brushes = [blueBrush]
 
   const cacheImages = async (srcArray) => {
     const promises = await srcArray.map((src) => {
@@ -240,6 +242,10 @@ function App() {
     }
   }
 
+  const paintFinger = (color) => {
+
+  }
+
   if (isLoading) {
     return (
       <div className="App" id='loading-screen'>
@@ -274,7 +280,13 @@ function App() {
       </div>
 
       <div className={`body `} >
+        
         <div id="about" className='section column' ref={sectionOne}>
+        <div className={'colorsContainer'}>
+          {brushes.map(brush => (
+            <div className='brush'><img src={blueBrush} alt="blue brush" ></img></div>
+          ))}
+        </div>
           <div className="headerText" >
             <div id='upOne'>
               <h4>Hi, my name is</h4>

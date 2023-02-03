@@ -117,8 +117,16 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
     useEffect(() => {
         
         let triggered = false;
-        
+        let firstFinger = null;
+        let pinching = false;
+        let proximityCount = 1;
+        let count = 0;
+
         for (const [key, value] of Object.entries(fingerPos)){
+
+            if (proximityCount === Object.entries(fingerPos).length){
+                pinching = true;
+            }
 
             const left = value.left;
             const top = value.top;
@@ -127,7 +135,17 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             const clicking = zIndex < prevZ-10.2;
             const clickStrength = prevZ - zIndex;
 
+            if(count === 0){
+                firstFinger = {
+                    firstLeft: left,
+                    firstTop: top
+                }  
+                count++
+            }
 
+            if(Math.abs(firstFinger.firstLeft - left) < 50 && Math.abs(firstFinger.firstTop - top) < 50){
+                proximityCount++
+            }
 
             if((left > 420 && left < 480) &&(top > 0 && top < 50)){
                 clicking && pressButton(1, clickStrength);
@@ -148,6 +166,8 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             }else if((left > 570 && left < 610) &&(top > 0 && top < 55)){
                 // pressButton(5);
                 // triggered = true
+            }else if(pinching){
+                console.log(pinching);
             }else{
                 !triggered && pressButton(900);
             }
