@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './App.css';
 import CameraCanvas from './CameraCanvas';
 const loading = require('./resources/loading.gif');
@@ -54,14 +54,8 @@ function App() {
   const buttonFour = useRef(null);
   const buttonFive = useRef(null);
 
-  const appDims = appWrapper;
-  const appWidth = appDims?.current?.offsetWidth;
-  const appHeight = appDims?.current?.offsetHeight;
-
-  const APP_DIMENSIONS = {
-    width: appWidth,
-    height: appHeight
-  }
+  const APP_WRAPPER = appWrapper;
+ 
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
 
@@ -256,7 +250,7 @@ function App() {
 
   return (
     <div className={`App ${modeAR ? 'arMode' : ""}`} onScroll={() => handleScroll()} ref={appWrapper}>
-      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton} APP_DIMENSIONS={APP_DIMENSIONS} /> : null}
+      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton} APP_WRAPPER={APP_WRAPPER} /> : null}
       <div className='header-container'>
         <header>
           <div className='logo-container'>

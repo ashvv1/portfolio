@@ -4,7 +4,7 @@ import * as handpose from '@tensorflow-models/handpose';
 import '@tensorflow/tfjs-backend-webgl';
 import usePrevious from './UsePrevious';
 
-const CameraCanvas = ({ arActive, pressButton, APP_DIMENSIONS }) => {
+const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const canvasContainer = useRef(null);
@@ -21,6 +21,14 @@ const CameraCanvas = ({ arActive, pressButton, APP_DIMENSIONS }) => {
             setLoadedModel(model);
         } catch (e) {
         } 
+    }
+
+    const appWidth = APP_WRAPPER?.current?.offsetWidth;
+    const appHeight = APP_WRAPPER?.current?.offsetHeight;
+  
+    const APP_DIMENSIONS = {
+      width: appWidth,
+      height: appHeight
     }
 
     if(!loadedModel){
