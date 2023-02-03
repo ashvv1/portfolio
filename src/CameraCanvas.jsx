@@ -4,7 +4,7 @@ import * as handpose from '@tensorflow-models/handpose';
 import '@tensorflow/tfjs-backend-webgl';
 import usePrevious from './UsePrevious';
 
-const CameraCanvas = ({ arActive, pressButton }) => {
+const CameraCanvas = ({ arActive, pressButton, APP_DIMENSIONS }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const canvasContainer = useRef(null);
@@ -43,6 +43,8 @@ const CameraCanvas = ({ arActive, pressButton }) => {
             camera.stop();
 
         }
+
+        
 
         return () => {
             console.log("closing stream")
@@ -135,7 +137,7 @@ const CameraCanvas = ({ arActive, pressButton }) => {
                 clicking && pressButton(4, clickStrength);
                 pressButton(-4);
                 triggered = true
-            }else if((left > 570 && left < 600) &&(top > 0 && top < 55)){
+            }else if((left > 570 && left < 610) &&(top > 0 && top < 55)){
                 // pressButton(5);
                 // triggered = true
             }else{
@@ -178,9 +180,11 @@ const CameraCanvas = ({ arActive, pressButton }) => {
         return () => clearInterval(drawInterval)
     }, [loadedModel])
 
+
+
     return (
         <div className="cameraCanvas" ref={canvasContainer}>
-            <div className="cameraCanvasInnter">
+       
             {!cameraLoaded &&  <div className='loadingScreen'>
 CAMERA LOADING
 </div>}
@@ -189,12 +193,12 @@ CAMERA LOADING
                 <canvas ref={canvasRef} className="output_canvas">
                 </canvas>
  
-            </div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.thumb.left) * 2.98), top: (fingerPos.thumb.top * 2.5) }} id="thumb"></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.pointer.left) * 2.98), top: (fingerPos.pointer.top * 2.5) }}></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.middle.left) * 2.98), top: (fingerPos.middle.top * 2.5) }}id="middleFing"></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.ring.left) * 2.98), top: (fingerPos.ring.top * 2.5) }} id="ringFing"></div>
-            <div className="fingerTracker" style={{ left: ((600 - fingerPos.pinky.left) * 2.98), top: (fingerPos.pinky.top * 2.5) }} id="pinky"></div>
+       
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.thumb.top * (APP_DIMENSIONS.height/330))}} id="thumb"></div>
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.pointer.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.pointer.top * (APP_DIMENSIONS.height/350)) }}></div>
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.middle.top * (APP_DIMENSIONS.height/350)) }}id="middleFing"></div>
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.ring.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.ring.top * (APP_DIMENSIONS.height/350)) }} id="ringFing"></div>
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.pinky.left) * (APP_DIMENSIONS.width/620)), top: (fingerPos.pinky.top * (APP_DIMENSIONS.height/350)) }} id="pinky"></div>
         </div>
     );
 };

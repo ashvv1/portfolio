@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import './App.css';
 import CameraCanvas from './CameraCanvas';
 const loading = require('./resources/loading.gif');
@@ -53,6 +53,15 @@ function App() {
   const buttonThree = useRef(null);
   const buttonFour = useRef(null);
   const buttonFive = useRef(null);
+
+  const appDims = appWrapper;
+  const appWidth = appDims?.current?.offsetWidth;
+  const appHeight = appDims?.current?.offsetHeight;
+
+  const APP_DIMENSIONS = {
+    width: appWidth,
+    height: appHeight
+  }
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
 
@@ -187,6 +196,7 @@ function App() {
     }
   }
 
+
   const openEmail = () => {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
   }
@@ -246,7 +256,7 @@ function App() {
 
   return (
     <div className={`App ${modeAR ? 'arMode' : ""}`} onScroll={() => handleScroll()} ref={appWrapper}>
-      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton} /> : null}
+      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton} APP_DIMENSIONS={APP_DIMENSIONS} /> : null}
       <div className='header-container'>
         <header>
           <div className='logo-container'>

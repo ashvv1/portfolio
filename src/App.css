@@ -515,7 +515,7 @@ cursor: pointer;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: black;
   position: fixed;
   z-index: -1;
@@ -525,6 +525,7 @@ cursor: pointer;
   justify-content: center;
   align-items: center;
 }
+
 
 .input_video{
   top: 0;
