@@ -118,8 +118,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
     }, [handData, prevHandData]);
 
     useEffect(() => {
-        
-        let triggered = false;
+ 
         let firstFinger = null;
         let pinching = false;
         let proximityCount = 1;
@@ -139,7 +138,9 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             const clicking = zIndex < prevZ-sensitivity;
             const clickStrength = prevZ - zIndex;
             const X_PIXELS = (620-left)*WIDTH_RATIO;
-            const Y_PIXELS = top * (HEIGHT_RATIO)
+            const Y_PIXELS = top * (HEIGHT_RATIO);
+
+            key === "pointer" && pressButton(X_PIXELS, Y_PIXELS, clicking, pinching);
 
             if(count === 0){
                 firstFinger = {
@@ -153,8 +154,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
                 proximityCount++
             }
 
-            pressButton(X_PIXELS, Y_PIXELS, clicking)
-
+        
             // if((left > 420 && left < 480) &&(top > 0 && top < 50)){
             //     clicking ? pressButton(1, clickStrength) :
             //     pressButton(-1);
@@ -226,11 +226,11 @@ CAMERA LOADING
             <video ref={videoRef} className="input_video" id='video'></video>
                 <canvas ref={canvasRef} className="output_canvas">
                 </canvas>
-            <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (WIDTH_RATIO)), top: (fingerPos.thumb.top * (HEIGHT_RATIO))}} id="thumb"></div>
+            {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (WIDTH_RATIO)), top: (fingerPos.thumb.top * (HEIGHT_RATIO))}} id="thumb"></div> */}
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.pointer.left) * (WIDTH_RATIO)), top: (fingerPos.pointer.top * (HEIGHT_RATIO)) }} ref={pointerFinger}></div>
-            <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (WIDTH_RATIO)), top: (fingerPos.middle.top * (HEIGHT_RATIO)) }}id="middleFing"></div>
+            {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (WIDTH_RATIO)), top: (fingerPos.middle.top * (HEIGHT_RATIO)) }}id="middleFing"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.ring.left) * (WIDTH_RATIO)), top: (fingerPos.ring.top * (HEIGHT_RATIO)) }} id="ringFing"></div>
-            <div className="fingerTracker" style={{ left: ((620 - fingerPos.pinky.left) * (WIDTH_RATIO)), top: (fingerPos.pinky.top * (HEIGHT_RATIO)) }} id="pinky"></div>
+            <div className="fingerTracker" style={{ left: ((620 - fingerPos.pinky.left) * (WIDTH_RATIO)), top: (fingerPos.pinky.top * (HEIGHT_RATIO)) }} id="pinky"></div> */}
         </div>
     );
 };
