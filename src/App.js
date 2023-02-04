@@ -55,8 +55,14 @@ function App() {
   const buttonFour = useRef(null);
   const buttonFive = useRef(null);
 
+  const linkedinRef = useRef(null);
+  const cvRef = useRef(null);
+  const mailRef = useRef(null);
+  const gitRef = useRef(null);
+
   const APP_WRAPPER = appWrapper;
- 
+
+  let clicked = false;
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
   const brushes = [blueBrush]
@@ -171,6 +177,12 @@ function App() {
     ref.current.scrollIntoView({ behavior: "smooth" });
   }
 
+  const inRange = (x, y, topMax, bottomMax, rightMax, leftMax) => {
+    const xInRange = x < rightMax + 50 && x > leftMax - 50;
+    const yInRange = y < bottomMax + 200 && y > topMax - 150;
+    return xInRange && yInRange;
+  }
+
 
   const checkIfInView = (element) => {
     const elementBounds = element.current.getBoundingClientRect();
@@ -197,58 +209,125 @@ function App() {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
   }
 
-  const pressButton = (button, clickStrength) => {
-    const activeElement = document.querySelector('[aria-label="hovered"]');
-    (activeElement && !clickStrength) && activeElement.setAttribute("aria-label", "unhovered");
+  const pressButton = (x_axis, y_axis, clicking) => {
 
-    switch (button) {
-      case 1:
-        buttonOne.current.setAttribute("aria-label", "pressed");
-        buttonOne.current.click();
-        break;
-      case 2:
-        buttonTwo.current.setAttribute("aria-label", "pressed");
-        buttonTwo.current.click();
-        break;
-      case 3:
-        buttonThree.current.setAttribute("aria-label", "pressed");
-        buttonThree.current.click();
-        break;
-      case 4:
-        buttonFour.current.setAttribute("aria-label", "pressed");
-        buttonFour.current.click();
-        break;
-      case 5:
-        buttonFive.current.setAttribute("aria-label", "pressed");
-        buttonFive.current.click();
-        break;
-      case -1:
-        buttonOne.current.setAttribute("aria-label", "hovered");
-        break;
-      case -2:
-        buttonTwo.current.setAttribute("aria-label", "hovered");
-        break;
-      case -3:
-        buttonThree.current.setAttribute("aria-label", "hovered");
-        break;
-      case -4:
-        buttonFour.current.setAttribute("aria-label", "hovered");
-        break;
-      case -5:
-        buttonFive.current.setAttribute("aria-label", "hovered");
-        break;
-      case 800:
-        console.log("pinching")
-        break;
-      default:
-        break;
+    const menuElements = [buttonOne, buttonTwo, buttonThree, buttonFour];
+    let triggered = false;
+
+      for(let i = 0; i < menuElements.length; i++){
+        const topMax = menuElements[i].current.getBoundingClientRect().top;
+        const bottomMax = menuElements[i].current.getBoundingClientRect().bottom;
+        const leftMax = menuElements[i].current.getBoundingClientRect().left;
+        const rightMax = menuElements[i].current.getBoundingClientRect().right;
+        if(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)){
+          menuElements[i].current.setAttribute("aria-label", "hovered");
+          triggered = true;
+          if(!clicked && clicking){
+            menuElements[i].current.setAttribute("aria-selected", "true")
+            setTimeout(() => {
+                    menuElements[i].current.setAttribute("aria-selected", "false")
+                  }, 10)
+            clicked = true;
+            console.log(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax))
+            menuElements[i].current.click();
+            // eslint-disable-next-line no-loop-func
+            setTimeout(() => {
+              clicked = false;
+            }, 800)
+            break;
+          }
+        }
     }
+  
+    if(active === 'contact'){
+      const sectionElements = [linkedinRef, cvRef, mailRef, gitRef];
+
+      for(let i = 0; i < sectionElements.length; i++){
+        const topMax = sectionElements[i].current.getBoundingClientRect().top;
+        const bottomMax = sectionElements[i].current.getBoundingClientRect().bottom;
+        const leftMax = sectionElements[i].current.getBoundingClientRect().left;
+        const rightMax = sectionElements[i].current.getBoundingClientRect().right;
+
+        if(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)){
+          if(!clicked && clicking){
+            clicked = true;
+            console.log(clicked)
+            sectionElements[i].current.click();
+            // eslint-disable-next-line no-loop-func
+            setTimeout(() => {
+              clicked = false;
+              console.log(clicked);
+            }, 1000)
+            break;
+          }
+        }
+      }
+    }
+      
+    // switch (button) {
+    //   case 1:
+    //     buttonOne.current.setAttribute("aria-selected","true");
+    //     setTimeout(() => {
+    //       buttonOne.current.setAttribute("aria-selected", "false")
+    //     }, 10)
+    //     buttonOne.current.click();
+    //     break;
+    //   case 2:
+    //     buttonTwo.current.setAttribute("aria-selected","true");
+    //     setTimeout(() => {
+    //       buttonTwo.current.setAttribute("aria-selected", "false")
+    //     }, 10)
+    //     buttonTwo.current.click();
+    //     break;
+    //   case 3:
+    //     buttonThree.current.setAttribute("aria-selected","true");
+    //     setTimeout(() => {
+    //       buttonThree.current.setAttribute("aria-selected", "false")
+    //     }, 10)
+    //     buttonThree.current.click();
+    //     break;
+    //   case 4:
+    //     buttonFour.current.setAttribute("aria-selected","true");
+    //     setTimeout(() => {
+    //       buttonFour.current.setAttribute("aria-selected", "false")
+    //     }, 10)
+    //     buttonFour.current.click();
+    //     break;
+    //   case 5:
+    //     buttonFive.current.setAttribute("aria-selected","true");
+    //     setTimeout(() => {
+    //       buttonFive.current.setAttribute("aria-selected", "false")
+    //     }, 10)
+    //     buttonFive.current.click();
+    //     break;
+    //   case -1:
+    //     buttonOne.current.setAttribute("aria-label", "hovered");
+    //     break;
+    //   case -2:
+    //     buttonTwo.current.setAttribute("aria-label", "hovered");
+    //     break;
+    //   case -3:
+    //     buttonThree.current.setAttribute("aria-label", "hovered");
+    //     break;
+    //   case -4:
+    //     buttonFour.current.setAttribute("aria-label", "hovered");
+    //     break;
+    //   case -5:
+    //     buttonFive.current.setAttribute("aria-label", "hovered");
+    //     break;
+    //   case 800:
+    //     console.log("pinching")
+    //     break;
+    //   default:
+    //     break;
+    // }
+    const activeElement = document.querySelector('[aria-label="hovered"]');
+    !triggered && activeElement?.setAttribute("aria-label", "unhovered");
   }
 
-  const paintFinger = (color) => {
+  // const paintFinger = (color) => {
 
-  }
-
+  // }
   if (isLoading) {
     return (
       <div className="App" id='loading-screen'>
@@ -270,7 +349,7 @@ function App() {
           <nav >
 
             <ul className='nav-list'>
-              <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)} ref={buttonOne}  >About</li>
+              <li className={active === 'about' ? 'active' : ""} onClick={() => goToSection(sectionOne)} ref={buttonOne}>About</li>
               <li className={active === 'work' ? 'active' : ""} onClick={() => goToSection(sectionTwo)} ref={buttonTwo}>Projects</li>
               <li className={active === 'contact' ? 'active' : ""} onClick={() => goToSection(sectionThree)} ref={buttonThree}>Contact</li>
             </ul>
@@ -334,12 +413,12 @@ function App() {
         <div id='contact' ref={sectionThree} className='section'>
           <div className="contact-icons">
 
-            <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer"><img src={linkedinIcon} alt='linkedin icon' /></a>
-            <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer"><img src={resumeIcon} alt='resume icon'></img></a>
-            <div id='email-icon-container'>
-              <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon'></img>
+            <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer" ref={linkedinRef}><img src={linkedinIcon} alt='linkedin icon' ref={linkedinRef} /></a>
+            <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer" ref={cvRef}><img src={resumeIcon} alt='resume icon' ></img></a>
+            <div id='email-icon-container' >
+              <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon' ref={mailRef}></img>
             </div>
-            <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer"><img src={githubIcon} alt='github icon'></img></a>
+            <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer" ref={gitRef}><img src={githubIcon} alt='github icon'></img></a>
 
           </div>
 

@@ -171,13 +171,12 @@ h4{
 .arMode .nav-list li[aria-label ="hovered"]{
   background-color: green;
   opacity: 100%;
-  animation: press 350ms ease-out forwards;
 }
 
-.arMode .nav-list li[aria-label ="pressed"]{
+.arMode .nav-list li[aria-selected ="true"]{
   background-color: green;
   opacity: 100%;  
-
+  animation: press 350ms ease-out forwards;
   box-shadow:-.5em .5em .1em .1em rgb(246, 6, 6) ;
 }
 
@@ -191,6 +190,11 @@ h4{
   opacity: 100%;
   animation: arFade 2.5s 1.5s forwards;
 }
+
+.arMode .progress-ball-container{
+  display: none;
+}
+
 
 ul{
   padding: 0;
@@ -260,6 +264,16 @@ header{
   position: relative;
   z-index: 2;
   overflow-x: hidden;
+}
+
+
+.arMode .section{
+  max-height: 100vh;
+}
+
+.arMode .Project-list-item{
+  width: 35em;
+  height: 20em;
 }
 
 .column{
@@ -683,9 +697,13 @@ cursor: pointer;
     box-shadow: -.2em .2em .1em .3em rgb(48, 48, 48);
     transform: translateX(0) translateY(0);
   }
-  100%{
+  50%{
     box-shadow: -.1em .1em .05em .15em rgb(48, 48, 48);
     transform: translateX(-.2em) translateY(.2em);
+  }
+  100%{
+    box-shadow: -.2em .2em .1em .3em rgb(48, 48, 48);
+    transform: translateX(0) translateY(0);
   }
 }
 
