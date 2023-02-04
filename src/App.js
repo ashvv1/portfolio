@@ -210,129 +210,68 @@ function App() {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
   }
 
-  const pressButton = (x_axis, y_axis, clicking) => {
-    const activeElement = document.querySelector('[aria-label="hovered"]');
-    !triggered && activeElement?.setAttribute("aria-label", "un-hover");
+  const pressButton = (x_axis, y_axis, clicking, pinching) => {
+
     let triggerCount = 0;
 
     const menuElements = [buttonOne, buttonTwo, buttonThree, buttonFour];
 
-      for(let i = 0; i < menuElements.length; i++){
-        const topMax = menuElements[i].current.getBoundingClientRect().top;
-        const bottomMax = menuElements[i].current.getBoundingClientRect().bottom;
-        const leftMax = menuElements[i].current.getBoundingClientRect().left;
-        const rightMax = menuElements[i].current.getBoundingClientRect().right;
-        if(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)){
-          menuElements[i].current.setAttribute("aria-label", "hovered");
-          triggered++
-          if(!clicked && clicking){
-            menuElements[i].current.setAttribute("aria-selected", "true")
-            menuElements[i].current.setAttribute("aria-label", "un-hover");
-            setTimeout(() => {
-                    menuElements[i].current.setAttribute("aria-selected", "false")
-                  }, 10)
-            clicked = true;
-            console.log(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax))
-            menuElements[i].current.click();
-            // eslint-disable-next-line no-loop-func
-            setTimeout(() => {
-              clicked = false;
-            }, 800)
-            break;
-          }
+    for (let i = 0; i < menuElements.length; i++) {
+      const topMax = menuElements[i].current.getBoundingClientRect().top;
+      const bottomMax = menuElements[i].current.getBoundingClientRect().bottom;
+      const leftMax = menuElements[i].current.getBoundingClientRect().left;
+      const rightMax = menuElements[i].current.getBoundingClientRect().right;
+      if (inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)) {
+        menuElements[i].current.setAttribute("aria-label", "hovered");
+        triggerCount++
+        if (!clicked && clicking) {
+          menuElements[i].current.setAttribute("aria-selected", "true")
+          menuElements[i].current.setAttribute("aria-label", "un-hover");
+          setTimeout(() => {
+            menuElements[i].current.setAttribute("aria-selected", "false")
+          }, 10)
+          clicked = true;
+          // console.log(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax))
+          menuElements[i].current.click();
+          // eslint-disable-next-line no-loop-func
+          setTimeout(() => {
+            clicked = false;
+          }, 800)
         }
+        break;
+      }
     }
-  
-    if(active === 'contact'){
+
+    if (active === 'contact') {
       const sectionElements = [linkedinRef, cvRef, mailRef, gitRef];
 
-      for(let i = 0; i < sectionElements.length; i++){
+      for (let i = 0; i < sectionElements.length; i++) {
         const topMax = sectionElements[i].current.getBoundingClientRect().top;
         const bottomMax = sectionElements[i].current.getBoundingClientRect().bottom;
         const leftMax = sectionElements[i].current.getBoundingClientRect().left;
         const rightMax = sectionElements[i].current.getBoundingClientRect().right;
 
-        if(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)){
-          if(!clicked && clicking){
+        if (inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)) {
+          if (!clicked && clicking) {
             clicked = true;
-            console.log(clicked)
             sectionElements[i].current.click();
             // eslint-disable-next-line no-loop-func
             setTimeout(() => {
-              clicked = false;
-              console.log(clicked);
             }, 1000)
             break;
           }
         }
       }
-      triggerCount > 0 ? triggered = true : triggered = false;
-
     }
-      
-    // switch (button) {
-    //   case 1:
-    //     buttonOne.current.setAttribute("aria-selected","true");
-    //     setTimeout(() => {
-    //       buttonOne.current.setAttribute("aria-selected", "false")
-    //     }, 10)
-    //     buttonOne.current.click();
-    //     break;
-    //   case 2:
-    //     buttonTwo.current.setAttribute("aria-selected","true");
-    //     setTimeout(() => {
-    //       buttonTwo.current.setAttribute("aria-selected", "false")
-    //     }, 10)
-    //     buttonTwo.current.click();
-    //     break;
-    //   case 3:
-    //     buttonThree.current.setAttribute("aria-selected","true");
-    //     setTimeout(() => {
-    //       buttonThree.current.setAttribute("aria-selected", "false")
-    //     }, 10)
-    //     buttonThree.current.click();
-    //     break;
-    //   case 4:
-    //     buttonFour.current.setAttribute("aria-selected","true");
-    //     setTimeout(() => {
-    //       buttonFour.current.setAttribute("aria-selected", "false")
-    //     }, 10)
-    //     buttonFour.current.click();
-    //     break;
-    //   case 5:
-    //     buttonFive.current.setAttribute("aria-selected","true");
-    //     setTimeout(() => {
-    //       buttonFive.current.setAttribute("aria-selected", "false")
-    //     }, 10)
-    //     buttonFive.current.click();
-    //     break;
-    //   case -1:
-    //     buttonOne.current.setAttribute("aria-label", "hovered");
-    //     break;
-    //   case -2:
-    //     buttonTwo.current.setAttribute("aria-label", "hovered");
-    //     break;
-    //   case -3:
-    //     buttonThree.current.setAttribute("aria-label", "hovered");
-    //     break;
-    //   case -4:
-    //     buttonFour.current.setAttribute("aria-label", "hovered");
-    //     break;
-    //   case -5:
-    //     buttonFive.current.setAttribute("aria-label", "hovered");
-    //     break;
-    //   case 800:
-    //     console.log("pinching")
-    //     break;
-    //   default:
-    //     break;
-    // }
-
+    triggerCount > 0 ? triggered = true : triggered = false;
+    const activeElement = document.querySelector('[aria-label="hovered"]');
+    !triggered && activeElement?.setAttribute("aria-label", "un-hover");
   }
 
   // const paintFinger = (color) => {
 
   // }
+
   if (isLoading) {
     return (
       <div className="App" id='loading-screen'>
@@ -367,13 +306,13 @@ function App() {
       </div>
 
       <div className={`body `} >
-        
+
         <div id="about" className='section column' ref={sectionOne}>
-        <div className={'colorsContainer'}>
-          {brushes.map(brush => (
-            <div className='brush'><img src={blueBrush} alt="blue brush" ></img></div>
-          ))}
-        </div>
+          <div className={'colorsContainer'}>
+            {brushes.map(brush => (
+              <div className='brush'><img src={blueBrush} alt="blue brush" ></img></div>
+            ))}
+          </div>
           <div className="headerText" >
             <div id='upOne'>
               <h4>Hi, my name is</h4>

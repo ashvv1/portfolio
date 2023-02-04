@@ -4,7 +4,7 @@ import * as handpose from '@tensorflow-models/handpose';
 import '@tensorflow/tfjs-backend-webgl';
 import usePrevious from './UsePrevious';
 
-const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
+const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const canvasContainer = useRef(null);
@@ -12,30 +12,30 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
 
     const [handData, setHandData] = useState();
     const [cameraLoaded, setCameraLoaded] = useState(false);
-    const [loadedModel , setLoadedModel] = useState();
+    const [loadedModel, setLoadedModel] = useState();
 
     const prevHandData = usePrevious(handData);
-   
+
     const loadModel = async () => {
-        try{
+        try {
             const model = await handpose.load();
             setLoadedModel(model);
         } catch (e) {
-        } 
+        }
     }
 
     const appWidth = APP_WRAPPER?.current?.offsetWidth;
     const appHeight = APP_WRAPPER?.current?.offsetHeight;
-  
+
     const APP_DIMENSIONS = {
-      width: appWidth,
-      height: appHeight
+        width: appWidth,
+        height: appHeight
     }
 
-    const WIDTH_RATIO = APP_DIMENSIONS?.width/620
-    const HEIGHT_RATIO = APP_DIMENSIONS?.height/350
+    const WIDTH_RATIO = APP_DIMENSIONS?.width / 620
+    const HEIGHT_RATIO = APP_DIMENSIONS?.height / 350
 
-    if(!loadedModel){
+    if (!loadedModel) {
         loadModel();
     }
 
@@ -56,7 +56,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
 
         }
 
-    
+
         return () => {
             console.log("closing stream")
             endstream();
@@ -66,67 +66,68 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
     const fingerPos = useMemo(() => {
         if (handData?.landmarks) {
             return ({
-                thumb: {left: handData.landmarks[4][0], top: handData.landmarks[4][1], zIndex: handData.landmarks[4][2]},
-                pointer: {left: handData.landmarks[8][0], top: handData.landmarks[8][1], zIndex: handData.landmarks[8][2]},
-                middle: {left: handData.landmarks[12][0], top: handData.landmarks[12][1], zIndex: handData.landmarks[12][2]},
-                ring: {left: handData.landmarks[16][0], top: handData.landmarks[16][1], zIndex: handData.landmarks[16][2]},
-                pinky: {left: handData.landmarks[20][0], top: handData.landmarks[20][1], zIndex: handData.landmarks[20][2]}
+                thumb: { left: handData.landmarks[4][0], top: handData.landmarks[4][1], zIndex: handData.landmarks[4][2] },
+                pointer: { left: handData.landmarks[8][0], top: handData.landmarks[8][1], zIndex: handData.landmarks[8][2] },
+                middle: { left: handData.landmarks[12][0], top: handData.landmarks[12][1], zIndex: handData.landmarks[12][2] },
+                ring: { left: handData.landmarks[16][0], top: handData.landmarks[16][1], zIndex: handData.landmarks[16][2] },
+                pinky: { left: handData.landmarks[20][0], top: handData.landmarks[20][1], zIndex: handData.landmarks[20][2] }
             })
         } else {
             return (
-                { 
-                    thumb: {left: -200, top: -200 },
-                    pointer: {left: -200, top: -200 },
-                    middle: {left: -200, top: -200 },
-                    ring: {left: -200, top: -200 },
-                    pinky: {left: -200, top: -200 }
+                {
+                    thumb: { left: -200, top: -200 },
+                    pointer: { left: -200, top: -200 },
+                    middle: { left: -200, top: -200 },
+                    ring: { left: -200, top: -200 },
+                    pinky: { left: -200, top: -200 }
                 }
-                )
+            )
         }
     }, [handData])
 
     const prevFingerPos = useMemo(() => {
         if (prevHandData?.landmarks) {
             return ({
-                thumb: {left: prevHandData.landmarks[4][0], top: prevHandData.landmarks[4][1], zIndex: prevHandData.landmarks[4][2]},
-                pointer: {left: prevHandData.landmarks[8][0], top: prevHandData.landmarks[8][1], zIndex: prevHandData.landmarks[8][2]},
-                middle: {left: prevHandData.landmarks[12][0], top: prevHandData.landmarks[12][1], zIndex: prevHandData.landmarks[12][2]},
-                ring: {left: prevHandData.landmarks[16][0], top: prevHandData.landmarks[16][1], zIndex: prevHandData.landmarks[16][2]},
-                pinky: {left: prevHandData.landmarks[20][0], top: prevHandData.landmarks[20][1], zIndex: prevHandData.landmarks[20][2]}
+                thumb: { left: prevHandData.landmarks[4][0], top: prevHandData.landmarks[4][1], zIndex: prevHandData.landmarks[4][2] },
+                pointer: { left: prevHandData.landmarks[8][0], top: prevHandData.landmarks[8][1], zIndex: prevHandData.landmarks[8][2] },
+                middle: { left: prevHandData.landmarks[12][0], top: prevHandData.landmarks[12][1], zIndex: prevHandData.landmarks[12][2] },
+                ring: { left: prevHandData.landmarks[16][0], top: prevHandData.landmarks[16][1], zIndex: prevHandData.landmarks[16][2] },
+                pinky: { left: prevHandData.landmarks[20][0], top: prevHandData.landmarks[20][1], zIndex: prevHandData.landmarks[20][2] }
             })
         } else {
-            if(handData?.length > 0 ){
-             return {   thumb: {left: handData.landmarks[4][0], top: handData.landmarks[4][1], zIndex: handData.landmarks[4][2]},
-                pointer: {left: handData.landmarks[8][0], top: handData.landmarks[8][1], zIndex: handData.landmarks[8][2]},
-                middle: {left: handData.landmarks[12][0], top: handData.landmarks[12][1], zIndex: handData.landmarks[12][2]},
-                ring: {left: handData.landmarks[16][0], top: handData.landmarks[16][1], zIndex: handData.landmarks[16][2]},
-                pinky: {left: handData.landmarks[20][0], top: handData.landmarks[20][1], zIndex: handData.landmarks[20][2]}
-            }
-            }else{
+            if (handData?.length > 0) {
+                return {
+                    thumb: { left: handData.landmarks[4][0], top: handData.landmarks[4][1], zIndex: handData.landmarks[4][2] },
+                    pointer: { left: handData.landmarks[8][0], top: handData.landmarks[8][1], zIndex: handData.landmarks[8][2] },
+                    middle: { left: handData.landmarks[12][0], top: handData.landmarks[12][1], zIndex: handData.landmarks[12][2] },
+                    ring: { left: handData.landmarks[16][0], top: handData.landmarks[16][1], zIndex: handData.landmarks[16][2] },
+                    pinky: { left: handData.landmarks[20][0], top: handData.landmarks[20][1], zIndex: handData.landmarks[20][2] }
+                }
+            } else {
                 return (
-                    { 
-                        thumb: {left: -200, top: -200 },
-                        pointer: {left: -200, top: -200 },
-                        middle: {left: -200, top: -200 },
-                        ring: {left: -200, top: -200 },
-                        pinky: {left: -200, top: -200 }
+                    {
+                        thumb: { left: -200, top: -200 },
+                        pointer: { left: -200, top: -200 },
+                        middle: { left: -200, top: -200 },
+                        ring: { left: -200, top: -200 },
+                        pinky: { left: -200, top: -200 }
                     }
-                    )
+                )
             }
-      
+
         }
     }, [handData, prevHandData]);
 
     useEffect(() => {
- 
+
         let firstFinger = null;
         let pinching = false;
         let proximityCount = 1;
         let count = 0;
 
-        for (const [key, value] of Object.entries(fingerPos)){
+        for (const [key, value] of Object.entries(fingerPos)) {
 
-            if (proximityCount === Object.entries(fingerPos).length){
+            if (proximityCount === Object.entries(fingerPos).length) {
                 pinching = true;
             }
 
@@ -134,27 +135,27 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             const top = value.top;
             const zIndex = value.zIndex;
             const prevZ = prevFingerPos[key].zIndex;
-            const sensitivity = 13.5;
-            const clicking = zIndex < prevZ-sensitivity;
-            const clickStrength = prevZ - zIndex;
-            const X_PIXELS = (620-left)*WIDTH_RATIO;
+            const sensitivity = 11.5;
+            const clicking = zIndex < prevZ - sensitivity;
+            // const clickStrength = prevZ - zIndex;
+            const X_PIXELS = (620 - left) * WIDTH_RATIO;
             const Y_PIXELS = top * (HEIGHT_RATIO);
 
             key === "pointer" && pressButton(X_PIXELS, Y_PIXELS, clicking, pinching);
 
-            if(count === 0){
+            if (count === 0) {
                 firstFinger = {
                     firstLeft: left,
                     firstTop: top
-                }  
+                }
                 count++
             }
 
-            if(Math.abs(firstFinger.firstLeft - left) < 50 && Math.abs(firstFinger.firstTop - top) < 50){
+            if (Math.abs(firstFinger.firstLeft - left) < 50 && Math.abs(firstFinger.firstTop - top) < 50) {
                 proximityCount++
             }
 
-        
+
             // if((left > 420 && left < 480) &&(top > 0 && top < 50)){
             //     clicking ? pressButton(1, clickStrength) :
             //     pressButton(-1);
@@ -180,26 +181,26 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             //     !triggered && pressButton(900);
             // }
         }
-        
-    },[HEIGHT_RATIO, WIDTH_RATIO, fingerPos, pressButton, prevFingerPos])
+
+    }, [HEIGHT_RATIO, WIDTH_RATIO, fingerPos, pressButton, prevFingerPos])
 
     useEffect(() => {
         const video = videoRef.current;
 
         async function draw() {
-         
-          
+
+
             // Load the MediaPipe handpose model assets.  
-           
+
             // Pass in a video stream to the model to obtain 
             // a prediction from the MediaPipe graph.
-            try{
-                if(loadedModel){
+            try {
+                if (loadedModel) {
 
                 }
                 const hands = await loadedModel.estimateHands(video);
                 hands && setCameraLoaded(true);
-                
+
                 if (hands?.length > 0) {
                     setHandData(hands[0])
                 } else {
@@ -208,7 +209,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             } catch (e) {
             }
         }
-        
+
         const drawInterval = setInterval(() => {
             draw();
         }, 20)
@@ -218,14 +219,14 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
 
     return (
         <div className="cameraCanvas" ref={canvasContainer}>
-       
-            {!cameraLoaded &&  <div className='loadingScreen'>
-CAMERA LOADING
-</div>}
-          
+
+            {!cameraLoaded && <div className='loadingScreen'>
+                CAMERA LOADING
+            </div>}
+
             <video ref={videoRef} className="input_video" id='video'></video>
-                <canvas ref={canvasRef} className="output_canvas">
-                </canvas>
+            <canvas ref={canvasRef} className="output_canvas">
+            </canvas>
             {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (WIDTH_RATIO)), top: (fingerPos.thumb.top * (HEIGHT_RATIO))}} id="thumb"></div> */}
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.pointer.left) * (WIDTH_RATIO)), top: (fingerPos.pointer.top * (HEIGHT_RATIO)) }} ref={pointerFinger}></div>
             {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (WIDTH_RATIO)), top: (fingerPos.middle.top * (HEIGHT_RATIO)) }}id="middleFing"></div>
