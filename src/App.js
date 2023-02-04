@@ -63,6 +63,7 @@ function App() {
   const APP_WRAPPER = appWrapper;
 
   let clicked = false;
+  let triggered = false;
 
   const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
   const brushes = [blueBrush]
@@ -179,7 +180,7 @@ function App() {
 
   const inRange = (x, y, topMax, bottomMax, rightMax, leftMax) => {
     const xInRange = x < rightMax + 50 && x > leftMax - 50;
-    const yInRange = y < bottomMax + 200 && y > topMax - 150;
+    const yInRange = y < bottomMax + 50 && y > topMax - 50;
     return xInRange && yInRange;
   }
 
@@ -210,9 +211,11 @@ function App() {
   }
 
   const pressButton = (x_axis, y_axis, clicking) => {
+    const activeElement = document.querySelector('[aria-label="hovered"]');
+    !triggered && activeElement?.setAttribute("aria-label", "un-hover");
+    let triggerCount = 0;
 
     const menuElements = [buttonOne, buttonTwo, buttonThree, buttonFour];
-    let triggered = false;
 
       for(let i = 0; i < menuElements.length; i++){
         const topMax = menuElements[i].current.getBoundingClientRect().top;
@@ -221,9 +224,10 @@ function App() {
         const rightMax = menuElements[i].current.getBoundingClientRect().right;
         if(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)){
           menuElements[i].current.setAttribute("aria-label", "hovered");
-          triggered = true;
+          triggered++
           if(!clicked && clicking){
             menuElements[i].current.setAttribute("aria-selected", "true")
+            menuElements[i].current.setAttribute("aria-label", "un-hover");
             setTimeout(() => {
                     menuElements[i].current.setAttribute("aria-selected", "false")
                   }, 10)
@@ -262,6 +266,8 @@ function App() {
           }
         }
       }
+      triggerCount > 0 ? triggered = true : triggered = false;
+
     }
       
     // switch (button) {
@@ -321,8 +327,7 @@ function App() {
     //   default:
     //     break;
     // }
-    const activeElement = document.querySelector('[aria-label="hovered"]');
-    !triggered && activeElement?.setAttribute("aria-label", "unhovered");
+
   }
 
   // const paintFinger = (color) => {

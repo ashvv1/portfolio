@@ -135,11 +135,11 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER}) => {
             const top = value.top;
             const zIndex = value.zIndex;
             const prevZ = prevFingerPos[key].zIndex;
-            const sensitivity = 12.5;
+            const sensitivity = 13.5;
             const clicking = zIndex < prevZ-sensitivity;
             const clickStrength = prevZ - zIndex;
             const X_PIXELS = (620-left)*WIDTH_RATIO;
-            const Y_PIXELS = fingerPos.thumb.top * (HEIGHT_RATIO)
+            const Y_PIXELS = top * (HEIGHT_RATIO)
 
             if(count === 0){
                 firstFinger = {

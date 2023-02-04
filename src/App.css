@@ -173,6 +173,7 @@ h4{
   opacity: 100%;
 }
 
+
 .arMode .nav-list li[aria-selected ="true"]{
   background-color: green;
   opacity: 100%;  
