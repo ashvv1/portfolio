@@ -252,6 +252,8 @@ function App() {
         const rightMax = sectionElements[i].current.getBoundingClientRect().right;
 
         if (inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)) {
+          sectionElements[i].current.setAttribute("aria-label", "hovered");
+          triggerCount++
           if (!clicked && clicking) {
             clicked = true;
             sectionElements[i].current.click();
@@ -311,7 +313,7 @@ function App() {
         <div id="about" className='section column' ref={sectionOne}>
           <div className={'colorsContainer'}>
             {brushes.map(brush => (
-              <div className='brush'><img src={blueBrush} alt="blue brush" ></img></div>
+              <div className='brush' key={brush}><img src={blueBrush} alt="blue brush" ></img></div>
             ))}
           </div>
           <div className="headerText" >

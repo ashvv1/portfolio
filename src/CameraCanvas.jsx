@@ -4,7 +4,7 @@ import * as handpose from '@tensorflow-models/handpose';
 import '@tensorflow/tfjs-backend-webgl';
 import usePrevious from './UsePrevious';
 
-const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER }) => {
+const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const canvasContainer = useRef(null);
@@ -135,7 +135,7 @@ const CameraCanvas = ({ arActive, pressButton, APP_WRAPPER }) => {
             const top = value.top;
             const zIndex = value.zIndex;
             const prevZ = prevFingerPos[key].zIndex;
-            const sensitivity = 11.5;
+            const sensitivity = 15.5;
             const clicking = zIndex < prevZ - sensitivity;
             // const clickStrength = prevZ - zIndex;
             const X_PIXELS = (620 - left) * WIDTH_RATIO;

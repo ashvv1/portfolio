@@ -196,6 +196,9 @@ h4{
   display: none;
 }
 
+.arMode .contact-icons *[aria-label="hovered"]{
+  filter: brightness(200%)
+}
 
 ul{
   padding: 0;
