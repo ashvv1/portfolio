@@ -257,7 +257,8 @@ function App() {
             sectionElements[i].current.click();
             // eslint-disable-next-line no-loop-func
             setTimeout(() => {
-            }, 1000)
+              clicked = false;
+            }, 800)
             break;
           }
         }
