@@ -29,7 +29,8 @@ const githubSmall = require('./resources/githubsmall.png');
 const websiteIcon = require('./resources/tabicon.png');
 const offSwitch = require('./resources/offSwitch.png');
 const onSwitch = require('./resources/onSwitch.png');
-const blueBrush = require('./resources/brushes/bluebrush.png')
+const blueBrush = require('./resources/brushes/bluebrush.png');
+
 
 
 function App() {
@@ -85,10 +86,8 @@ function App() {
     setIsLoading(false)
   }
 
-
-
-  const pathLength = pathRef.current && pathRef.current.getTotalLength();
-
+  const pathLength = pathRef.current ? pathRef.current.getTotalLength() : 0;
+  
   useEffect(() => {
     const imgs = [
       loading,
@@ -202,7 +201,7 @@ function App() {
   const handleScroll = () => {
 
   const drawLength = (pathLength * progress * .01);
-  console.log(drawLength, pathLength)
+  console.log(drawLength);
 
   // Draw in reverse
   pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
@@ -332,10 +331,18 @@ progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = p
 
       <div className={`body `} >
 
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className={modeAR ? 'hidden' : 'svgPath'} visibility={progress < .1 ? "hidden" : ""}>
+      <path ref={pathRef}
+        d="M 4.835 7.02 C 0.488 3.868 -1.358 15.133 2.63 12.159 C 4.099 11.25 7.772 4.673 4.832 6.971 
+        C 3.084 8.101 2.77 11.74 2.665 12.124 C 2.41 14.545 6.548 8.871 8.507 7.716 C 11.771 5.434 7.073
+        5.163 7.842 8.101 C 9.067 14.363 5.883 12.404 5.428 11.39 C 3.749 7.647 8.997 12.754 9.836 10.9 
+        C 11.655 7.542 19.422 1.769 16.938 0.58 C 15.049 -0.12 8.507 11.145 9.56 12.002 C 10.517 12.541 12.132 
+        6.378 13.568 7.664 C 14.256 8.502 10.128 12.84 13.179 11.853 C 14.107 11.464 14.705 10.626 14.944 9.549"
+        stroke="#E9ECF8" strokeWidth="0.05" fill="none" />
+    </svg>
+
         <div id="about" className='section column' ref={sectionOne}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className='svgPath' visibility={progress < .1 ? "hidden" : ""}>
-  <path ref={pathRef} d="M 4.835 7.02 C 0.488 3.868 -1.358 15.133 2.63 12.159 C 4.099 11.25 7.772 4.673 4.832 6.971 C 3.084 8.101 2.77 11.74 2.665 12.124 C 2.41 14.545 6.548 8.871 8.507 7.716 C 10.256 5.897 7.073 5.163 7.842 8.101 C 9.067 14.363 5.883 12.404 5.428 11.39 C 3.749 7.647 8.997 12.754 9.836 10.9 C 11.655 7.542 19.422 1.769 16.938 0.58 C 15.049 -0.12 8.507 11.145 9.56 12.002 C 10.517 12.541 12.132 6.378 13.568 7.664 C 14.256 8.502 10.128 12.84 13.179 11.853 C 14.107 11.464 14.705 10.626 14.944 9.549" stroke="#E9ECF8" stroke-width="0.1" fill="none"/>
-</svg>
+
           <div className={'colorsContainer'}>
             {brushes.map(brush => (
               <div className='brush' key={brush}><img src={blueBrush} alt="blue brush" ></img></div>
@@ -350,12 +357,12 @@ progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = p
               <h3>I am a FullStack Developer</h3>
             </div>
             <div id='upThree'>
-              <p>I specialize in building websites and apps using React and NoSQL databases.
-                Currently, I am working as an intern, building a Learning Management System from the ground up as part of a small team.</p>
+              <p>I specialize in building websites and apps using React, Next.js and NoSQL databases.
+                I have over one year of experience in building both professional and personal projects. My current focus is on AR and VR technologies.</p>
             </div>
           </div>
 
-          <img className='vs-snip' src={vsSnip} alt="vscode snippet" hidden={active !== 'about'}></img>
+          <img className='vs-snip' src={vsSnip} alt="vscode snippet" ></img>
         </div>
 
         <div id="work" ref={sectionTwo} className='section'>

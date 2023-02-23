@@ -419,16 +419,25 @@ padding: 0;
   padding: 0;
 }
 
-
 .svgPath{
   position: fixed;
-  top: 5%;
   left: 20vw;
   width: 60vw;
   height: auto;
-  opacity: 10%;
-  filter: drop-shadow( 0 0 3em rgb(189, 86, 180));
+  transform: rotate(-10deg);
+  opacity: 30%;
+  bottom: 8%;
+  overflow: show;
+  -webkit-filter: 
+  drop-shadow( 3px 3px .2em rgba(111, 103, 216, 0.733))
+  drop-shadow( -3px -3px .2em rgba(22, 1, 247, 0.916))
+  ;
+  filter: 
+  drop-shadow( 3px 3px .2em rgba(111, 103, 216, 0.733))
+  drop-shadow( -3px -3px .2em rgba(22, 1, 247, 0.916));
+  z-index: 0;
 }
+
 
 #contact #email-icon{
 cursor: pointer;
@@ -476,6 +485,7 @@ cursor: pointer;
   display: flex;
   justify-content: space-around;
   z-index: 3;
+  opacity: 80%;
   border-radius: 5px;
   overflow: hidden;
   filter: grayscale(80%);
@@ -744,9 +754,11 @@ cursor: pointer;
 
 @keyframes colorIn {
   from { 
+    opacity: 80%;
     filter: grayscale(20)
   }
   to { 
+    opacity: 100%;
     filter: grayscale(0)
    }
 }
@@ -773,6 +785,14 @@ cursor: pointer;
 
 @media only screen
 and (max-aspect-ratio: 1/1) {
+
+  .svgPath{
+    position: fixed;
+    top: 35%;
+    left: 2.5vw;
+    width: 95vw;
+    height: auto;
+  }
 
   .arButton{
     display: none;
