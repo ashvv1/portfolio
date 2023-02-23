@@ -420,6 +420,16 @@ padding: 0;
 }
 
 
+.svgPath{
+  position: fixed;
+  top: 5%;
+  left: 20vw;
+  width: 60vw;
+  height: auto;
+  opacity: 10%;
+  filter: drop-shadow( 0 0 3em rgb(189, 86, 180));
+}
+
 #contact #email-icon{
 cursor: pointer;
 }

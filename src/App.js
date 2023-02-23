@@ -60,6 +60,8 @@ function App() {
   const mailRef = useRef(null);
   const gitRef = useRef(null);
 
+  const pathRef = useRef(null);
+
   const APP_WRAPPER = appWrapper;
 
   let clicked = false;
@@ -82,6 +84,10 @@ function App() {
 
     setIsLoading(false)
   }
+
+
+
+  const pathLength = pathRef.current && pathRef.current.getTotalLength();
 
   useEffect(() => {
     const imgs = [
@@ -194,6 +200,20 @@ function App() {
   }
 
   const handleScroll = () => {
+
+  const drawLength = (pathLength * progress * .01);
+  console.log(drawLength, pathLength)
+
+  // Draw in reverse
+  pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
+    
+  // When complete, remove the dash array, otherwise shape isn't quite sharp
+ // Accounts for fuzzy math
+  if (progress >= 99.90) {
+    pathRef.current.style.strokeDasharray = "none";
+  } else {
+    pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
+  }
     const appHeight = (sectionOne.current.clientHeight + sectionTwo.current.clientHeight + sectionThree.current.clientHeight);
     setProgress(appWrapper.current.scrollTop / (appHeight - window.innerHeight) * 100)
     if (checkIfInView(sectionOne)) {
@@ -271,9 +291,11 @@ function App() {
     !triggered && activeElement?.setAttribute("aria-label", "un-hover");
   }
 
-  // const paintFinger = (color) => {
+ //SVG PATH DRAWING
 
-  // }
+pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
+
+progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = pathLength))
 
   if (isLoading) {
     return (
@@ -311,6 +333,9 @@ function App() {
       <div className={`body `} >
 
         <div id="about" className='section column' ref={sectionOne}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className='svgPath' visibility={progress < .1 ? "hidden" : ""}>
+  <path ref={pathRef} d="M 4.835 7.02 C 0.488 3.868 -1.358 15.133 2.63 12.159 C 4.099 11.25 7.772 4.673 4.832 6.971 C 3.084 8.101 2.77 11.74 2.665 12.124 C 2.41 14.545 6.548 8.871 8.507 7.716 C 10.256 5.897 7.073 5.163 7.842 8.101 C 9.067 14.363 5.883 12.404 5.428 11.39 C 3.749 7.647 8.997 12.754 9.836 10.9 C 11.655 7.542 19.422 1.769 16.938 0.58 C 15.049 -0.12 8.507 11.145 9.56 12.002 C 10.517 12.541 12.132 6.378 13.568 7.664 C 14.256 8.502 10.128 12.84 13.179 11.853 C 14.107 11.464 14.705 10.626 14.944 9.549" stroke="#E9ECF8" stroke-width="0.1" fill="none"/>
+</svg>
           <div className={'colorsContainer'}>
             {brushes.map(brush => (
               <div className='brush' key={brush}><img src={blueBrush} alt="blue brush" ></img></div>
@@ -354,7 +379,7 @@ function App() {
               </div>
             ))}
           </div>
-          <img className='vs-snip' src={vsSnipTwo} alt="vscode snippet" hidden={active !== 'work'}></img>
+        
         </ div>
 
         <div id='contact' ref={sectionThree} className='section'>

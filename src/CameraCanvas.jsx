@@ -188,8 +188,6 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         const video = videoRef.current;
 
         async function draw() {
-
-
             // Load the MediaPipe handpose model assets.  
 
             // Pass in a video stream to the model to obtain 
