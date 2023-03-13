@@ -13,6 +13,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
     const [handData, setHandData] = useState();
     const [cameraLoaded, setCameraLoaded] = useState(false);
     const [loadedModel, setLoadedModel] = useState();
+    const [clickStrength, setClickStrength] = useState();
 
     const prevHandData = usePrevious(handData);
 
@@ -33,7 +34,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
     }
 
     const WIDTH_RATIO = APP_DIMENSIONS?.width / 620
-    const HEIGHT_RATIO = APP_DIMENSIONS?.height / 350
+    const HEIGHT_RATIO = APP_DIMENSIONS?.height / 360
 
     if (!loadedModel) {
         loadModel();
@@ -64,6 +65,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
     }, [])
 
     const fingerPos = useMemo(() => {
+        
         if (handData?.landmarks) {
             return ({
                 thumb: { left: handData.landmarks[4][0], top: handData.landmarks[4][1], zIndex: handData.landmarks[4][2] },
@@ -118,6 +120,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         }
     }, [handData, prevHandData]);
 
+
     useEffect(() => {
 
         let firstFinger = null;
@@ -127,26 +130,29 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
 
         for (const [key, value] of Object.entries(fingerPos)) {
 
-            if (proximityCount === Object.entries(fingerPos).length) {
+            if (proximityCount > Object.entries(fingerPos).length - 3) {
                 pinching = true;
+                // console.log(pinching);
             }
 
             const left = value.left;
             const top = value.top;
             const zIndex = value.zIndex;
             const prevZ = prevFingerPos[key].zIndex;
-            const sensitivity = 15.5;
+            const sensitivity = 10.5;
             const clicking = zIndex < prevZ - sensitivity;
-            // const clickStrength = prevZ - zIndex;
+            const currentStrength = prevZ - zIndex;
             const X_PIXELS = (620 - left) * WIDTH_RATIO;
             const Y_PIXELS = top * (HEIGHT_RATIO);
+
+            setClickStrength(currentStrength)
 
             key === "pointer" && pressButton(X_PIXELS, Y_PIXELS, clicking, pinching);
 
             if (count === 0) {
                 firstFinger = {
                     firstLeft: left,
-                    firstTop: top
+                    firstTop: top,
                 }
                 count++
             }
@@ -155,31 +161,6 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
                 proximityCount++
             }
 
-
-            // if((left > 420 && left < 480) &&(top > 0 && top < 50)){
-            //     clicking ? pressButton(1, clickStrength) :
-            //     pressButton(-1);
-            //     triggered = true
-            // }else if((left > 270 && left < 330) &&(top > 0 && top < 55)){
-            //     clicking ? pressButton(2, clickStrength) :
-            //     pressButton(-2);
-            //     triggered = true
-            // }else if((left > 120 && left < 180) &&(top > 0 && top < 55)){
-            //     clicking ? pressButton(3, clickStrength) :
-            //     pressButton(-3);
-            //     triggered = true
-            // }else if((left > 0 && left < 30) &&(top > 0 && top < 55)){
-            //     clicking ? pressButton(4, clickStrength) :
-            //     pressButton(-4);
-            //     triggered = true
-            // }else if((left > 570 && left < 610) &&(top > 0 && top < 55)){
-            //     // pressButton(5);
-            //     // triggered = true
-            // }else if(pinching){
-            //     pressButton(800);
-            // }else{
-            //     !triggered && pressButton(900);
-            // }
         }
 
     }, [HEIGHT_RATIO, WIDTH_RATIO, fingerPos, pressButton, prevFingerPos])
@@ -210,7 +191,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
 
         const drawInterval = setInterval(() => {
             draw();
-        }, 20)
+        }, 5)
 
         return () => clearInterval(drawInterval)
     }, [loadedModel])
@@ -226,7 +207,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
             <canvas ref={canvasRef} className="output_canvas">
             </canvas>
             {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (WIDTH_RATIO)), top: (fingerPos.thumb.top * (HEIGHT_RATIO))}} id="thumb"></div> */}
-            <div className="fingerTracker" style={{ left: ((620 - fingerPos.pointer.left) * (WIDTH_RATIO)), top: (fingerPos.pointer.top * (HEIGHT_RATIO)) }} ref={pointerFinger}></div>
+            <div className={`fingerTracker`} id={`${clickStrength > 10 ? 'clickingFlash' : ""}`}style={{ left: ((620 - fingerPos.pointer.left) * (WIDTH_RATIO)), top: (fingerPos.pointer.top * (HEIGHT_RATIO))}} ref={pointerFinger}></div>
             {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (WIDTH_RATIO)), top: (fingerPos.middle.top * (HEIGHT_RATIO)) }}id="middleFing"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.ring.left) * (WIDTH_RATIO)), top: (fingerPos.ring.top * (HEIGHT_RATIO)) }} id="ringFing"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.pinky.left) * (WIDTH_RATIO)), top: (fingerPos.pinky.top * (HEIGHT_RATIO)) }} id="pinky"></div> */}

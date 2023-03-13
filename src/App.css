@@ -425,16 +425,16 @@ padding: 0;
   width: 60vw;
   height: auto;
   transform: rotate(-10deg);
-  opacity: 30%;
+  opacity: 70%;
   bottom: 8%;
   overflow: show;
   -webkit-filter: 
-  drop-shadow( 3px 3px .2em rgba(111, 103, 216, 0.733))
-  drop-shadow( -3px -3px .2em rgba(22, 1, 247, 0.916))
+  drop-shadow( 3px 3px .3em rgba(111, 103, 216, 0.733))
+  drop-shadow( -3px -3px .3em rgba(22, 1, 247, 0.916))
   ;
   filter: 
-  drop-shadow( 3px 3px .2em rgba(111, 103, 216, 0.733))
-  drop-shadow( -3px -3px .2em rgba(22, 1, 247, 0.916));
+  drop-shadow( 3px 3px .3em rgba(111, 103, 216, 0.733))
+  drop-shadow( -3px -3px .3em rgba(22, 1, 247, 0.916));
   z-index: 0;
 }
 
@@ -520,6 +520,7 @@ cursor: pointer;
   flex-wrap: wrap;
   position: relative;
   margin-top: -10vh;
+  opacity: 85%;
 }
 
 .headerText p{
@@ -615,10 +616,15 @@ cursor: pointer;
   background-color: rgba(80, 79, 79, 0.467);
   box-shadow: rgba(95, 188, 251, 0.682) 0 0 1em 1em;
   position: absolute;
-  z-index: 1000;
+  z-index: 2000;
   width: 2em;
   height: 2em;
   border-radius: 50%;
+}
+
+
+#clickingFlash {
+  box-shadow: green 0 0 1em 1em;
 }
 
 #thumb{

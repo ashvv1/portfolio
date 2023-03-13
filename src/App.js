@@ -201,7 +201,6 @@ function App() {
   const handleScroll = () => {
 
   const drawLength = (pathLength * progress * .01);
-  console.log(drawLength);
 
   // Draw in reverse
   pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
@@ -250,7 +249,6 @@ function App() {
             menuElements[i].current.setAttribute("aria-selected", "false")
           }, 10)
           clicked = true;
-          // console.log(inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax))
           menuElements[i].current.click();
           // eslint-disable-next-line no-loop-func
           setTimeout(() => {
@@ -290,7 +288,6 @@ function App() {
     !triggered && activeElement?.setAttribute("aria-label", "un-hover");
   }
 
- //SVG PATH DRAWING
 
 pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
 
