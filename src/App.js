@@ -10,11 +10,13 @@ const mongoIcon = require('./resources/mongoicon.png');
 const jsIcon = require('./resources/jsicon.png');
 const dockerIcon = require('./resources/dockericon.png');
 const firebaseIcon = require('./resources/firebaseicon.png');
+const typeScriptIcon = require('./resources/typescript_icon.png');
 const awsIcon = require('./resources/awsicon.png');
 const htmlIcon = require('./resources/htmlicon.png');
 const cssIcon = require('./resources/cssicon.png');
 const safesend = require('./resources/safesend.jpg')
 const cheats = require('./resources/cheat.jpg');
+const phpIcon = require('./resources/phpicon.png')
 const anon = require('./resources/anon.png')
 const galquiz = require('./resources/quizgalscreen.PNG');
 const linkedinIcon = require('./resources/linkedinicon.png');
@@ -68,7 +70,7 @@ function App() {
   let clicked = false;
   let triggered = false;
 
-  const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon];
+  const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon, phpIcon, typeScriptIcon];
   const brushes = [blueBrush]
 
   const cacheImages = async (srcArray) => {

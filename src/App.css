@@ -324,9 +324,18 @@ header{
   position: relative;
 }
 
+.icons-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .icons-container img{
   margin: 0 1em;
-  width: 5%;
+  max-width: 5em;
+  height: auto;
 }
 
 .icons-container img:hover{
