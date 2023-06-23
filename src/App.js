@@ -146,7 +146,7 @@ function App() {
       description: "Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
       tech: ["React"],
       images: [safesend],
-      link: "http://textsod.com",
+      link: null,
     },
     {
       name: "Cheat Delete",

@@ -87,6 +87,8 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         }
     }, [handData])
 
+    console.log(fingerPos);
+
     const prevFingerPos = useMemo(() => {
         if (prevHandData?.landmarks) {
             return ({
