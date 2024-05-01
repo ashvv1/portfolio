@@ -1,39 +1,37 @@
 import { useRef, useState, useEffect } from 'react';
 import './App.css';
 import CameraCanvas from './CameraCanvas';
-const loading = require('./resources/loading.gif');
-const logo = require('./resources/adamportpix.png');
-const realAdam = require('./resources/adamport.png');
-const reactIcon = require('./resources/reacticon.png');
-const nodeIcon = require('./resources/nodeicon.png');
-const mongoIcon = require('./resources/mongoicon.png');
-const jsIcon = require('./resources/jsicon.png');
-const dockerIcon = require('./resources/dockericon.png');
-const firebaseIcon = require('./resources/firebaseicon.png');
-const typeScriptIcon = require('./resources/typescript_icon.png');
-const awsIcon = require('./resources/awsicon.png');
-const htmlIcon = require('./resources/htmlicon.png');
-const cssIcon = require('./resources/cssicon.png');
-const safesend = require('./resources/safesend.jpg')
-const cheats = require('./resources/cheat.jpg');
-const phpIcon = require('./resources/phpicon.png')
-const anon = require('./resources/anon.png')
-const galquiz = require('./resources/quizgalscreen.PNG');
-const linkedinIcon = require('./resources/linkedinicon.png');
-const resumeIcon = require('./resources/resumeicon.png');
-const emailIcon = require('./resources/emailicon.png');
-const vsSnip = require('./resources/vsSnipOne.JPG');
-const vsSnipTwo = require('./resources/vsSnipTwo.JPG');
-const resumePdf = require('./resources/engResumeAdamShaneHaviv.pdf');
-const githubIcon = require('./resources/githubicon.png');
-const minervaXR = require('./resources/minervaxr.JPG');
-const githubSmall = require('./resources/githubsmall.png');
-const websiteIcon = require('./resources/tabicon.png');
-const offSwitch = require('./resources/offSwitch.png');
-const onSwitch = require('./resources/onSwitch.png');
-const blueBrush = require('./resources/brushes/bluebrush.png');
-
-
+import loading from './resources/loading.gif';
+import logo from './resources/adamportpix.png';
+import realAdam from './resources/adamport.png';
+import reactIcon from './resources/reacticon.png';
+import nodeIcon from './resources/nodeicon.png';
+import mongoIcon from './resources/mongoicon.png';
+import jsIcon from './resources/jsicon.png';
+import dockerIcon from './resources/dockericon.png';
+import firebaseIcon from './resources/firebaseicon.png';
+import typeScriptIcon from './resources/typescript_icon.png';
+import awsIcon from './resources/awsicon.png';
+import htmlIcon from './resources/htmlicon.png';
+import cssIcon from './resources/cssicon.png';
+import safesend from './resources/safesend.jpg';
+import cheats from './resources/cheat.jpg';
+import phpIcon from './resources/phpicon.png';
+import anon from './resources/anon.png';
+import galquiz from './resources/quizgalscreen.PNG';
+import linkedinIcon from './resources/linkedinicon.png';
+import resumeIcon from './resources/resumeicon.png';
+import emailIcon from './resources/emailicon.png';
+import vsSnip from './resources/vsSnipOne.JPG';
+import vsSnipTwo from './resources/vsSnipTwo.JPG';
+import resumePdf from './resources/engResumeAdamShaneHaviv.pdf';
+import githubIcon from './resources/githubicon.png';
+import minervaXR from './resources/minervaxr.JPG';
+import githubSmall from './resources/githubsmall.png';
+import websiteIcon from './resources/tabicon.png';
+import offSwitch from './resources/offSwitch.png';
+import onSwitch from './resources/onSwitch.png';
+import blueBrush from './resources/brushes/bluebrush.png';
 
 function App() {
 
@@ -89,7 +87,7 @@ function App() {
   }
 
   const pathLength = pathRef.current ? pathRef.current.getTotalLength() : 0;
-  
+
   useEffect(() => {
     const imgs = [
       loading,
@@ -202,19 +200,21 @@ function App() {
 
   const handleScroll = () => {
 
-  const drawLength = (pathLength * progress * .01);
+    const drawLength = (pathLength * progress * .01);
 
-  // Draw in reverse
-  pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
-    
-  // When complete, remove the dash array, otherwise shape isn't quite sharp
- // Accounts for fuzzy math
-  if (progress >= 99.90) {
-    pathRef.current.style.strokeDasharray = "none";
-  } else {
-    pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
-  }
-    const appHeight = (sectionOne.current.clientHeight + sectionTwo.current.clientHeight + sectionThree.current.clientHeight);
+    pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
+
+ 
+    if (progress >= 99.90) {
+      pathRef.current.style.strokeDasharray = "none";
+    } else {
+      pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
+    }
+    const appHeight = (
+      sectionOne.current.clientHeight 
+      + sectionTwo.current.clientHeight 
+      + sectionThree.current.clientHeight
+      );
     setProgress(appWrapper.current.scrollTop / (appHeight - window.innerHeight) * 100)
     if (checkIfInView(sectionOne)) {
       setActive('about');
@@ -237,10 +237,11 @@ function App() {
     const menuElements = [buttonOne, buttonTwo, buttonThree, buttonFour];
 
     for (let i = 0; i < menuElements.length; i++) {
-      const topMax = menuElements[i].current.getBoundingClientRect().top;
-      const bottomMax = menuElements[i].current.getBoundingClientRect().bottom;
-      const leftMax = menuElements[i].current.getBoundingClientRect().left;
-      const rightMax = menuElements[i].current.getBoundingClientRect().right;
+      const menuButton = menuElements[i].current.getBoundingClientRect()
+      const topMax = menuButton.top;
+      const bottomMax = menuButton.bottom;
+      const leftMax = menuButton.left;
+      const rightMax = menuButton.right;
       if (inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)) {
         menuElements[i].current.setAttribute("aria-label", "hovered");
         triggerCount++
@@ -291,9 +292,9 @@ function App() {
   }
 
 
-pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
+  pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
 
-progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = pathLength))
+  progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = pathLength))
 
   if (isLoading) {
     return (
@@ -305,7 +306,7 @@ progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = p
 
   return (
     <div className={`App ${modeAR ? 'arMode' : ""}`} onScroll={() => handleScroll()} ref={appWrapper}>
-      {modeAR ? <CameraCanvas arActive={modeAR} pressButton={pressButton} APP_WRAPPER={APP_WRAPPER} /> : null}
+      {modeAR ? <CameraCanvas pressButton={pressButton} APP_WRAPPER={APP_WRAPPER} /> : null}
       <div className='header-container'>
         <header>
           <div className='logo-container'>
@@ -330,15 +331,15 @@ progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = p
 
       <div className={`body `} >
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className={modeAR ? 'hidden' : 'svgPath'} visibility={progress < .1 ? "hidden" : ""}>
-      <path ref={pathRef}
-        d="M 4.835 7.02 C 0.488 3.868 -1.358 15.133 2.63 12.159 C 4.099 11.25 7.772 4.673 4.832 6.971 
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className={modeAR ? 'hidden' : 'svgPath'} visibility={progress < .1 ? "hidden" : ""}>
+          <path ref={pathRef}
+            d="M 4.835 7.02 C 0.488 3.868 -1.358 15.133 2.63 12.159 C 4.099 11.25 7.772 4.673 4.832 6.971 
         C 3.084 8.101 2.77 11.74 2.665 12.124 C 2.41 14.545 6.548 8.871 8.507 7.716 C 11.771 5.434 7.073
         5.163 7.842 8.101 C 9.067 14.363 5.883 12.404 5.428 11.39 C 3.749 7.647 8.997 12.754 9.836 10.9 
         C 11.655 7.542 19.422 1.769 16.938 0.58 C 15.049 -0.12 8.507 11.145 9.56 12.002 C 10.517 12.541 12.132 
         6.378 13.568 7.664 C 14.256 8.502 10.128 12.84 13.179 11.853 C 14.107 11.464 14.705 10.626 14.944 9.549"
-        stroke="#E9ECF8" strokeWidth="0.05" fill="none" />
-    </svg>
+            stroke="#E9ECF8" strokeWidth="0.05" fill="none" />
+        </svg>
 
         <div id="about" className='section column' ref={sectionOne}>
 
@@ -385,7 +386,7 @@ progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = p
               </div>
             ))}
           </div>
-        
+
         </ div>
 
         <div id='contact' ref={sectionThree} className='section'>
