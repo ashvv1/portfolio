@@ -204,17 +204,17 @@ function App() {
 
     pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
 
- 
+
     if (progress >= 99.90) {
       pathRef.current.style.strokeDasharray = "none";
     } else {
       pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
     }
     const appHeight = (
-      sectionOne.current.clientHeight 
-      + sectionTwo.current.clientHeight 
+      sectionOne.current.clientHeight
+      + sectionTwo.current.clientHeight
       + sectionThree.current.clientHeight
-      );
+    );
     setProgress(appWrapper.current.scrollTop / (appHeight - window.innerHeight) * 100)
     if (checkIfInView(sectionOne)) {
       setActive('about');

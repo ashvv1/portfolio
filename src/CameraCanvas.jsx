@@ -68,16 +68,16 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
     }, [])
 
     const returnLandmarks = (hand => {
-            return ({
-                thumb: { left: hand[4][0], top: hand[4][1], zIndex: hand[4][2] },
-                pointer: { left: hand[8][0], top: hand[8][1], zIndex: hand[8][2] },
-                middle: { left: hand[12][0], top: hand[12][1], zIndex: hand[12][2] },
-                ring: { left: hand[16][0], top: hand[16][1], zIndex: hand[16][2] },
-                pinky: { left: hand[20][0], top: hand[20][1], zIndex: hand[20][2] }
-            })
+        return ({
+            thumb: { left: hand[4][0], top: hand[4][1], zIndex: hand[4][2] },
+            pointer: { left: hand[8][0], top: hand[8][1], zIndex: hand[8][2] },
+            middle: { left: hand[12][0], top: hand[12][1], zIndex: hand[12][2] },
+            ring: { left: hand[16][0], top: hand[16][1], zIndex: hand[16][2] },
+            pinky: { left: hand[20][0], top: hand[20][1], zIndex: hand[20][2] }
+        })
     });
     const fingerPos = useMemo(() => {
-        
+
         if (handData?.landmarks) {
             return returnLandmarks(handData.landmarks);
         } else {
@@ -178,16 +178,16 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
             try {
                 if (loadedModel) {
 
-                
-                const hands = await loadedModel.estimateHands(video);
-                hands && setCameraLoaded(true);
 
-                if (hands?.length > 0) {
-                    setHandData(hands[0])
-                } else {
-                    setHandData(null);
+                    const hands = await loadedModel.estimateHands(video);
+                    hands && setCameraLoaded(true);
+
+                    if (hands?.length > 0) {
+                        setHandData(hands[0])
+                    } else {
+                        setHandData(null);
+                    }
                 }
-            }
             } catch (e) {
                 console.log(e);
             }
@@ -210,7 +210,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
             <canvas ref={canvasRef} className="output_canvas">
             </canvas>
             {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.thumb.left) * (WIDTH_RATIO)), top: (fingerPos.thumb.top * (HEIGHT_RATIO))}} id="thumb"></div> */}
-            <div className={`fingerTracker`} id={`${clickFlash ? 'clickingFlash' : ""}`}style={{ left: ((620 - fingerPos.pointer.left) * (WIDTH_RATIO)), top: (fingerPos.pointer.top * (HEIGHT_RATIO))}} ref={pointerFinger}></div>
+            <div className={`fingerTracker`} id={`${clickFlash ? 'clickingFlash' : ""}`} style={{ left: ((620 - fingerPos.pointer.left) * (WIDTH_RATIO)), top: (fingerPos.pointer.top * (HEIGHT_RATIO)) }} ref={pointerFinger}></div>
             {/* <div className="fingerTracker" style={{ left: ((620 - fingerPos.middle.left) * (WIDTH_RATIO)), top: (fingerPos.middle.top * (HEIGHT_RATIO)) }}id="middleFing"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.ring.left) * (WIDTH_RATIO)), top: (fingerPos.ring.top * (HEIGHT_RATIO)) }} id="ringFing"></div>
             <div className="fingerTracker" style={{ left: ((620 - fingerPos.pinky.left) * (WIDTH_RATIO)), top: (fingerPos.pinky.top * (HEIGHT_RATIO)) }} id="pinky"></div> */}
