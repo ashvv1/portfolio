@@ -23,7 +23,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
             const model = await handpose.load();
             setLoadedModel(model);
         } catch (e) {
-            console.log(e);
+        
         }
     }
 
@@ -40,13 +40,11 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
 
     if (!loadedModel) {
         loadModel();
-        console.log('loading model')
     }
 
     useEffect(() => {
         const camera = new Camera(videoRef.current);
         const video = videoRef.current;
-        console.log(video.offsetHeight)
         camera.start();
 
         const endstream = async () => {
@@ -173,39 +171,45 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
 
     useEffect(() => {
         const video = videoRef.current;
+        let rafId = null;
 
-        async function draw() {
-            try {
-                if (loadedModel) {
-
-
-                    const hands = await loadedModel.estimateHands(video);
-                    hands && setCameraLoaded(true);
-
-                    if (hands?.length > 0) {
-                        setHandData(hands[0])
-                    } else {
-                        setHandData(null);
-                    }
-                }
-            } catch (e) {
-                console.log(e);
+        async function detectHands() {
+            if (!loadedModel || !video) {
+                rafId = requestAnimationFrame(detectHands);
+                return;
             }
+
+            try {
+                const hands = await loadedModel.estimateHands(video);
+                
+                if (!cameraLoaded && hands) {
+                    setCameraLoaded(true);
+                }
+
+                setHandData(hands[0] || null);
+            } catch (e) {
+                console.error('Hand detection error:', e);
+            }
+
+            rafId = requestAnimationFrame(detectHands);
         }
 
-        const drawInterval = setInterval(() => {
-            draw();
-        }, 50)
+        // Start the detection loop
+        detectHands();
 
-        return () => clearInterval(drawInterval)
-    }, [loadedModel])
+        // Cleanup
+        return () => {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+        };
+    }, [loadedModel]); // Only re-run if model changes
+
     return (
         <div className="cameraCanvas" ref={canvasContainer}>
-
             {!cameraLoaded && <div className='loadingScreen'>
                 CAMERA LOADING
             </div>}
-
             <video ref={videoRef} className="input_video" id='video'></video>
             <canvas ref={canvasRef} className="output_canvas">
             </canvas>

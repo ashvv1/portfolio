@@ -139,7 +139,7 @@ function App() {
       description: "Learn any language that you want through practice and by testing yourself, for free!",
       tech: ["React", "Router", "Heroku", "Firebase"],
       images: [galquiz],
-      link: "https://www.myquizgal.com/"
+      link: null
     },
     {
       name: "TextSOD",
@@ -357,8 +357,8 @@ function App() {
               <h3>I am a FullStack Developer</h3>
             </div>
             <div id='upThree'>
-              <p>I specialize in building websites and apps using React, Next.js and NoSQL databases.
-                I have over one year of experience in building both professional and personal projects. My current focus is on AR and VR technologies.</p>
+              <p>I specialize in building websites and web apps using a wide range of technologies.
+              With over 3 years of experience in building both professional and personal projects, I have a passion for innovation and learning new technologies.</p>
             </div>
           </div>
 
