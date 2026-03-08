@@ -1,35 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.93fae450.css",
-    "main.js": "/static/js/main.328f7e0a.js",
+    "main.css": "/static/css/main.d2f99901.css",
+    "main.js": "/static/js/main.ae46e826.js",
     "static/media/cheat.jpg": "/static/media/cheat.effac1e8a1417d4a05e7.jpg",
     "static/media/vsSnipOne.JPG": "/static/media/vsSnipOne.aa1513e945da6621ae73.JPG",
     "static/media/vsSnipTwo.JPG": "/static/media/vsSnipTwo.6bcf330623b4c0726952.JPG",
+    "static/media/site123.png": "/static/media/site123.542058551fb8d941456b.png",
     "static/media/adamport.png": "/static/media/adamport.8a596f89a70d74813208.png",
     "static/media/minervaxr.JPG": "/static/media/minervaxr.8dea470f6049e7804465.JPG",
     "static/media/safesend.jpg": "/static/media/safesend.645a4a3ebbabb1f29248.jpg",
+    "static/media/adamhavivresume26.pdf": "/static/media/adamhavivresume26.1762fa8ed4d4412fc2c0.pdf",
     "static/media/anon.png": "/static/media/anon.b8c6bb97eed5f07ce3b1.png",
-    "static/media/engResumeAdamShaneHaviv.pdf": "/static/media/engResumeAdamShaneHaviv.af28708f1eb4d296794e.pdf",
     "static/media/adamportpix.png": "/static/media/adamportpix.e9cf072ee88881c9c6a8.png",
     "static/media/quizgalscreen.PNG": "/static/media/quizgalscreen.997c1844fcb6201f017f.PNG",
-    "static/media/reacticon.png": "/static/media/reacticon.7aa3e7438534a7686f56.png",
     "static/media/githubicon.png": "/static/media/githubicon.d4a0b8f6cb7d1e29ec90.png",
     "static/media/resumeicon.png": "/static/media/resumeicon.969ae6e37acc441c84af.png",
-    "static/media/awsicon.png": "/static/media/awsicon.291bb8025c1ae0517224.png",
-    "static/media/mongoicon.png": "/static/media/mongoicon.a8889d623357ad8ce30e.png",
     "static/media/emailicon.png": "/static/media/emailicon.b20e695af2ad6cc0e2e0.png",
-    "static/media/nodeicon.png": "/static/media/nodeicon.a4713ff2ca054bf23788.png",
-    "static/media/firebaseicon.png": "/static/media/firebaseicon.8ee1bbf44059792c092b.png",
-    "static/media/jsicon.png": "/static/media/jsicon.f4cfa53e1a981cf7af59.png",
-    "static/media/dockericon.png": "/static/media/dockericon.02ac7d071c626c855cc2.png",
-    "static/media/cssicon.png": "/static/media/cssicon.5721a3928fe43de6baf8.png",
-    "static/media/phpicon.png": "/static/media/phpicon.0a564540c19c7189202e.png",
     "index.html": "/index.html",
-    "main.93fae450.css.map": "/static/css/main.93fae450.css.map",
-    "main.328f7e0a.js.map": "/static/js/main.328f7e0a.js.map"
+    "main.d2f99901.css.map": "/static/css/main.d2f99901.css.map",
+    "main.ae46e826.js.map": "/static/js/main.ae46e826.js.map"
   },
   "entrypoints": [
-    "static/css/main.93fae450.css",
-    "static/js/main.328f7e0a.js"
+    "static/css/main.d2f99901.css",
+    "static/js/main.ae46e826.js"
   ]
 }
