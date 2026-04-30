@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.f8574d5f.css",
-    "main.js": "/static/js/main.ad861e07.js",
+    "main.css": "/static/css/main.654b7c3f.css",
+    "main.js": "/static/js/main.926714c8.js",
     "static/media/cheat.jpg": "/static/media/cheat.effac1e8a1417d4a05e7.jpg",
     "static/media/vsSnipOne.JPG": "/static/media/vsSnipOne.aa1513e945da6621ae73.JPG",
+    "static/media/pyloft-landing.png": "/static/media/pyloft-landing.4c738ebb890fc28fc772.png",
     "static/media/vsSnipTwo.JPG": "/static/media/vsSnipTwo.6bcf330623b4c0726952.JPG",
     "static/media/site123.png": "/static/media/site123.542058551fb8d941456b.png",
     "static/media/adamport.png": "/static/media/adamport.8a596f89a70d74813208.png",
     "static/media/minervaxr.JPG": "/static/media/minervaxr.8dea470f6049e7804465.JPG",
+    "static/media/pyloft-editor.png": "/static/media/pyloft-editor.e56b24c5300f8e03c1c0.png",
     "static/media/safesend.jpg": "/static/media/safesend.645a4a3ebbabb1f29248.jpg",
     "static/media/adamhavivresume26.pdf": "/static/media/adamhavivresume26.1762fa8ed4d4412fc2c0.pdf",
     "static/media/anon.png": "/static/media/anon.b8c6bb97eed5f07ce3b1.png",
@@ -17,11 +19,11 @@
     "static/media/resumeicon.png": "/static/media/resumeicon.969ae6e37acc441c84af.png",
     "static/media/emailicon.png": "/static/media/emailicon.b20e695af2ad6cc0e2e0.png",
     "index.html": "/index.html",
-    "main.f8574d5f.css.map": "/static/css/main.f8574d5f.css.map",
-    "main.ad861e07.js.map": "/static/js/main.ad861e07.js.map"
+    "main.654b7c3f.css.map": "/static/css/main.654b7c3f.css.map",
+    "main.926714c8.js.map": "/static/js/main.926714c8.js.map"
   },
   "entrypoints": [
-    "static/css/main.f8574d5f.css",
-    "static/js/main.ad861e07.js"
+    "static/css/main.654b7c3f.css",
+    "static/js/main.926714c8.js"
   ]
 }
