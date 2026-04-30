@@ -1,22 +1,11 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import './App.css';
 import CameraCanvas from './CameraCanvas';
 import loading from './resources/loading.gif';
 import logo from './resources/adamportpix.png';
 import realAdam from './resources/adamport.png';
-import reactIcon from './resources/reacticon.png';
-import nodeIcon from './resources/nodeicon.png';
-import mongoIcon from './resources/mongoicon.png';
-import jsIcon from './resources/jsicon.png';
-import dockerIcon from './resources/dockericon.png';
-import firebaseIcon from './resources/firebaseicon.png';
-import typeScriptIcon from './resources/typescript_icon.png';
-import awsIcon from './resources/awsicon.png';
-import htmlIcon from './resources/htmlicon.png';
-import cssIcon from './resources/cssicon.png';
 import safesend from './resources/safesend.jpg';
 import cheats from './resources/cheat.jpg';
-import phpIcon from './resources/phpicon.png';
 import anon from './resources/anon.png';
 import galquiz from './resources/quizgalscreen.PNG';
 import linkedinIcon from './resources/linkedinicon.png';
@@ -24,7 +13,7 @@ import resumeIcon from './resources/resumeicon.png';
 import emailIcon from './resources/emailicon.png';
 import vsSnip from './resources/vsSnipOne.JPG';
 import vsSnipTwo from './resources/vsSnipTwo.JPG';
-import resumePdf from './resources/engResumeAdamShaneHaviv.pdf';
+import resumePdf from './resources/adamhavivresume26.pdf';
 import githubIcon from './resources/githubicon.png';
 import minervaXR from './resources/minervaxr.JPG';
 import githubSmall from './resources/githubsmall.png';
@@ -32,6 +21,45 @@ import websiteIcon from './resources/tabicon.png';
 import offSwitch from './resources/offSwitch.png';
 import onSwitch from './resources/onSwitch.png';
 import blueBrush from './resources/brushes/bluebrush.png';
+import site123 from './resources/site123.png';
+import pyloftLanding from './resources/pyloft-landing.png';
+import pyloftEditor from './resources/pyloft-editor.png';
+import TechGlobe from './TechGlobe';
+
+const inRange = (x, y, topMax, bottomMax, rightMax, leftMax) => {
+  const xInRange = x < rightMax + 50 && x > leftMax - 50;
+  const yInRange = y < bottomMax + 50 && y > topMax - 50;
+  return xInRange && yInRange;
+};
+
+function OrbThumb({ images, alt, intervalMs = 3500, startDelayMs = 0 }) {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    if (!images || images.length <= 1) return undefined;
+    let intervalId;
+    const startId = setTimeout(() => {
+      intervalId = setInterval(() => {
+        setIdx((i) => (i + 1) % images.length);
+      }, intervalMs);
+    }, startDelayMs);
+    return () => {
+      clearTimeout(startId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [images, intervalMs, startDelayMs]);
+
+  if (!images || images.length === 0) return null;
+
+  return images.map((src, i) => (
+    <img
+      key={src}
+      className={`orb-thumb${images.length > 1 && i !== idx ? ' orb-thumb-hidden' : ''}`}
+      src={src}
+      alt={alt}
+    />
+  ));
+}
 
 function App() {
 
@@ -43,6 +71,8 @@ function App() {
   const [capMessage, setCapMessage] = useState("Hi! Thanks for visiting :)")
   const [isLoading, setIsLoading] = useState(true);
   const [modeAR, setModeAR] = useState(false);
+  const [pinchDrag, setPinchDrag] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState(null);
 
   const sectionTwo = useRef(null);
   const sectionOne = useRef(null);
@@ -65,10 +95,28 @@ function App() {
 
   const APP_WRAPPER = appWrapper;
 
-  let clicked = false;
-  let triggered = false;
+  const clickedRef = useRef(false);
+  const triggeredRef = useRef(false);
 
-  const icons = [reactIcon, nodeIcon, mongoIcon, jsIcon, dockerIcon, firebaseIcon, awsIcon, htmlIcon, cssIcon, phpIcon, typeScriptIcon];
+  const icons = [
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+  ];
   const brushes = [blueBrush]
 
   const cacheImages = async (srcArray) => {
@@ -93,15 +141,6 @@ function App() {
       loading,
       logo,
       realAdam,
-      reactIcon,
-      nodeIcon,
-      mongoIcon,
-      jsIcon,
-      dockerIcon,
-      firebaseIcon,
-      awsIcon,
-      htmlIcon,
-      cssIcon,
       safesend,
       cheats,
       anon,
@@ -119,6 +158,13 @@ function App() {
   }, [])
 
   const projects = [
+    {
+      name: "Pyloft",
+      description: "Free real-time collaborative Python editor. Share a room link, code together with live cursors, take turns running code.",
+      tech: ["React", "WebSockets", "Python", "Node"],
+      images: [pyloftEditor, pyloftLanding],
+      link: "https://py-loft.com"
+    },
     {
       name: "MinervaXR - LMS",
       description: "A Learning Management System made during my internship at MinervaXR ",
@@ -155,6 +201,13 @@ function App() {
       images: [cheats],
       link: "https://ashvv1.github.io/cheatdelete",
       repo: "https://github.com/ashvv1/cheatdelete"
+    },
+    {
+      name: "SITE123",
+      description: "Current dev team member",
+      tech: [],
+      images: [site123],
+      link: "https://www.site123.com",
     }
   ];
 
@@ -183,11 +236,7 @@ function App() {
     ref.current.scrollIntoView({ behavior: "smooth" });
   }
 
-  const inRange = (x, y, topMax, bottomMax, rightMax, leftMax) => {
-    const xInRange = x < rightMax + 50 && x > leftMax - 50;
-    const yInRange = y < bottomMax + 50 && y > topMax - 50;
-    return xInRange && yInRange;
-  }
+  // inRange moved outside the component to avoid re-creation
 
 
   const checkIfInView = (element) => {
@@ -230,7 +279,16 @@ function App() {
     window.open('mailto:ashaviv27@gmail.com?subject=Job%20Offer&body=Come%20work%20with%20us!')
   }
 
-  const pressButton = (x_axis, y_axis, clicking, pinching) => {
+
+  const pressButton = useCallback((x_axis, y_axis, clicking, pinching) => {
+    if (pinching) {
+      setPinchDrag((prev) => {
+        if (prev?.active && prev.x === x_axis && prev.y === y_axis) return prev;
+        return { active: true, x: x_axis, y: y_axis };
+      });
+    } else {
+      setPinchDrag((prev) => prev?.active ? { active: false, x: 0, y: 0 } : prev);
+    }
 
     let triggerCount = 0;
 
@@ -245,17 +303,17 @@ function App() {
       if (inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)) {
         menuElements[i].current.setAttribute("aria-label", "hovered");
         triggerCount++
-        if (!clicked && clicking) {
+        if (!clickedRef.current && clicking) {
           menuElements[i].current.setAttribute("aria-selected", "true")
           menuElements[i].current.setAttribute("aria-label", "un-hover");
           setTimeout(() => {
             menuElements[i].current.setAttribute("aria-selected", "false")
           }, 10)
-          clicked = true;
+          clickedRef.current = true;
           menuElements[i].current.click();
           // eslint-disable-next-line no-loop-func
           setTimeout(() => {
-            clicked = false;
+            clickedRef.current = false;
           }, 800)
         }
         break;
@@ -274,22 +332,23 @@ function App() {
         if (inRange(x_axis, y_axis, topMax, bottomMax, rightMax, leftMax)) {
           sectionElements[i].current.setAttribute("aria-label", "hovered");
           triggerCount++
-          if (!clicked && clicking) {
-            clicked = true;
+          if (!clickedRef.current && clicking) {
+            clickedRef.current = true;
             sectionElements[i].current.click();
             // eslint-disable-next-line no-loop-func
             setTimeout(() => {
-              clicked = false;
+              clickedRef.current = false;
             }, 800)
             break;
           }
         }
       }
     }
-    triggerCount > 0 ? triggered = true : triggered = false;
+    triggeredRef.current = triggerCount > 0;
     const activeElement = document.querySelector('[aria-label="hovered"]');
-    !triggered && activeElement?.setAttribute("aria-label", "un-hover");
-  }
+    !triggeredRef.current && activeElement?.setAttribute("aria-label", "un-hover");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
 
 
   pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
@@ -366,28 +425,60 @@ function App() {
         </div>
 
         <div id="work" ref={sectionTwo} className='section'>
-          <div className="icons-container">
-            {icons.map((icon, i) => (
-              <img key={`icon${i}`} src={icon} alt='stack icon'></img>
-            ))}
+          <div className="globe-orbit-wrapper">
+            <TechGlobe
+              icons={icons}
+              pinchDrag={modeAR ? pinchDrag : null}
+              isARMode={modeAR}
+              isMobile={window.innerWidth <= window.innerHeight}
+            />
+            <div 
+              className={`orbit-ring ${hoveredProject !== null ? 'paused' : ''}`}
+            >
+              {projects.map((project, i) => {
+                // Solar system: each project orbits at a different radius & speed
+                const orbitConfigs = [
+                  { radius: 320, duration: 28 },
+                  { radius: 290, duration: 28 },
+                  { radius: 380, duration: 28 },
+                  { radius: 440, duration: 28 },
+                  { radius: 360, duration: 28 },
+                  { radius: 420, duration: 28 },
+                  { radius: 340, duration: 28 },
+                ];
+                const config = orbitConfigs[i] || { radius: 380, duration: 28 };
+                const angle = (360 / projects.length) * i;
+                const isHovered = hoveredProject === i;
+                return (
+                  <div
+                    key={project.name}
+                    className="orbit-slot"
+                    style={{
+                      '--orbit-radius': `${config.radius}px`,
+                      animationDelay: `${-(angle / 360) * config.duration}s`,
+                      animationDuration: `${config.duration}s`,
+                    }}
+                  >
+                    <div
+                      className={`project-orb ${isHovered ? 'expanded' : ''} ${hoveredProject !== null && !isHovered ? 'dimmed' : ''}`}
+                      onMouseEnter={() => setHoveredProject(i)}
+                      onMouseLeave={() => setHoveredProject(null)}
+                    >
+                      <OrbThumb images={project.images} alt={project.name} startDelayMs={i * 600} />
+                      <div className="orb-card-content">
+                        {project.repo && <a href={project.repo} target="_blank" rel="noreferrer" className="projectIcon orb-icon-tl"><img src={githubSmall} alt="link to github" /></a>}
+                        {project.link && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon orb-icon-tr"><img src={websiteIcon} alt="link to website" /></a>}
+                        <h3>{project.name}</h3>
+                        <h4>{project.description}</h4>
+                        {project.tech.length > 0 && <p className="project-tech">Made using: {project.tech.map(tech => <span key={tech}>{tech} </span>)}</p>}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="Project-list">
-            {projects.map((project, i) => (
-              <div key={project.name} className="Project-list-item">
-
-                <img className="projectBackgroundImage" src={project.images[0]} alt={`${project.name} background`} />
-                <div className="project-list-desc">
-                  {project.repo && <a href={project.repo} target="_blank" rel="noreferrer" className="projectIcon" id="topLeft"><img src={githubSmall} alt={"link to github"} /></a>}
-                  {project.link && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon" id="topRight"><img src={websiteIcon} alt={"link to website"} /></a>}
-                  <h3>{project.name}</h3>
-                  <h4>{project.description}</h4>
-                  <p className="project-tech">Made using: {project.tech.map(tech => <span key={tech}>{tech} </span>)}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </ div>
+        </div>
 
         <div id='contact' ref={sectionThree} className='section'>
           <div className="contact-icons">
