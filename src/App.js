@@ -73,6 +73,11 @@ function App() {
   const [modeAR, setModeAR] = useState(false);
   const [pinchDrag, setPinchDrag] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [isShaking, setIsShaking] = useState(false);
+
+  const lastScrollPosRef = useRef(0);
+  const lastScrollTimeRef = useRef(0);
+  const lastShakeTimeRef = useRef(0);
 
   const sectionTwo = useRef(null);
   const sectionOne = useRef(null);
@@ -272,6 +277,31 @@ function App() {
     } else if (checkIfInView(sectionThree)) {
       setActive('contact');
     }
+
+    // ── "Hard-scroll" shake: when the user reaches the bottom with
+    // significant velocity, jiggle the contact icons like an impact ──
+    const wrapper = appWrapper.current;
+    if (!wrapper) return;
+    const maxScroll = wrapper.scrollHeight - wrapper.clientHeight;
+    const currentScroll = wrapper.scrollTop;
+    const distanceFromBottom = maxScroll - currentScroll;
+
+    const now = performance.now();
+    const dt = now - lastScrollTimeRef.current;
+    const dy = currentScroll - lastScrollPosRef.current;
+    const velocity = dt > 0 ? dy / dt : 0;
+    lastScrollPosRef.current = currentScroll;
+    lastScrollTimeRef.current = now;
+
+    if (
+      distanceFromBottom < 8 &&
+      velocity > 0.6 &&
+      (now - lastShakeTimeRef.current) > 1200
+    ) {
+      lastShakeTimeRef.current = now;
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 950);
+    }
   }
 
 
@@ -392,12 +422,25 @@ function App() {
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className={modeAR ? 'hidden' : 'svgPath'} visibility={progress < .1 ? "hidden" : ""}>
           <path ref={pathRef}
-            d="M 4.835 7.02 C 0.488 3.868 -1.358 15.133 2.63 12.159 C 4.099 11.25 7.772 4.673 4.832 6.971 
-        C 3.084 8.101 2.77 11.74 2.665 12.124 C 2.41 14.545 6.548 8.871 8.507 7.716 C 11.771 5.434 7.073
-        5.163 7.842 8.101 C 9.067 14.363 5.883 12.404 5.428 11.39 C 3.749 7.647 8.997 12.754 9.836 10.9 
-        C 11.655 7.542 19.422 1.769 16.938 0.58 C 15.049 -0.12 8.507 11.145 9.56 12.002 C 10.517 12.541 12.132 
-        6.378 13.568 7.664 C 14.256 8.502 10.128 12.84 13.179 11.853 C 14.107 11.464 14.705 10.626 14.944 9.549"
-            stroke="#E9ECF8" strokeWidth="0.05" fill="none" />
+            d="M 0.9 8.5
+               C 0.5 6.7, 2.6 4.0, 5.0 5.0
+               S 6.4 7.5, 5.4 8.6
+               S 2.6 9.4, 2.6 7.8
+               S 4.7 6.0, 5.4 7.9
+               S 6.6 9.1, 7.6 8.0
+               S 9.4 4.6, 8.4 4.6
+               S 8.0 6.1, 8.7 6.6
+               S 8.5 8.1, 9.0 9.0
+               S 10.0 9.7, 10.7 9.0
+               S 12.5 3.0, 12.5 1.6
+               C 12.7 0.8, 13.5 0.8, 13.0 1.7
+               S 11.5 6.0, 12.2 9.0
+               C 12.5 7.5, 14.0 6.0, 14.5 7.4
+               S 15.8 9.0, 16.1 9.4
+               S 16.7 9.5, 17.0 9.2"
+            strokeWidth="0.18"
+            strokeLinecap="round" strokeLinejoin="round"
+            fill="none" />
         </svg>
 
         <div id="about" className='section column' ref={sectionOne}>
@@ -480,15 +523,37 @@ function App() {
           </div>
         </div>
 
-        <div id='contact' ref={sectionThree} className='section'>
-          <div className="contact-icons">
+        <div id='contact' ref={sectionThree} className={`section ${active === 'contact' ? 'contact-active' : ''}`}>
+          <div className={`contact-icons ${isShaking ? 'shaking' : ''}`}>
 
-            <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer" ref={linkedinRef}><img src={linkedinIcon} alt='linkedin icon' ref={linkedinRef} /></a>
-            <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer" ref={cvRef}><img src={resumeIcon} alt='resume icon' ></img></a>
+            <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer" ref={linkedinRef}>
+              <img src={linkedinIcon} alt='linkedin icon' />
+              <span className="contact-label">
+                <span className="contact-label-title">LinkedIn</span>
+                <span className="contact-label-detail">adam-haviv</span>
+              </span>
+            </a>
+            <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer" ref={cvRef}>
+              <img src={resumeIcon} alt='resume icon' />
+              <span className="contact-label">
+                <span className="contact-label-title">CV</span>
+                <span className="contact-label-detail">Download Here</span>
+              </span>
+            </a>
             <div id='email-icon-container' >
               <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon' ref={mailRef}></img>
+              <span className="contact-label">
+                <span className="contact-label-title">Email</span>
+                <span className="contact-label-detail">ashaviv27@gmail.com</span>
+              </span>
             </div>
-            <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer" ref={gitRef}><img src={githubIcon} alt='github icon'></img></a>
+            <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer" ref={gitRef}>
+              <img src={githubIcon} alt='github icon' />
+              <span className="contact-label">
+                <span className="contact-label-title">GitHub</span>
+                <span className="contact-label-detail">github.com/ashvv1</span>
+              </span>
+            </a>
 
           </div>
 

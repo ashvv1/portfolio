@@ -1015,7 +1015,9 @@ header::after {
 #contact{
   display: flex;
   position: relative;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background: linear-gradient(to bottom,
     rgba(13, 10, 38, 0.30) 0%,
     rgba(7, 6, 26, 0.45) 30%,
@@ -1023,22 +1025,18 @@ header::after {
   );
 }
 
-#contact a{
-width: 15%;
-margin: 5%;
-padding: 0;
-position: relative;
-display: inline-block;
-isolation: isolate;
-}
-
+#contact a,
 #contact #email-icon-container{
   width: 15%;
-  margin: 5%;
+  aspect-ratio: 1 / 1;
+  margin: 3%;
   padding: 0;
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   isolation: isolate;
+  cursor: pointer;
 }
 
 #contact a::before,
@@ -1069,22 +1067,24 @@ isolation: isolate;
   width: 60vw;
   height: auto;
   transform: rotate(-10deg);
-  opacity: 80%;
+  opacity: 0.7;
   bottom: 8%;
-  overflow: show;
+  overflow: visible;
+  /* Soft dark imprint — broad, low-contrast, with diffuse shadows so the line
+     reads as a pressed-in watermark rather than a defined stroke. */
   -webkit-filter:
-    drop-shadow(2px 2px .25em rgba(95, 220, 255, 0.55))
-    drop-shadow(-2px -2px .25em rgba(255, 97, 216, 0.45))
-    drop-shadow(0 0 .35em rgba(124, 92, 255, 0.65));
+    drop-shadow(0 1px 2px rgba(182, 168, 255, 0.10))
+    drop-shadow(0 -1px 3px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 12px rgba(0, 0, 0, 0.45));
   filter:
-    drop-shadow(2px 2px .25em rgba(95, 220, 255, 0.55))
-    drop-shadow(-2px -2px .25em rgba(255, 97, 216, 0.45))
-    drop-shadow(0 0 .35em rgba(124, 92, 255, 0.65));
+    drop-shadow(0 1px 2px rgba(182, 168, 255, 0.10))
+    drop-shadow(0 -1px 3px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 12px rgba(0, 0, 0, 0.45));
   z-index: 0;
 }
 
 .svgPath path {
-  stroke: var(--lavender);
+  stroke: rgba(0, 0, 0, 0.32);
 }
 
 
@@ -1094,11 +1094,91 @@ cursor: pointer;
 
 #contact img{
   padding: 0;
-  width: 100%;
+  width: auto;
+  height: auto;
+  max-width: 78%;
+  max-height: 78%;
+  object-fit: contain;
 }
 
 #contact img:hover{
   filter: brightness(1.15) drop-shadow(0 0 18px rgba(124, 92, 255, 0.65));
+}
+
+/* ── Contact labels under each icon — fade-in from top when section active ── */
+.contact-label {
+  position: absolute;
+  top: calc(100% + 1.2em);
+  left: 50%;
+  transform: translateX(-50%) translateY(-14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  text-align: center;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.contact-label-title {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: var(--text-hi);
+  letter-spacing: -0.01em;
+}
+
+.contact-label-detail {
+  font-size: 0.85em;
+  color: var(--text-low);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+#contact.contact-active .contact-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Stagger the fade-in across the four icons */
+#contact.contact-active .contact-icons > *:nth-child(1) .contact-label { transition-delay: 0.10s; }
+#contact.contact-active .contact-icons > *:nth-child(2) .contact-label { transition-delay: 0.20s; }
+#contact.contact-active .contact-icons > *:nth-child(3) .contact-label { transition-delay: 0.30s; }
+#contact.contact-active .contact-icons > *:nth-child(4) .contact-label { transition-delay: 0.40s; }
+
+/* ── Hard-scroll shake: the icons jump and settle when the user
+   reaches the bottom of the page with significant velocity ── */
+@keyframes contact-icon-bounce {
+  0%   { transform: translateY(0)     scale(1); }
+  18%  { transform: translateY(-26px) scale(1.06); }
+  36%  { transform: translateY(8px)   scale(0.96); }
+  56%  { transform: translateY(-10px) scale(1.02); }
+  80%  { transform: translateY(3px)   scale(0.99); }
+  100% { transform: translateY(0)     scale(1); }
+}
+
+.contact-icons.shaking > * {
+  animation: contact-icon-bounce 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contact-icons.shaking > *:nth-child(1) { animation-delay: 0s; }
+.contact-icons.shaking > *:nth-child(2) { animation-delay: 0.06s; }
+.contact-icons.shaking > *:nth-child(3) { animation-delay: 0.12s; }
+.contact-icons.shaking > *:nth-child(4) { animation-delay: 0.18s; }
+
+/* Mobile: smaller label text so detail fits within the narrower icon column */
+@media only screen and (max-aspect-ratio: 1/1) {
+  .contact-label {
+    top: calc(100% + 0.6em);
+  }
+  .contact-label-title {
+    font-size: 0.95em;
+  }
+  .contact-label-detail {
+    font-size: 0.7em;
+  }
 }
 
 .Project-list {
@@ -1171,7 +1251,7 @@ cursor: pointer;
   flex-direction: row;
   flex-wrap: wrap;
   position: relative;
-  margin-top: -10vh;
+  width: 100%;
   opacity: 85%;
 }
 
@@ -1528,14 +1608,11 @@ and (max-aspect-ratio: 1/1) {
     padding: .1em;
   }
 
-  #contact a{
-    height: 30%;
-    width: 30%;
-  }
-
+  #contact a,
   #contact #email-icon-container{
     width: 30%;
-    height: 30%;
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
 
   .Project-list-item{
