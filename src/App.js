@@ -16,8 +16,6 @@ import vsSnipTwo from './resources/vsSnipTwo.JPG';
 import resumePdf from './resources/adamhavivresume26.pdf';
 import githubIcon from './resources/githubicon.png';
 import minervaXR from './resources/minervaxr.JPG';
-import githubSmall from './resources/githubsmall.png';
-import websiteIcon from './resources/tabicon.png';
 import offSwitch from './resources/offSwitch.png';
 import onSwitch from './resources/onSwitch.png';
 import blueBrush from './resources/brushes/bluebrush.png';
@@ -32,7 +30,7 @@ const inRange = (x, y, topMax, bottomMax, rightMax, leftMax) => {
   return xInRange && yInRange;
 };
 
-function OrbThumb({ images, alt, intervalMs = 3500, startDelayMs = 0 }) {
+function ProjectImageRotator({ images, alt, intervalMs = 3500, startDelayMs = 0 }) {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
@@ -54,7 +52,7 @@ function OrbThumb({ images, alt, intervalMs = 3500, startDelayMs = 0 }) {
   return images.map((src, i) => (
     <img
       key={src}
-      className={`orb-thumb${images.length > 1 && i !== idx ? ' orb-thumb-hidden' : ''}`}
+      className={`project-image-rotator-img${images.length > 1 && i !== idx ? ' project-image-rotator-img-hidden' : ''}`}
       src={src}
       alt={alt}
     />
@@ -72,7 +70,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [modeAR, setModeAR] = useState(false);
   const [pinchDrag, setPinchDrag] = useState(null);
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
 
   const lastScrollPosRef = useRef(0);
@@ -95,8 +93,10 @@ function App() {
   const cvRef = useRef(null);
   const mailRef = useRef(null);
   const gitRef = useRef(null);
-
-  const pathRef = useRef(null);
+  const projectStripRef = useRef(null);
+  const stripScrollPausedRef = useRef(false);
+  const stripScrollDirRef = useRef(1);
+  const stripScrollRafRef = useRef(null);
 
   const APP_WRAPPER = appWrapper;
 
@@ -139,8 +139,6 @@ function App() {
     setIsLoading(false)
   }
 
-  const pathLength = pathRef.current ? pathRef.current.getTotalLength() : 0;
-
   useEffect(() => {
     const imgs = [
       loading,
@@ -156,7 +154,10 @@ function App() {
       vsSnip,
       vsSnipTwo,
       resumePdf,
-      githubIcon
+      githubIcon,
+      pyloftEditor,
+      pyloftLanding,
+      site123,
     ]
 
     cacheImages(imgs);
@@ -172,14 +173,14 @@ function App() {
     },
     {
       name: "MinervaXR - LMS",
-      description: "A Learning Management System made during my internship at MinervaXR ",
+      description: "Learning management platform from my MinervaXR internship. My first time building with a team across different platforms and stacks.",
       tech: ["Node", "React", "Firebase", "AWS", "Docker"],
       images: [minervaXR],
       link: null
     },
     {
       name: "AnonChat",
-      description: "Open a temporary chat room at chat anonymously",
+      description: "Spin up a temporary chat room and talk anonymously. Started as a fun idea and my first experiment with near real-time database sync.",
       tech: ["NEXTjs", "Netlify", "Firebase"],
       images: [anon],
       link: "https://bespoke-dolphin-95cd93.netlify.app/",
@@ -187,21 +188,21 @@ function App() {
     },
     {
       name: "My Quiz Gal",
-      description: "Learn any language that you want through practice and by testing yourself, for free!",
+      description: "Language quizzes for practice and self-testing. Built to make my wife’s tutoring easier—and because language tools have always been close to my heart.",
       tech: ["React", "Router", "Heroku", "Firebase"],
       images: [galquiz],
       link: null
     },
     {
       name: "TextSOD",
-      description: "Send and receive messages using a 5 Digit Code that is known only by you and your intended respondents",
+      description: "A quiet bridge for discreet messages between friends, using a shared five-digit code and deliberately simple “dumb” encryption.",
       tech: ["React"],
       images: [safesend],
       link: null,
     },
     {
       name: "Cheat Delete",
-      description: "Get a customized workout according to calorie intake",
+      description: "My first web app—a small experiment turning calorie estimates into workout suggestions for the usual post-indulgence guilt.",
       tech: ["React"],
       images: [cheats],
       link: "https://ashvv1.github.io/cheatdelete",
@@ -215,6 +216,126 @@ function App() {
       link: "https://www.site123.com",
     }
   ];
+
+  useEffect(() => {
+    if (isLoading) return undefined;
+
+    const strip = projectStripRef.current;
+    if (!strip) return undefined;
+
+    const mobileMq = window.matchMedia('(max-width: 980px), (max-aspect-ratio: 1/1)');
+    const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const SCROLL_PX_PER_SEC = 16;
+    let lastTime = 0;
+
+    const shouldAnimate = () => mobileMq.matches && !reducedMq.matches;
+
+    const pauseStripScroll = () => {
+      stripScrollPausedRef.current = true;
+    };
+
+    const resumeStripScroll = () => {
+      stripScrollPausedRef.current = false;
+    };
+
+    const onStripPointerDown = () => {
+      if (!shouldAnimate()) return;
+      pauseStripScroll();
+
+      const onPointerEnd = () => {
+        resumeStripScroll();
+        document.removeEventListener('pointerup', onPointerEnd);
+        document.removeEventListener('pointercancel', onPointerEnd);
+      };
+
+      document.addEventListener('pointerup', onPointerEnd);
+      document.addEventListener('pointercancel', onPointerEnd);
+    };
+
+    const tick = (time) => {
+      stripScrollRafRef.current = requestAnimationFrame(tick);
+
+      if (!shouldAnimate() || stripScrollPausedRef.current) {
+        lastTime = 0;
+        return;
+      }
+
+      const maxScroll = strip.scrollWidth - strip.clientWidth;
+      if (maxScroll <= 1) {
+        lastTime = 0;
+        return;
+      }
+
+      if (lastTime > 0) {
+        const dt = (time - lastTime) / 1000;
+        let next = strip.scrollLeft + stripScrollDirRef.current * SCROLL_PX_PER_SEC * dt;
+
+        if (next <= 0) {
+          next = 0;
+          stripScrollDirRef.current = 1;
+        } else if (next >= maxScroll) {
+          next = maxScroll;
+          stripScrollDirRef.current = -1;
+        }
+
+        strip.scrollLeft = next;
+      }
+
+      lastTime = time;
+    };
+
+    const startLoop = () => {
+      if (stripScrollRafRef.current != null) return;
+      lastTime = 0;
+      stripScrollRafRef.current = requestAnimationFrame(tick);
+    };
+
+    const stopLoop = () => {
+      if (stripScrollRafRef.current != null) {
+        cancelAnimationFrame(stripScrollRafRef.current);
+        stripScrollRafRef.current = null;
+      }
+      lastTime = 0;
+    };
+
+    let stripListenersActive = false;
+
+    const syncStripListeners = () => {
+      if (shouldAnimate() && !stripListenersActive) {
+        strip.addEventListener('pointerdown', onStripPointerDown);
+        stripListenersActive = true;
+      } else if (!shouldAnimate() && stripListenersActive) {
+        strip.removeEventListener('pointerdown', onStripPointerDown);
+        stripListenersActive = false;
+      }
+    };
+
+    const onMqChange = () => {
+      if (shouldAnimate()) {
+        resumeStripScroll();
+        syncStripListeners();
+        startLoop();
+      } else {
+        resumeStripScroll();
+        syncStripListeners();
+        stopLoop();
+      }
+    };
+
+    mobileMq.addEventListener('change', onMqChange);
+    reducedMq.addEventListener('change', onMqChange);
+
+    onMqChange();
+
+    return () => {
+      stopLoop();
+      if (stripListenersActive) {
+        strip.removeEventListener('pointerdown', onStripPointerDown);
+      }
+      mobileMq.removeEventListener('change', onMqChange);
+      reducedMq.removeEventListener('change', onMqChange);
+    };
+  }, [isLoading, projects.length]);
 
   const switchLogo = () => {
     setClickCount((prevCount) => {
@@ -253,17 +374,6 @@ function App() {
   }
 
   const handleScroll = () => {
-
-    const drawLength = (pathLength * progress * .01);
-
-    pathRef && (pathRef.current.style.strokeDashoffset = pathLength - drawLength);
-
-
-    if (progress >= 99.90) {
-      pathRef.current.style.strokeDasharray = "none";
-    } else {
-      pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
-    }
     const appHeight = (
       sectionOne.current.clientHeight
       + sectionTwo.current.clientHeight
@@ -381,10 +491,6 @@ function App() {
   }, [active]);
 
 
-  pathRef.current && (pathRef.current.style.strokeDasharray = pathLength + ' ' + pathLength);
-
-  progress < .1 && (pathRef.current && (pathRef.current.style.strokeDashoffset = pathLength))
-
   if (isLoading) {
     return (
       <div className="App" id='loading-screen'>
@@ -392,6 +498,9 @@ function App() {
       </div>
     )
   }
+
+  const featuredProject = projects[selectedProject] || projects[0];
+  const hasProjectActions = Boolean(featuredProject.link || featuredProject.repo);
 
   return (
     <div className={`App ${modeAR ? 'arMode' : ""}`} onScroll={() => handleScroll()} ref={appWrapper}>
@@ -418,30 +527,20 @@ function App() {
         </header>
       </div>
 
-      <div className={`body `} >
+      <button
+        type="button"
+        className={`mobile-ar-bubble ${modeAR ? 'active' : ''}`}
+        onClick={() => setModeAR(!modeAR)}
+        aria-pressed={modeAR}
+        aria-label={modeAR ? 'Disable camera mode' : 'Enable camera mode'}
+      >
+        <span className="mobile-ar-bubble-orb">
+          <img src={modeAR ? onSwitch : offSwitch} alt="" />
+        </span>
+        <span className="mobile-ar-bubble-text">{modeAR ? 'ON' : 'AR'}</span>
+      </button>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0.327874 0.448701 17.2 12.37" className={modeAR ? 'hidden' : 'svgPath'} visibility={progress < .1 ? "hidden" : ""}>
-          <path ref={pathRef}
-            d="M 0.9 8.5
-               C 0.5 6.7, 2.6 4.0, 5.0 5.0
-               S 6.4 7.5, 5.4 8.6
-               S 2.6 9.4, 2.6 7.8
-               S 4.7 6.0, 5.4 7.9
-               S 6.6 9.1, 7.6 8.0
-               S 9.4 4.6, 8.4 4.6
-               S 8.0 6.1, 8.7 6.6
-               S 8.5 8.1, 9.0 9.0
-               S 10.0 9.7, 10.7 9.0
-               S 12.5 3.0, 12.5 1.6
-               C 12.7 0.8, 13.5 0.8, 13.0 1.7
-               S 11.5 6.0, 12.2 9.0
-               C 12.5 7.5, 14.0 6.0, 14.5 7.4
-               S 15.8 9.0, 16.1 9.4
-               S 16.7 9.5, 17.0 9.2"
-            strokeWidth="0.18"
-            strokeLinecap="round" strokeLinejoin="round"
-            fill="none" />
-        </svg>
+      <div className={`body `} >
 
         <div id="about" className='section column' ref={sectionOne}>
 
@@ -467,96 +566,123 @@ function App() {
           <img className='vs-snip' src={vsSnip} alt="vscode snippet" ></img>
         </div>
 
-        <div id="work" ref={sectionTwo} className='section'>
-          <div className="globe-orbit-wrapper">
-            <TechGlobe
-              icons={icons}
-              pinchDrag={modeAR ? pinchDrag : null}
-              isARMode={modeAR}
-              isMobile={window.innerWidth <= window.innerHeight}
-            />
-            <div 
-              className={`orbit-ring ${hoveredProject !== null ? 'paused' : ''}`}
-            >
-              {projects.map((project, i) => {
-                // Solar system: each project orbits at a different radius & speed
-                const orbitConfigs = [
-                  { radius: 320, duration: 28 },
-                  { radius: 290, duration: 28 },
-                  { radius: 380, duration: 28 },
-                  { radius: 440, duration: 28 },
-                  { radius: 360, duration: 28 },
-                  { radius: 420, duration: 28 },
-                  { radius: 340, duration: 28 },
-                ];
-                const config = orbitConfigs[i] || { radius: 380, duration: 28 };
-                const angle = (360 / projects.length) * i;
-                const isHovered = hoveredProject === i;
-                return (
-                  <div
-                    key={project.name}
-                    className="orbit-slot"
-                    style={{
-                      '--orbit-radius': `${config.radius}px`,
-                      animationDelay: `${-(angle / 360) * config.duration}s`,
-                      animationDuration: `${config.duration}s`,
-                    }}
-                  >
-                    <div
-                      className={`project-orb ${isHovered ? 'expanded' : ''} ${hoveredProject !== null && !isHovered ? 'dimmed' : ''}`}
-                      onMouseEnter={() => setHoveredProject(i)}
-                      onMouseLeave={() => setHoveredProject(null)}
-                    >
-                      <OrbThumb images={project.images} alt={project.name} startDelayMs={i * 600} />
-                      <div className="orb-card-content">
-                        {project.repo && <a href={project.repo} target="_blank" rel="noreferrer" className="projectIcon orb-icon-tl"><img src={githubSmall} alt="link to github" /></a>}
-                        {project.link && <a href={project.link} target="_blank" rel="noreferrer" className="projectIcon orb-icon-tr"><img src={websiteIcon} alt="link to website" /></a>}
-                        <h3>{project.name}</h3>
-                        <h4>{project.description}</h4>
-                        {project.tech.length > 0 && <p className="project-tech">Made using: {project.tech.map(tech => <span key={tech}>{tech} </span>)}</p>}
-                      </div>
-                    </div>
+        <div id="work" ref={sectionTwo} className='section projects-section'>
+          <div className="projects-shell">
+            <div className="projects-copy">
+              <span className="section-kicker">Selected work</span>
+              <h2>Projects with a purpose</h2>
+              <p>
+                A focused look at the products and experiments I have built, paired with the
+                stack that powers them.
+              </p>
+            </div>
+
+            <div className="projects-visual">
+              <div className="projects-globe-frame">
+                <TechGlobe
+                  icons={icons}
+                  pinchDrag={modeAR ? pinchDrag : null}
+                  isARMode={modeAR}
+                  isMobile={window.innerWidth <= window.innerHeight}
+                />
+              </div>
+            </div>
+
+            <article className="featured-project-card">
+              <div className="featured-project-media" aria-label={`${featuredProject.name} preview`}>
+                <ProjectImageRotator images={featuredProject.images} alt={featuredProject.name} />
+              </div>
+              <div className="featured-project-content">
+                <span className="featured-project-index">
+                  {String(selectedProject + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                </span>
+                <h3>{featuredProject.name}</h3>
+                <p>{featuredProject.description}</p>
+                {featuredProject.tech.length > 0 && (
+                  <div className="featured-project-tech">
+                    {featuredProject.tech.map((tech) => (
+                      <span key={tech}>{tech}</span>
+                    ))}
                   </div>
-                );
-              })}
+                )}
+                <div className="project-actions">
+                  {featuredProject.link && (
+                    <a href={featuredProject.link} target="_blank" rel="noreferrer">Visit site</a>
+                  )}
+                  {featuredProject.repo && (
+                    <a href={featuredProject.repo} target="_blank" rel="noreferrer">GitHub</a>
+                  )}
+                  {!hasProjectActions && <span>Private project</span>}
+                </div>
+              </div>
+            </article>
+
+            <div
+              className="project-selector-strip"
+              ref={projectStripRef}
+              aria-label="Select project"
+            >
+              {projects.map((project, i) => (
+                <button
+                  key={project.name}
+                  type="button"
+                  className={`project-selector-card ${selectedProject === i ? 'active' : ''}`}
+                  onClick={() => setSelectedProject(i)}
+                >
+                  <span className="project-selector-thumb">
+                    <img src={project.images[0]} alt="" />
+                  </span>
+                  <span className="project-selector-copy">
+                    <strong>{project.name}</strong>
+                    <small>{project.tech.length > 0 ? project.tech.slice(0, 3).join(' · ') : 'Professional work'}</small>
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
-        <div id='contact' ref={sectionThree} className={`section ${active === 'contact' ? 'contact-active' : ''}`}>
-          <div className={`contact-icons ${isShaking ? 'shaking' : ''}`}>
-
-            <a href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer" ref={linkedinRef}>
-              <img src={linkedinIcon} alt='linkedin icon' />
-              <span className="contact-label">
-                <span className="contact-label-title">LinkedIn</span>
-                <span className="contact-label-detail">adam-haviv</span>
-              </span>
-            </a>
-            <a href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer" ref={cvRef}>
-              <img src={resumeIcon} alt='resume icon' />
-              <span className="contact-label">
-                <span className="contact-label-title">CV</span>
-                <span className="contact-label-detail">Download Here</span>
-              </span>
-            </a>
-            <div id='email-icon-container' >
-              <img onClick={() => openEmail()} id='email-icon' src={emailIcon} alt='email icon' ref={mailRef}></img>
-              <span className="contact-label">
-                <span className="contact-label-title">Email</span>
-                <span className="contact-label-detail">ashaviv27@gmail.com</span>
-              </span>
+        <div id='contact' ref={sectionThree} className={`section contact-section ${active === 'contact' ? 'contact-active' : ''}`}>
+          <div className={`contact-panel ${isShaking ? 'shaking' : ''}`}>
+            <div className="contact-copy">
+              <span className="section-kicker">Contact</span>
+              <h2>Contact</h2>
+              <p>
+                You can reach me through LinkedIn, email, GitHub, or download my CV below.
+              </p>
             </div>
-            <a href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer" ref={gitRef}>
-              <img src={githubIcon} alt='github icon' />
-              <span className="contact-label">
-                <span className="contact-label-title">GitHub</span>
-                <span className="contact-label-detail">github.com/ashvv1</span>
-              </span>
-            </a>
 
+            <div className="contact-actions">
+              <a className="contact-action" href='https://www.linkedin.com/in/adam-haviv-84bb17225' target="_blank" rel="noreferrer" ref={linkedinRef}>
+                <span className="contact-action-icon"><img src={linkedinIcon} alt='' /></span>
+                <span className="contact-action-text">
+                  <strong>LinkedIn</strong>
+                  <small>Connect with me</small>
+                </span>
+              </a>
+              <a className="contact-action" href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer" ref={cvRef}>
+                <span className="contact-action-icon"><img src={resumeIcon} alt='' /></span>
+                <span className="contact-action-text">
+                  <strong>CV</strong>
+                  <small>Download resume</small>
+                </span>
+              </a>
+              <button className="contact-action" type="button" onClick={() => openEmail()} ref={mailRef}>
+                <span className="contact-action-icon"><img id='email-icon' src={emailIcon} alt='' /></span>
+                <span className="contact-action-text">
+                  <strong>Email</strong>
+                  <small>ashaviv27@gmail.com</small>
+                </span>
+              </button>
+              <a className="contact-action" href={'https://github.com/ashvv1/'} target="_blank" rel="noreferrer" ref={gitRef}>
+                <span className="contact-action-icon"><img src={githubIcon} alt='' /></span>
+                <span className="contact-action-text">
+                  <strong>GitHub</strong>
+                  <small>github.com/ashvv1</small>
+                </span>
+              </a>
+            </div>
           </div>
-
         </div>
 
       </div>

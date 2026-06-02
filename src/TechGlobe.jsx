@@ -403,8 +403,85 @@ function RotatingScene({ icons, pinchDrag, isMobile, isARMode }) {
 
 // ── Exported component ───────────────────────────────────────────────
 export default function TechGlobe({ icons, pinchDrag, isMobile, isARMode }) {
+  const containerRef = useRef(null);
+  const scrollLockRef = useRef(null);
+
+  const unlockPageScroll = useCallback(() => {
+    const lock = scrollLockRef.current;
+    if (!lock) return;
+
+    lock.app.style.overflowY = lock.overflowY;
+    lock.app.style.overscrollBehavior = lock.overscrollBehavior;
+    scrollLockRef.current = null;
+  }, []);
+
+  const lockPageScroll = useCallback(() => {
+    if (scrollLockRef.current) return;
+
+    const app = containerRef.current?.closest('.App');
+    if (!app) return;
+
+    scrollLockRef.current = {
+      app,
+      overflowY: app.style.overflowY,
+      overscrollBehavior: app.style.overscrollBehavior,
+    };
+    app.style.overflowY = 'hidden';
+    app.style.overscrollBehavior = 'contain';
+  }, []);
+
+  const isInsideInnerGlobe = useCallback((event) => {
+    const container = containerRef.current;
+    if (!container) return false;
+
+    const rect = container.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const innerRadius = Math.min(rect.width, rect.height) * 0.45; // 90% diameter
+
+    return Math.hypot(x - centerX, y - centerY) <= innerRadius;
+  }, []);
+
+  const handlePointerDownCapture = useCallback((event) => {
+    const isTouchLike =
+      isMobile ||
+      event.pointerType === 'touch' ||
+      event.pointerType === 'pen' ||
+      window.matchMedia?.('(pointer: coarse)').matches;
+
+    if (isTouchLike && isInsideInnerGlobe(event)) {
+      lockPageScroll();
+    }
+  }, [isInsideInnerGlobe, isMobile, lockPageScroll]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return undefined;
+
+    const preventScrollWhileLocked = (event) => {
+      if (scrollLockRef.current) {
+        event.preventDefault();
+      }
+    };
+
+    container.addEventListener('touchmove', preventScrollWhileLocked, { passive: false });
+    return () => {
+      container.removeEventListener('touchmove', preventScrollWhileLocked);
+      unlockPageScroll();
+    };
+  }, [unlockPageScroll]);
+
   return (
-    <div className="tech-globe-container">
+    <div
+      className="tech-globe-container"
+      ref={containerRef}
+      onPointerDownCapture={handlePointerDownCapture}
+      onPointerUpCapture={unlockPageScroll}
+      onPointerCancelCapture={unlockPageScroll}
+      onPointerLeave={unlockPageScroll}
+    >
       <Canvas
         gl={{
           alpha: true,

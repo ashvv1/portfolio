@@ -30,6 +30,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
     const [handData, setHandData] = useState(null);
     const [cameraLoaded, setCameraLoaded] = useState(false);
     const [loadedModel, setLoadedModel] = useState(null);
+    const [cameraError, setCameraError] = useState(null);
     const [clickFlash, setClickFlash] = useState(false);
 
     const prevHandData = usePrevious(handData);
@@ -45,22 +46,33 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
                 }
             } catch (e) {
                 console.error('Failed to load handpose model:', e);
+                if (!cancelled) {
+                    setCameraError('Hand tracking could not load. Please refresh and try again.');
+                }
             }
         };
         loadModel();
         return () => { cancelled = true; };
     }, []);
 
-    // FIX: Memoize dimension ratios instead of recomputing every render
-    const { WIDTH_RATIO, HEIGHT_RATIO } = useMemo(() => {
-        const appWidth = APP_WRAPPER?.current?.offsetWidth || 620;
-        const appHeight = APP_WRAPPER?.current?.offsetHeight || 360;
+    // Map model coordinates into the visible canvas. The previous 620x360
+    // mapping drifted badly on mobile because the video is mirrored and scaled
+    // to the full viewport, not to that fixed reference size.
+    const mapVideoPointToCanvas = useCallback((left, top) => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        if (!canvas) return { x: 0, y: 0 };
+
+        const videoWidth = video?.videoWidth || 640;
+        const videoHeight = video?.videoHeight || 480;
+        const scaleX = canvas.width / videoWidth;
+        const scaleY = canvas.height / videoHeight;
+
         return {
-            WIDTH_RATIO: appWidth / 620,
-            HEIGHT_RATIO: appHeight / 360,
+            x: (videoWidth - left) * scaleX,
+            y: top * scaleY,
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [APP_WRAPPER?.current?.offsetWidth, APP_WRAPPER?.current?.offsetHeight]);
+    }, []);
 
     // Camera setup & cleanup — @mediapipe/camera_utils requires an onFrame
     // config (we no-op it because we run TF handpose against the <video> directly)
@@ -73,14 +85,28 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
             width: 640,
             height: 480,
         });
-        camera.start();
+        camera.start().catch((error) => {
+            const permissionDenied =
+                error?.name === 'NotAllowedError' ||
+                error?.name === 'PermissionDeniedError';
+
+            setCameraError(
+                permissionDenied
+                    ? 'Camera access was blocked. Enable camera permissions to use AR mode.'
+                    : 'Camera could not start. Check your browser camera settings and try again.'
+            );
+        });
 
         return () => {
             const stream = video.srcObject;
             if (stream) {
                 stream.getTracks().forEach((track) => track.stop());
             }
-            camera.stop();
+            try {
+                camera.stop();
+            } catch (error) {
+                // MediaPipe can throw if stop is called after a failed/denied start.
+            }
         };
     }, []);
 
@@ -93,8 +119,11 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         const resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 const { width, height } = entry.contentRect;
-                canvas.width = width;
-                canvas.height = height;
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = Math.round(width * dpr);
+                canvas.height = Math.round(height * dpr);
+                canvas.style.width = `${width}px`;
+                canvas.style.height = `${height}px`;
             }
         });
         resizeObserver.observe(container);
@@ -180,18 +209,19 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
             const dy = thumbTop - pointerTop;
             const pinching = (dx * dx + dy * dy) < PINCH_THRESHOLD_SQ;
 
-            const x = (620 - pointerLeft) * WIDTH_RATIO;
-            const y = pointerTop * HEIGHT_RATIO;
+            const { x, y } = mapVideoPointToCanvas(pointerLeft, pointerTop);
             pressButton(x, y, pointerClicking, pinching);
         }
 
         if (maxStrength > 10) {
             makeFlash();
         }
-    }, [HEIGHT_RATIO, WIDTH_RATIO, fingerPos, pressButton, prevFingerPos, makeFlash]);
+    }, [fingerPos, mapVideoPointToCanvas, pressButton, prevFingerPos, makeFlash]);
 
     // Draw finger indicator on canvas instead of using a CSS-positioned div
     useEffect(() => {
+        if (cameraError) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
@@ -206,9 +236,9 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         // Don't draw if off-screen (default -200)
         if (pointerLeft < -100 || pointerTop < -100) return;
 
-        const x = (620 - pointerLeft) * WIDTH_RATIO;
-        const y = pointerTop * HEIGHT_RATIO;
-        const radius = 14;
+        const { x, y } = mapVideoPointToCanvas(pointerLeft, pointerTop);
+        const dpr = window.devicePixelRatio || 1;
+        const radius = 14 * dpr;
 
         ctx.save();
 
@@ -225,7 +255,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         // Inner bright ring
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2 * dpr;
         ctx.strokeStyle = clickFlash
             ? 'rgba(123, 1, 238, 0.8)'
             : 'rgba(95, 188, 251, 0.9)';
@@ -236,7 +266,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         ctx.stroke();
 
         ctx.restore();
-    }, [fingerPos, clickFlash, WIDTH_RATIO, HEIGHT_RATIO]);
+    }, [fingerPos, clickFlash, mapVideoPointToCanvas, cameraError]);
 
     // Hand detection loop — skips React re-renders when no hand is in view
     useEffect(() => {
@@ -245,6 +275,8 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
         let prevHadHand = false;
 
         async function detectHands() {
+            if (cameraError) return;
+
             if (!loadedModel || !video) {
                 rafId = requestAnimationFrame(detectHands);
                 return;
@@ -264,6 +296,7 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
                 prevHadHand = hasHand;
             } catch (e) {
                 console.error('Hand detection error:', e);
+                setCameraError('Hand tracking stopped unexpectedly. Please toggle AR mode off and on again.');
             }
 
             rafId = requestAnimationFrame(detectHands);
@@ -276,11 +309,16 @@ const CameraCanvas = ({ pressButton, APP_WRAPPER }) => {
                 cancelAnimationFrame(rafId);
             }
         };
-    }, [loadedModel, cameraLoaded]);
+    }, [loadedModel, cameraLoaded, cameraError]);
 
     return (
         <div className="cameraCanvas" ref={canvasContainer}>
-            {!cameraLoaded && (
+            {cameraError ? (
+                <div className="cameraError" role="status">
+                    <strong>AR mode needs camera access</strong>
+                    <span>{cameraError}</span>
+                </div>
+            ) : !cameraLoaded && (
                 <div className="loadingScreen">CAMERA LOADING</div>
             )}
             <video ref={videoRef} className="input_video" id="video"></video>
