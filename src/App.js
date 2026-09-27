@@ -13,7 +13,7 @@ import resumeIcon from './resources/resumeicon.png';
 import emailIcon from './resources/emailicon.png';
 import vsSnip from './resources/vsSnipOne.JPG';
 import vsSnipTwo from './resources/vsSnipTwo.JPG';
-import resumePdf from './resources/adamhavivresume26.pdf';
+import resumePdf from './resources/Adam_Haviv_Full_Stack_Developer.pdf';
 import githubIcon from './resources/githubicon.png';
 import minervaXR from './resources/minervaxr.JPG';
 import offSwitch from './resources/offSwitch.png';
@@ -660,7 +660,7 @@ function App() {
                   <small>Connect with me</small>
                 </span>
               </a>
-              <a className="contact-action" href={resumePdf} download='adamhavivresume.pdf' target="_blank" rel="noreferrer" ref={cvRef}>
+              <a className="contact-action" href={resumePdf} download="Adam_Haviv_Full_Stack_Developer.pdf" target="_blank" rel="noreferrer" ref={cvRef}>
                 <span className="contact-action-icon"><img src={resumeIcon} alt='' /></span>
                 <span className="contact-action-text">
                   <strong>CV</strong>
